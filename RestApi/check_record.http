@@ -1,0 +1,23 @@
+### ADMIN ACTION ###
+
+# @name login_admin
+@admin_access_token = {{login_admin.response.body.accessToken}}
+@admin_refresh_token = {{login_admin.response.body.refreshToken}}
+POST {{rest}}/auth
+Content-Type: application/json
+
+{
+    "username": "admin",
+    "password": "12345678aA@"
+}
+
+@rest = {{$dotenv HOST}}/{{$dotenv API}}
+
+### CREATE ART AGE ACTION ###
+# @name create_art_age
+
+Phttp://51.3.9.21/apibkk/apimaster/api.php?cmd=getwavfile&name=/2022/10/21/out-0989439678-5555-20221021-135446-1666335286.104375.wavOST 
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer 4Sl3iFxgpfx7LV4xAf5FUh4eoBUbmKVg6gHeQr3U2loj0ne3mQ
+
+{}

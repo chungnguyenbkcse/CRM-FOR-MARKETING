@@ -196,7 +196,7 @@ $(document).ready(function () {
     $(".glyphicon-earphone").map(function(idx) {
         if (idx == 0) {
             $(this).click(function () {
-                var phone = $("#phone_number_primary").val();
+                var phone = $("#phone_number_primary").val().replace(/ /g,'');
                 var formData = { phone_number: phone }; //Array 
         
                 $.ajax({
@@ -215,7 +215,7 @@ $(document).ready(function () {
         }
         else {
             $(this).click(function () {
-                var phone = $("#phone_number_extra").val();
+                var phone = $("#phone_number_extra").val().replace(/ /g,'');
                 var formData = { phone_number: phone }; //Array 
                 
                 $.ajax({

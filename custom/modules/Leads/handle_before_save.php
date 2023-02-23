@@ -80,5 +80,41 @@ class Handle1
                 }
             }
         }
+
+        /* // configure the Google Client
+        $client = new \Google_Client();
+        $client->setApplicationName('Google Sheets API');
+        $client->setScopes([\Google_Service_Sheets::SPREADSHEETS]);
+        $client->setAccessType('offline');
+        // credentials.json is the key file we downloaded while setting up our Google Sheets API
+        $path = '/home/www/html/mkt.tranthu.vn/dataleadmkt-906bd32bac02.json';
+        $client->setAuthConfig($path);
+
+        
+
+        // configure the Sheets Service
+        $service = new \Google_Service_Sheets($client);
+
+        // the spreadsheet id can be found in the url https://docs.google.com/spreadsheets/d/143xVs9lPopFSF4eJQWloDYAndMor/edit
+        $spreadsheetId = '10qhcaru2svtbiLYmpZlMtsILS0HFbN7RZh7eMTtGs7M';
+
+        $range = 'DataMKT'; // here we use the name of the Sheet to get all the rows
+        $response = $service->spreadsheets_values->get($spreadsheetId, $range);
+        var_dump($response);
+        
+        $newRow = [
+            (string)$bean->facebook_or_zalo_name,
+            (string)$bean->phone_number_primary,
+            (string)$bean->data_sources,
+            (string)$bean->sale_stage,
+            (string)$bean->lead_status,
+            (string)$bean->contact_date
+        ];
+        $rows = [$newRow]; // you can append several rows at once
+        $valueRange = new \Google_Service_Sheets_ValueRange();
+        $valueRange->setValues($rows);
+        $range = 'DataMKT'; // the service will detect the last row of this sheet
+        $options = ['valueInputOption' => 'USER_ENTERED'];
+        $service->spreadsheets_values->append($spreadsheetId, $range, $valueRange, $options);    */
     }
 }

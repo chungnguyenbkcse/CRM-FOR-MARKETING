@@ -109,7 +109,22 @@ class Handle1
         $lst = array();
 
         $lst[0] = $bean->facebook_or_zalo_name;
-        $lst[1] = $bean->data_sources;
+
+        $data_source_id = $bean->data_sources;
+        $data_sources = array(
+            '' => '',
+            '1' => 'FACEBOOK ADS',
+            '2' => 'GOOGLE ADS',
+            '3' => 'FB fanpage - group',
+            '4' => 'Zalo group',
+            '5' => 'MGM',
+        );
+        foreach ($data_sources as $key => $data) {
+            if ($key == $data_source_id) {
+                $lst[1] = $data;
+            }
+        }
+
         $lst[2] = $bean->phone_number_primary;
 
         if ($bean->card_bark_type != null && $bean->card_bark_type != "") {
@@ -119,15 +134,70 @@ class Handle1
             $lst[3] = "";
         }
 
-        if ($bean->service != null && $bean->service != "") {
-            $lst[4] = $bean->service;
+        if ($bean->service != null && $bean->service != "") {         
+            $service_id = $bean->service;
+            $services = array(
+                '' => '',
+                '1' => 'Đáo',
+                '2' => 'Rút',
+                '3' => 'Mở thẻ',
+                '4' => 'Trả góp',
+                '5' => 'Đại lý',
+            );
+            foreach ($services as $key => $data) {
+                if ($key == $service_id) {
+                    $lst[4] = $data;
+                }
+            }
         }
         else {
             $lst[4] = "";
         }
 
         if ($bean->bank != null && $bean->bank != "") {
-            $lst[5] = $bean->bank;
+            $bank_id = $bean->bank;
+            $banks = array (
+                '' => '',
+                '1' => 'HSBC',
+                '2' => 'KienLongBank',
+                '3' => 'Techcombank',
+                '4' => 'CIMB',
+                '5' => 'NamA Bank',
+                '6' => 'Vietcombank',
+                '7' => 'HDBank',
+                '8' => 'OCB',
+                '9' => 'MB Bank',
+                '10' => 'VIB',
+                '11' => 'Sacombank',
+                '12 ' => 'Shinhanbank',
+                '13' => 'Stanchart',
+                '14' => 'TPBank',
+                '15' => 'SCB',
+                '16' => 'VPBank ',
+                '17' => 'Vietbank',
+                '18' => 'Wooribank',
+                '19' => 'Eximbank',
+                '20' => 'FE Credit',
+                '21' => 'HD SaiSon',
+                '22' => 'Home Credit',
+                '23' => 'Lotte',
+                '24' => 'MB Shinsei',
+                '25' => 'Á Châu - ACB',
+                '26' => 'ABBank',
+                '27' => 'VietCapitalBank',
+                '28' => 'LienvietPostbank',
+                '29' => 'Citibank',
+                '30' => 'Vietinbank',
+                '31' => 'PVCombank',
+                '32' => 'BIDV',
+                '33' => 'SeaBank',
+                '24' => 'MaritimeBank',
+            );
+            foreach ($banks as $key => $data) {
+                if ($key == $bank_id) {
+                    $lst[5] = $data;
+                }
+            }
         }
         else {
             $lst[5] = "";
@@ -155,21 +225,84 @@ class Handle1
         }
 
         if ($bean->sale_stage != null && $bean->sale_stage != "") {
-            $lst[9] = $bean->sale_stage;
+            $sale_stage_id = $bean->sale_stage;
+            $sale_stages = array (
+                '0' => 'Choose',
+                '1' => 'New',
+                '2' => 'Theo dõi 1',
+                '3' => 'Theo dõi 2',
+                '4' => 'Theo dõi 3',
+                '5' => 'Hẹn',
+                '6' => 'Từ chối',
+                '7' => 'Đồng ý giao dịch',
+                '8' => 'Cancel',
+                '9' => 'Bán chéo sp',
+                '10' => 'Chuyển BU',
+                '11' => 'Sai quy định'
+            );
+            foreach ($sale_stages as $key => $data) {
+                if ($key == $sale_stage_id) {
+                    $lst[9] = $data;
+                }
+            }
         }
         else {
             $lst[9] = "";
         }
 
         if ($bean->lead_status != null && $bean->lead_status != "") {
-            $lst[10] = $bean->lead_status;
+            $lead_status_id = $bean->lead_status;
+            $lead_statuss = array(
+                '' => '',
+                '1' => 'NONE',
+                '2' => 'Không nghe ',
+                '3' => 'Thuê bao',
+                '4' => 'Đang bận hẹn gọi lại sau',
+                '5' => 'Đang cân nhắc ',
+                '6' => 'Hỗ trợ ship',
+                '7' => 'Cần thì liên hệ lại',
+                '8' => 'Không có shipper',
+                '9' => 'Không có máy pos',
+                '10' => 'Phí ship cao',
+                '11' => 'Văn phòng xa, khách không tiện ghé',
+                '12' => 'Không muốn gửi thẻ lại',
+                '13' => 'Thẻ bị khoá/Hết hạn/Trễ hạn thanh toán',
+                '14' => 'Giao dịch ngoài giờ làm việc',
+                '15' => 'Phí đáo/rút cao',
+                '16' => 'Khách hàng đổi ý',
+                '17' => 'Khách hàng quan tâm',
+                '18' => 'Giao dịch thành công',
+                '19' => 'Sai Rule',
+                '20' => 'Lừa đảo',
+                '21' => 'Lỗi RO',
+                '22' => 'Đại lý-CTV/Trả góp',
+                '23' => 'BU không hoàn thành Lead',
+            );
+            foreach ($lead_statuss as $key => $data) {
+                if ($key == $lead_status_id) {
+                    $lst[10] = $data;
+                }
+            }
         }
         else {
             $lst[10] = "";
         }
 
         if ($bean->owned_branch != null && $bean->owned_branch != "") {
-            $lst[11] = $bean->owned_branch;
+            $owned_branch_id = $bean->owned_branch;
+            $owned_branchs = array(
+                '' => '',
+                '1' => 'NTT',
+                '2' => 'Quận 10',
+                '3' => 'Tân Bình',
+                '4' => 'TELE',
+                '5' => 'DL TB',
+            );
+            foreach ($owned_branchs as $key => $data) {
+                if ($key == $owned_branch_id) {
+                    $lst[11] = $data;
+                }
+            }
         }
         else {
             $lst[11] = "";

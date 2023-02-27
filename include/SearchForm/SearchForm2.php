@@ -237,6 +237,13 @@ class SearchForm
                     if ($this->action == 'ListView') {
                         $this->th->ss->assign('DISPLAY_SEARCH_HELP', true);
                     }
+                    if ($_COOKIE['role']){
+                        $role = $_COOKIE['role'];
+                        $this->th->ss->assign('ROLE', $role);
+                    }
+                    else {
+                        $this->th->ss->assign('ROLE', "");
+                    }
                     $this->th->ss->assign('DISPLAY_SAVED_SEARCH', $this->displaySavedSearch);
                     $this->th->ss->assign('SAVED_SEARCH', $this->displaySavedSearch($orderBySelectOnly));
                     //this determines whether the saved search subform should be rendered open or not

@@ -108,19 +108,24 @@
                     <p>
                 </div>
             {/if}
-            <div class="" scope='row' width='10%' nowrap="nowrap">
-                <div class="col-xs-12">
-                    <label>{sugar_translate label='LBL_SAVE_SEARCH_AS' module='SavedSearch'}:</label>
+            {if $ROLE == "RO"}
+                
+            {else}
+                <div class="" scope='row' width='10%' nowrap="nowrap">
+                    <div class="col-xs-12">
+                        <label>{sugar_translate label='LBL_SAVE_SEARCH_AS' module='SavedSearch'}:</label>
+                    </div>
+                    <div class="form-item" width='30%' nowrap>
+                        <input type='text' name='saved_search_name'>
+                        <input type='hidden' name='search_module' value=''>
+                        <input type='hidden' name='saved_search_action' value=''>
+                        <input title='{$APP.LBL_SAVE_BUTTON_LABEL}' value='{$APP.LBL_SAVE_BUTTON_LABEL}' class='button'
+                               type='button' name='saved_search_submit'
+                               onclick='SUGAR.savedViews.setChooser(); return SUGAR.savedViews.saved_search_action("save");'>
+                    </div>
                 </div>
-                <div class="form-item" width='30%' nowrap>
-                    <input type='text' name='saved_search_name'>
-                    <input type='hidden' name='search_module' value=''>
-                    <input type='hidden' name='saved_search_action' value=''>
-                    <input title='{$APP.LBL_SAVE_BUTTON_LABEL}' value='{$APP.LBL_SAVE_BUTTON_LABEL}' class='button'
-                           type='button' name='saved_search_submit'
-                           onclick='SUGAR.savedViews.setChooser(); return SUGAR.savedViews.saved_search_action("save");'>
-                </div>
-            </div>
+            {/if}
+            
             <div class="hideUnusedSavedSearchElements" scope='row' width='10%'
                  nowrap="nowrap"{if !$savedSearchData.selected} style="display: none;"{/if}>
                 <label>{sugar_translate label='LBL_MODIFY_CURRENT_FILTER' module='SavedSearch'}: <span

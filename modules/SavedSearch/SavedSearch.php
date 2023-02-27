@@ -360,6 +360,7 @@ class SavedSearch extends SugarBean
 
     public function handleSave($prefix, $redirect = true, $useRequired = false, $id = null, $searchModuleBean = null)
     {
+        
         global $current_user, $timedate;
 
         $focus = new SavedSearch();

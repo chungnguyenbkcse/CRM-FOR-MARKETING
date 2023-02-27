@@ -81,7 +81,9 @@ class Handle1
             }
         }
 
-        /* // configure the Google Client
+        // My code .....
+
+        // configure the Google Client
         $client = new \Google_Client();
         $client->setApplicationName('Google Sheets API');
         $client->setScopes([\Google_Service_Sheets::SPREADSHEETS]);
@@ -95,26 +97,217 @@ class Handle1
         // configure the Sheets Service
         $service = new \Google_Service_Sheets($client);
 
-        // the spreadsheet id can be found in the url https://docs.google.com/spreadsheets/d/143xVs9lPopFSF4eJQWloDYAndMor/edit
+        // the spreadsheet id can be found in the url https://docs.google.com/spreadsheets/d/10qhcaru2svtbiLYmpZlMtsILS0HFbN7RZh7eMTtGs7M/edit
         $spreadsheetId = '10qhcaru2svtbiLYmpZlMtsILS0HFbN7RZh7eMTtGs7M';
 
-        $range = 'DataMKT'; // here we use the name of the Sheet to get all the rows
-        $response = $service->spreadsheets_values->get($spreadsheetId, $range);
-        var_dump($response);
         
-        $newRow = [
-            (string)$bean->facebook_or_zalo_name,
-            (string)$bean->phone_number_primary,
-            (string)$bean->data_sources,
-            (string)$bean->sale_stage,
-            (string)$bean->lead_status,
-            (string)$bean->contact_date
+        
+        /* $values = [
+            [$bean->facebook_or_zalo_name, $bean->data_sources, $bean->phone_number_primary, $bean->card_bark_type, $bean->bank, $bean->payment_day, $bean->transaction_amount, $bean->fee, $bean->sale_stage, $bean->lead_status, $bean->owned_branch, $bean->ro_name, $bean->contact_date, $bean->note, $bean->fullname, $bean->citizen_identificationj, $bean->citizen_identification_issuance_date, $bean->citizen_identification_issuance_place, $bean->real_transaction_amount, $bean->real_fee, $bean->payment_day, $bean->birthday, $bean->successful_trading_day, $bean->phone_number_extra, $bean->career, $bean->district_customer_live]
+        ]; */
+
+        $lst = array();
+
+        $lst[0] = $bean->facebook_or_zalo_name;
+        $lst[1] = $bean->data_sources;
+        $lst[2] = $bean->phone_number_primary;
+
+        if ($bean->card_bark_type != null && $bean->card_bark_type != "") {
+            $lst[3] = $bean->card_bark_type;
+        }
+        else {
+            $lst[3] = "";
+        }
+
+        if ($bean->service != null && $bean->service != "") {
+            $lst[4] = $bean->service;
+        }
+        else {
+            $lst[4] = "";
+        }
+
+        if ($bean->bank != null && $bean->bank != "") {
+            $lst[5] = $bean->bank;
+        }
+        else {
+            $lst[5] = "";
+        }
+
+        if ($bean->payment_day != null && $bean->payment_day != "") {
+            $lst[6] = $bean->payment_day;
+        }
+        else {
+            $lst[6] = "";
+        }
+
+        if ($bean->transaction_amount != null && $bean->transaction_amount != "") {
+            $lst[7] = $bean->transaction_amount;
+        }
+        else {
+            $lst[7] = "";
+        }
+
+        if ($bean->fee != null && $bean->fee != "") {
+            $lst[8] = $bean->fee;
+        }
+        else {
+            $lst[8] = "";
+        }
+
+        if ($bean->sale_stage != null && $bean->sale_stage != "") {
+            $lst[9] = $bean->sale_stage;
+        }
+        else {
+            $lst[9] = "";
+        }
+
+        if ($bean->lead_status != null && $bean->lead_status != "") {
+            $lst[10] = $bean->lead_status;
+        }
+        else {
+            $lst[10] = "";
+        }
+
+        if ($bean->owned_branch != null && $bean->owned_branch != "") {
+            $lst[11] = $bean->owned_branch;
+        }
+        else {
+            $lst[11] = "";
+        }
+
+        if ($bean->ro_name != null && $bean->ro_name != "") {
+            $lst[12] = $bean->ro_name;
+        }
+        else {
+            $lst[12] = "";
+        }
+
+        if ($bean->note != null && $bean->note != "") {
+            $lst[13] = $bean->note;
+        }
+        else {
+            $lst[13] = "";
+        }
+
+        
+        if ($bean->fullname != null && $bean->fullname != "") {
+            $lst[14] = $bean->fullname;
+        }
+        else {
+            $lst[14] = "";
+        }
+
+        if ($bean->citizen_identification != null && $bean->citizen_identification != "") {
+            $lst[15] = $bean->citizen_identification;
+        }
+        else {
+            $lst[15] = "";
+        }
+
+        if ($bean->citizen_identification_issuance_date != null && $bean->citizen_identification_issuance_date != "") {
+            $lst[16] = $bean->citizen_identification_issuance_date;
+        }
+        else {
+            $lst[16] = "";
+        }
+
+        if ($bean->citizen_identification_issuance_place != null && $bean->citizen_identification_issuance_place != "") {
+            $lst[17] = $bean->citizen_identification_issuance_place;
+        }
+        else {
+            $lst[17] = "";
+        }
+
+        if ($bean->real_transaction_amount != null && $bean->real_transaction_amount != "") {
+            $lst[18] = $bean->real_transaction_amount;
+        }
+        else {
+            $lst[18] = "";
+        }
+
+        if ($bean->real_fee != null && $bean->real_fee != "") {
+            $lst[19] = $bean->real_fee;
+        }
+        else {
+            $lst[19] = "";
+        }
+
+        if ($bean->birthday != null && $bean->birthday != "") {
+            $lst[20] = $bean->birthday;
+        }
+        else {
+            $lst[20] = "";
+        }
+
+        if ($bean->successful_trading_day != null && $bean->successful_trading_day != "") {
+            $lst[21] = $bean->successful_trading_day;
+        }
+        else {
+            $lst[21] = "";
+        }
+
+        if ($bean->phone_number_extra != null && $bean->phone_number_extra != "") {
+            $lst[22] = $bean->phone_number_extra;
+        }
+        else {
+            $lst[22] = "";
+        }
+
+        if ($bean->career != null && $bean->career != "") {
+            $lst[23] = $bean->career;
+        }
+        else {
+            $lst[23] = "";
+        }
+
+        if ($bean->district_customer_live != null && $bean->district_customer_live != "") {
+            $lst[24] = $bean->district_customer_live;
+        }
+        else {
+            $lst[24] = "";
+        }
+
+        $values = [
+            $lst
         ];
-        $rows = [$newRow]; // you can append several rows at once
-        $valueRange = new \Google_Service_Sheets_ValueRange();
-        $valueRange->setValues($rows);
-        $range = 'DataMKT'; // the service will detect the last row of this sheet
-        $options = ['valueInputOption' => 'USER_ENTERED'];
-        $service->spreadsheets_values->append($spreadsheetId, $range, $valueRange, $options);    */
+        
+        $body = new Google_Service_Sheets_ValueRange([
+            'values' => $values
+        ]);
+        
+        $params = [
+            'valueInputOption' => 'RAW'
+        ];
+        
+        $query_11 = "SELECT COUNT(*) AS total FROM leads WHERE id = '{$bean->id}'";
+        $result_11 = $GLOBALS['db']->query($query_11);   
+        $data = $GLOBALS['db']->fetchByAssoc($result_11); 
+        $GLOBALS['log']->fatal($data['total']); 
+        if ($data['total'] == 0) {
+            $range = 'Trang tính1';
+            $response = $service->spreadsheets_values->get($spreadsheetId, $range);
+            $values = $response->getValues();    
+            $rangeToInsert = 'Trang tính1!A' . (count($values) + 1);
+            $result = $service->spreadsheets_values->append($spreadsheetId, $rangeToInsert, $body, $params);
+        }
+        else {
+            $range = 'Trang tính1';
+            $response = $service->spreadsheets_values->get($spreadsheetId, $range);
+            $values = $response->getValues();
+            $key = $bean->phone_number_primary;
+            $GLOBALS['log']->fatal($values); 
+
+            foreach ($values as $row => $data) {
+                $GLOBALS['log']->fatal($data[2]); 
+                if ($data[2] == substr($key, 1)) {
+                    $GLOBALS['log']->fatal("hello key"); 
+                    $rangeToUpdate = 'Trang tính1!A' . ($row + 1) . ':Y' . ($row + 1);
+                    $result = $service->spreadsheets_values->update($spreadsheetId, $rangeToUpdate, $body, $params);
+                    printf("%d cells updated.\n", $result->getUpdatedCells());
+                    break;
+                }
+            }
+        }
+        
     }
 }

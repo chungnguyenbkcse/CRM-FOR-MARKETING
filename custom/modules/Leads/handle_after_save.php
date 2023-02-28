@@ -76,6 +76,8 @@ class Handle
         } */
         
         if ($bean->ro_name != "" && $bean->ro_name != null) {
+
+
             $query_ro_least_total = "SELECT COUNT(*) AS total FROM ro_least";
             $result_ro_least_total = $GLOBALS['db']->query($query_ro_least_total);
             $rows_ro_least_total = $GLOBALS['db']->fetchByAssoc($result_ro_least_total);

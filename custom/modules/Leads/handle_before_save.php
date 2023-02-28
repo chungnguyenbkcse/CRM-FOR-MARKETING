@@ -436,6 +436,16 @@ class Handle1
         $data = $GLOBALS['db']->fetchByAssoc($result_11); 
         $GLOBALS['log']->fatal($data['total']); 
         if ($data['total'] == 0) {
+
+            if ($bean->ro_name != "" && $bean->ro_name != null) {
+                // Delete ro choose last
+                $query_ro_choose = "DELETE FROM ro_choose";
+                $GLOBALS['db']->query($query_ro_choose);
+                
+                $query_insert_ro_choose = "INSERT INTO ro_choose  (lead_id) VALUES ('{$bean->ro_name}')";
+                $GLOBALS['db']->query($query_insert_ro_choose);
+            }
+            
             $range = 'DATA CRM';
             $response = $service->spreadsheets_values->get($spreadsheetId, $range);
             $values = $response->getValues();    

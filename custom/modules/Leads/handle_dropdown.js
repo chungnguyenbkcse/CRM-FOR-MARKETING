@@ -747,7 +747,6 @@ $(document).ready(function () {
                 })
             })
             
-            $("#ro_name").attr("disabled", true);
 
             $("#phone_number_primary").blur(function () {
                 check_phone_number()
@@ -770,6 +769,16 @@ $(document).ready(function () {
             $(".input_phone_number_primary").addClass("col-xl-12 col-xs-12 col-sm-8 edit-view-field")
             $('.input_phone_number_primary').css('width', "100%")
             $('#phone_number_primary').css('width', "90%")
+
+            $.ajax({
+                url: "index.php?module=Leads&entryPoint=ro_name",
+                data: { },
+                success: function (data) {
+                    console.log(data);
+                    $("#ro_name").html(data);
+                },
+                dataType: 'html'
+            });
         }
         else {
             $("#phone_number_primary").attr('type', 'password');
@@ -1263,16 +1272,7 @@ $(document).ready(function () {
             dataType: 'html'
         });
 
-        if (ro_name.length === 0) {
-            $.ajax({
-                url: "index.php?module=Leads&entryPoint=ro_name",
-                data: {},
-                success: function (data) {
-                    console.log(data);
-                    $("#ro_name").val(data);
-                }
-            });
-        }
+        
 
 
         if (ho_name.length === 0) {
@@ -1300,17 +1300,7 @@ $(document).ready(function () {
             });
         });
 
-        var ro_name_val = $("#ro_name_val").val();
-                $("#ro_name").attr("disabled", false);
-                $.ajax({
-                    url: "index.php?module=Leads&entryPoint=ro_name",
-                    data: { ro_name: ro_name_val },
-                    success: function (data) {
-                        console.log(data);
-                        $("#ro_name").html(data);
-                    },
-                    dataType: 'html'
-                });
+        
     }
 
     // role SUPER MKT

@@ -7,5 +7,6 @@
 include("custom/metadata/relationship_sale_stages_lead_statusMetadata.php");
 include("custom/metadata/relationship_card_leadMetadata.php");
 include("custom/metadata/ro_leastMetadata.php");
+include("custom/metadata/ro_chooseMetadata.php");
 
 ?>

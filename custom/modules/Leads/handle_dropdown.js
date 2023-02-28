@@ -233,7 +233,7 @@ $(document).ready(function () {
                             type: 'post',
                             success: function (data) {
                                 //alert(data);
-                                var url = "http://mkt.tranthu.vn/upload1/" + `${name_file}.wav`;
+                                var url = "https://mkt.tranthu.vn/upload1/" + `${name_file}.wav`;
                                 //$("#source").attr('src', url);
         
                                 $(".btn-record").html(

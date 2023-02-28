@@ -135,7 +135,7 @@ $(document).ready(function () {
 
         console.log(formData)
 
-        $.ajax({
+        /* $.ajax({
             url: "http://51.3.9.124/apibkk/apimaster/api.php?cmd=cdrreport",
             type: "POST",
             contentType: "application/x-www-form-urlencoded",
@@ -190,7 +190,67 @@ $(document).ready(function () {
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log('Error')
             }
+        }); */
+
+        $.ajax({
+            url: "index.php?module=Leads&entryPoint=CdrReport",
+            type: "GET",
+            data: {
+                sip: parseInt(sip),
+                start_date: start_date,
+                end_date: end_date,
+                field_name: "dst",
+                field_pattern: parseInt(phone),
+                status: "ANSWERED",
+                limit: 1,
+                offset: 0
+            },
+            success: function (data, textStatus, jqXHR) {
+                console.log('Susscess')
+                console.log(data)
+                
+                var res = jQuery.parseJSON(data)[0];
+                console.log(res)
+                const recording_file = "/" + year + "/" + month + "/" + day +  "/" + (res.recordingfile);
+                fetch(`index.php?module=Leads&entryPoint=GetWarfile&data=${recording_file}`)
+                    .then(response => response.blob())
+                    .then(blob => {
+                        //$("#source").attr('src', URL.createObjectURL(blob));
+                        let name_file = new Date().getTime();
+                        console.log(name_file)
+                        let file = new File([blob], `${name_file}.wav`, {
+                            type: "audio/x-wav", lastModified: new Date().getTime()
+                        });
+
+                        var form_data = new FormData();
+                        form_data.append("files[]", file);
+                        form_data.append('lead_id', lead_id);
+                        $.ajax({
+                            url: "index.php?module=Leads&entryPoint=handle_upload_file",
+                            contentType: false,
+                            processData: false,
+                            data: form_data,
+                            type: 'post',
+                            success: function (data) {
+                                //alert(data);
+                                var url = "http://mkt.tranthu.vn/upload1/" + `${name_file}.wav`;
+                                //$("#source").attr('src', url);
+        
+                                $(".btn-record").html(
+                                    `<audio id="audio" controls autoplay muted><source id="source" src="${url}" type="audio/wav" /></audio>`
+                                )
+                            },
+
+                        });
+                        // do stuff with `file`
+                    })
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log('Error')
+            }
         });
+
     }
 
     $(".glyphicon-earphone").map(function(idx) {

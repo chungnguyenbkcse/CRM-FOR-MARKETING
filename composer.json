@@ -30,7 +30,8 @@
     "symfony/options-resolver": "^3.4",
     "symfony/validator": "^3.4",
     "ezyang/htmlpurifier": "^4.10",
-    "cboden/ratchet": "^0.4.4"
+    "cboden/ratchet": "^0.4.4",
+    "telegram-bot/api": "^2.3"
   },
   "require-dev": {
     "leafo/scssphp": "dev-master",

@@ -108,31 +108,41 @@ class Handle1
 
         $lst = array();
 
-        $lst[0] = $bean->facebook_or_zalo_name;
+        if ($bean->contact_date != null && $bean->contact_date != "") {
+            $lst[0] = $bean->contact_date;
+        }
+        else {
+            $lst[0] = "";
+        }
+
+        $lst[1] = $bean->facebook_or_zalo_name;
 
         $data_source_id = $bean->data_sources;
         $data_sources = array(
             '' => '',
             '1' => 'FACEBOOK ADS',
             '2' => 'GOOGLE ADS',
-            '3' => 'FB fanpage - group',
+            '3' => 'Facebook group',
             '4' => 'Zalo group',
             '5' => 'MGM',
+            '6' => 'Facebook Fanpage',
+            '7' => 'Data Center',
+            '8' => 'Facebook UID',
         );
         
         foreach ($data_sources as $key => $data) {
             if ($key == $data_source_id) {
-                $lst[1] = $data;
+                $lst[2] = $data;
             }
         }
 
-        $lst[2] = $bean->phone_number_primary;
+        $lst[3] = $bean->phone_number_primary;
 
         if ($bean->card_bark_type != null && $bean->card_bark_type != "") {
-            $lst[3] = $bean->card_bark_type;
+            $lst[4] = $bean->card_bark_type;
         }
         else {
-            $lst[3] = "";
+            $lst[4] = "";
         }
 
         if ($bean->service != null && $bean->service != "") {         
@@ -147,12 +157,12 @@ class Handle1
             );
             foreach ($services as $key => $data) {
                 if ($key == $service_id) {
-                    $lst[4] = $data;
+                    $lst[5] = $data;
                 }
             }
         }
         else {
-            $lst[4] = "";
+            $lst[5] = "";
         }
 
         if ($bean->bank != null && $bean->bank != "") {
@@ -196,33 +206,33 @@ class Handle1
             );
             foreach ($banks as $key => $data) {
                 if ($key == $bank_id) {
-                    $lst[5] = $data;
+                    $lst[6] = $data;
                 }
             }
-        }
-        else {
-            $lst[5] = "";
-        }
-
-        if ($bean->payment_day != null && $bean->payment_day != "") {
-            $lst[6] = $bean->payment_day;
         }
         else {
             $lst[6] = "";
         }
 
-        if ($bean->transaction_amount != null && $bean->transaction_amount != "") {
-            $lst[7] = $bean->transaction_amount;
+        if ($bean->payment_day != null && $bean->payment_day != "") {
+            $lst[7] = $bean->payment_day;
         }
         else {
             $lst[7] = "";
         }
 
-        if ($bean->fee != null && $bean->fee != "") {
-            $lst[8] = $bean->fee;
+        if ($bean->transaction_amount != null && $bean->transaction_amount != "") {
+            $lst[8] = $bean->transaction_amount;
         }
         else {
             $lst[8] = "";
+        }
+
+        if ($bean->fee != null && $bean->fee != "") {
+            $lst[9] = $bean->fee;
+        }
+        else {
+            $lst[9] = "";
         }
 
         if ($bean->sale_stage != null && $bean->sale_stage != "") {
@@ -243,12 +253,12 @@ class Handle1
             );
             foreach ($sale_stages as $key => $data) {
                 if ($key == $sale_stage_id) {
-                    $lst[9] = $data;
+                    $lst[10] = $data;
                 }
             }
         }
         else {
-            $lst[9] = "";
+            $lst[10] = "";
         }
 
         if ($bean->lead_status != null && $bean->lead_status != "") {
@@ -271,22 +281,30 @@ class Handle1
                 '14' => 'Giao dịch ngoài giờ làm việc',
                 '15' => 'Phí đáo/rút cao',
                 '16' => 'Khách hàng đổi ý',
-                '17' => 'Khách hàng quan tâm',
+                '17' => 'Khác hàng quan tâm',
                 '18' => 'Giao dịch thành công',
                 '19' => 'Sai Rule',
                 '20' => 'Lừa đảo',
                 '21' => 'Lỗi RO',
                 '22' => 'Đại lý-CTV/Trả góp',
                 '23' => 'BU không hoàn thành Lead',
+                '24' => 'Đại lý-CTV/Trả góp/Mở thẻ/Vay',
+                '25' => 'Đã đáo/rút với bên khác',
+                '26' => 'Tìm hiểu thử cho biết',
+                '27' => 'Đang chờ để nhận thẻ',
+                '28' => 'Không nhu cầu',
+                '29' => 'Thuê bao',
+                '30' => 'Ấn nhầm link',
+                '31' => 'Nhầm số',
             );
             foreach ($lead_statuss as $key => $data) {
                 if ($key == $lead_status_id) {
-                    $lst[10] = $data;
+                    $lst[11] = $data;
                 }
             }
         }
         else {
-            $lst[10] = "";
+            $lst[11] = "";
         }
 
         if ($bean->owned_branch != null && $bean->owned_branch != "") {
@@ -301,104 +319,104 @@ class Handle1
             );
             foreach ($owned_branchs as $key => $data) {
                 if ($key == $owned_branch_id) {
-                    $lst[11] = $data;
+                    $lst[12] = $data;
                 }
             }
-        }
-        else {
-            $lst[11] = "";
-        }
-
-        if ($bean->ro_name != null && $bean->ro_name != "") {
-            $lst[12] = $bean->ro_name;
         }
         else {
             $lst[12] = "";
         }
 
-        if ($bean->note != null && $bean->note != "") {
-            $lst[13] = $bean->note;
+        if ($bean->ro_name != null && $bean->ro_name != "") {
+            $lst[13] = $bean->ro_name;
         }
         else {
             $lst[13] = "";
         }
 
-        
-        if ($bean->fullname != null && $bean->fullname != "") {
-            $lst[14] = $bean->fullname;
+        if ($bean->note != null && $bean->note != "") {
+            $lst[14] = $bean->note;
         }
         else {
             $lst[14] = "";
         }
 
-        if ($bean->citizen_identification != null && $bean->citizen_identification != "") {
-            $lst[15] = $bean->citizen_identification;
+        
+        if ($bean->fullname != null && $bean->fullname != "") {
+            $lst[15] = $bean->fullname;
         }
         else {
             $lst[15] = "";
         }
 
-        if ($bean->citizen_identification_issuance_date != null && $bean->citizen_identification_issuance_date != "") {
-            $lst[16] = $bean->citizen_identification_issuance_date;
+        if ($bean->citizen_identification != null && $bean->citizen_identification != "") {
+            $lst[16] = $bean->citizen_identification;
         }
         else {
             $lst[16] = "";
         }
 
-        if ($bean->citizen_identification_issuance_place != null && $bean->citizen_identification_issuance_place != "") {
-            $lst[17] = $bean->citizen_identification_issuance_place;
+        if ($bean->citizen_identification_issuance_date != null && $bean->citizen_identification_issuance_date != "") {
+            $lst[17] = $bean->citizen_identification_issuance_date;
         }
         else {
             $lst[17] = "";
         }
 
-        if ($bean->real_transaction_amount != null && $bean->real_transaction_amount != "") {
-            $lst[18] = $bean->real_transaction_amount;
+        if ($bean->citizen_identification_issuance_place != null && $bean->citizen_identification_issuance_place != "") {
+            $lst[18] = $bean->citizen_identification_issuance_place;
         }
         else {
             $lst[18] = "";
         }
 
-        if ($bean->real_fee != null && $bean->real_fee != "") {
-            $lst[19] = $bean->real_fee;
+        if ($bean->real_transaction_amount != null && $bean->real_transaction_amount != "") {
+            $lst[19] = $bean->real_transaction_amount;
         }
         else {
             $lst[19] = "";
         }
 
-        if ($bean->birthday != null && $bean->birthday != "") {
-            $lst[20] = $bean->birthday;
+        if ($bean->real_fee != null && $bean->real_fee != "") {
+            $lst[20] = $bean->real_fee;
         }
         else {
             $lst[20] = "";
         }
 
-        if ($bean->successful_trading_day != null && $bean->successful_trading_day != "") {
-            $lst[21] = $bean->successful_trading_day;
+        if ($bean->birthday != null && $bean->birthday != "") {
+            $lst[21] = $bean->birthday;
         }
         else {
             $lst[21] = "";
         }
 
-        if ($bean->phone_number_extra != null && $bean->phone_number_extra != "") {
-            $lst[22] = $bean->phone_number_extra;
+        if ($bean->successful_trading_day != null && $bean->successful_trading_day != "") {
+            $lst[22] = $bean->successful_trading_day;
         }
         else {
             $lst[22] = "";
         }
 
-        if ($bean->career != null && $bean->career != "") {
-            $lst[23] = $bean->career;
+        if ($bean->phone_number_extra != null && $bean->phone_number_extra != "") {
+            $lst[23] = $bean->phone_number_extra;
         }
         else {
             $lst[23] = "";
         }
 
-        if ($bean->district_customer_live != null && $bean->district_customer_live != "") {
-            $lst[24] = $bean->district_customer_live;
+        if ($bean->career != null && $bean->career != "") {
+            $lst[24] = $bean->career;
         }
         else {
             $lst[24] = "";
+        }
+
+        if ($bean->district_customer_live != null && $bean->district_customer_live != "") {
+            $lst[25] = $bean->district_customer_live;
+        }
+        else {
+            $lst[25] = "";
         }
 
         $values = [
@@ -418,14 +436,14 @@ class Handle1
         $data = $GLOBALS['db']->fetchByAssoc($result_11); 
         $GLOBALS['log']->fatal($data['total']); 
         if ($data['total'] == 0) {
-            $range = 'Trang tính1';
+            $range = 'DATA CRM';
             $response = $service->spreadsheets_values->get($spreadsheetId, $range);
             $values = $response->getValues();    
-            $rangeToInsert = 'Trang tính1!A' . (count($values) + 1);
+            $rangeToInsert = 'DATA CRM!A' . (count($values) + 1);
             $result = $service->spreadsheets_values->append($spreadsheetId, $rangeToInsert, $body, $params);
         }
         else {
-            $range = 'Trang tính1';
+            $range = 'DATA CRM';
             $response = $service->spreadsheets_values->get($spreadsheetId, $range);
             $values = $response->getValues();
             $key = $bean->phone_number_primary;
@@ -433,9 +451,9 @@ class Handle1
 
             foreach ($values as $row => $data) {
                 $GLOBALS['log']->fatal($data[2]); 
-                if ($data[2] == substr($key, 1)) {
+                if ($data[3] == substr($key, 1)) {
                     $GLOBALS['log']->fatal("hello key"); 
-                    $rangeToUpdate = 'Trang tính1!A' . ($row + 1) . ':Y' . ($row + 1);
+                    $rangeToUpdate = 'DATA CRM!A' . ($row + 1) . ':Z' . ($row + 1);
                     $result = $service->spreadsheets_values->update($spreadsheetId, $rangeToUpdate, $body, $params);
                     printf("%d cells updated.\n", $result->getUpdatedCells());
                     break;

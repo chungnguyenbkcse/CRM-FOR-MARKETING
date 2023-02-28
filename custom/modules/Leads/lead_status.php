@@ -27,6 +27,14 @@ function getStatesRo($sale_stage)
         '21' => 'RO error',
         '22' => 'Agent-CTV/Installment',
         '23' => 'BU not completed',
+        '24' => 'Agent-CTV/Installment/Open Card/Loan',
+        '25' => 'Done/withdrawn with another party',
+        '26' => 'Find out and let me know',
+        '27' => 'Waiting to receive card',
+        '28' => 'No need',
+        '29' => 'Subscriber',
+        '30' => 'Press the wrong link',
+        '31' => 'Wrong number',
     );
 
     if ($ck_login_language_20 == "vi_VN") {
@@ -56,6 +64,14 @@ function getStatesRo($sale_stage)
             '21' => 'Lỗi RO',
             '22' => 'Đại lý-CTV/Trả góp',
             '23' => 'BU không hoàn thành Lead',
+            '24' => 'Đại lý-CTV/Trả góp/Mở thẻ/Vay',
+            '25' => 'Đã đáo/rút với bên khác',
+            '26' => 'Tìm hiểu thử cho biết',
+            '27' => 'Đang chờ để nhận thẻ',
+            '28' => 'Không nhu cầu',
+            '29' => 'Thuê bao',
+            '30' => 'Ấn nhầm link',
+            '31' => 'Nhầm số',
         );
     }
     global $db;
@@ -108,6 +124,14 @@ function getStatesBuAndMkt($sale_stage)
         '21' => 'RO error',
         '22' => 'Agent-CTV/Installment',
         '23' => 'BU not completed',
+        '24' => 'Agent-CTV/Installment/Open Card/Loan',
+        '25' => 'Done/withdrawn with another party',
+        '26' => 'Find out and let me know',
+        '27' => 'Waiting to receive card',
+        '28' => 'No need',
+        '29' => 'Subscriber',
+        '30' => 'Press the wrong link',
+        '31' => 'Wrong number',
     );
 
     if ($ck_login_language_20 == "vi_VN") {
@@ -137,6 +161,14 @@ function getStatesBuAndMkt($sale_stage)
             '21' => 'Lỗi RO',
             '22' => 'Đại lý-CTV/Trả góp',
             '23' => 'BU không hoàn thành Lead',
+            '24' => 'Đại lý-CTV/Trả góp/Mở thẻ/Vay',
+            '25' => 'Đã đáo/rút với bên khác',
+            '26' => 'Tìm hiểu thử cho biết',
+            '27' => 'Đang chờ để nhận thẻ',
+            '28' => 'Không nhu cầu',
+            '29' => 'Thuê bao',
+            '30' => 'Ấn nhầm link',
+            '31' => 'Nhầm số',
         );
     }
     global $db;
@@ -189,6 +221,14 @@ function getStatesSuperMkt($sale_stage)
         '21' => 'RO error',
         '22' => 'Agent-CTV/Installment',
         '23' => 'BU not completed',
+        '24' => 'Agent-CTV/Installment/Open Card/Loan',
+        '25' => 'Done/withdrawn with another party',
+        '26' => 'Find out and let me know',
+        '27' => 'Waiting to receive card',
+        '28' => 'No need',
+        '29' => 'Subscriber',
+        '30' => 'Press the wrong link',
+        '31' => 'Wrong number',
     );
 
     if ($ck_login_language_20 == "vi_VN") {
@@ -218,6 +258,14 @@ function getStatesSuperMkt($sale_stage)
             '21' => 'Lỗi RO',
             '22' => 'Đại lý-CTV/Trả góp',
             '23' => 'BU không hoàn thành Lead',
+            '24' => 'Đại lý-CTV/Trả góp/Mở thẻ/Vay',
+            '25' => 'Đã đáo/rút với bên khác',
+            '26' => 'Tìm hiểu thử cho biết',
+            '27' => 'Đang chờ để nhận thẻ',
+            '28' => 'Không nhu cầu',
+            '29' => 'Thuê bao',
+            '30' => 'Ấn nhầm link',
+            '31' => 'Nhầm số',
         );
     }
     global $db;

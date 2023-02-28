@@ -621,9 +621,12 @@ $app_list_strings = array(
         '' => '',
         '1' => 'FACEBOOK ADS',
         '2' => 'GOOGLE ADS',
-        '3' => 'FB fanpage - group',
+        '3' => 'Facebook group',
         '4' => 'Zalo group',
         '5' => 'MGM',
+        '6' => 'Facebook Fanpage',
+        '7' => 'Data Center',
+        '8' => 'Facebook UID',
     ),
 
     'receiving_branch_dom' => array(
@@ -1066,6 +1069,14 @@ $app_list_strings = array(
             '21' => 'Lỗi RO',
             '22' => 'Đại lý-CTV/Trả góp',
             '23' => 'BU không hoàn thành Lead',
+            '24' => 'Đại lý-CTV/Trả góp/Mở thẻ/Vay',
+            '25' => 'Đã đáo/rút với bên khác',
+            '26' => 'Tìm hiểu thử cho biết',
+            '27' => 'Đang chờ để nhận thẻ',
+            '28' => 'Không nhu cầu',
+            '29' => 'Thuê bao',
+            '30' => 'Ấn nhầm link',
+            '31' => 'Nhầm số',
     ),
 
     'projects_status_options' => array(

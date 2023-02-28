@@ -29,7 +29,8 @@
     "google/apiclient": "^2.8.0",
     "symfony/options-resolver": "^3.4",
     "symfony/validator": "^3.4",
-    "ezyang/htmlpurifier": "^4.10"
+    "ezyang/htmlpurifier": "^4.10",
+    "cboden/ratchet": "^0.4.4"
   },
   "require-dev": {
     "leafo/scssphp": "dev-master",

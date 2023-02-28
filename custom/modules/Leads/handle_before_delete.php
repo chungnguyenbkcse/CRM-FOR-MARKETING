@@ -76,16 +76,16 @@ class Handle
         // the spreadsheet id can be found in the url https://docs.google.com/spreadsheets/d/10qhcaru2svtbiLYmpZlMtsILS0HFbN7RZh7eMTtGs7M/edit
         $spreadsheetId = '10qhcaru2svtbiLYmpZlMtsILS0HFbN7RZh7eMTtGs7M';
 
-        $range = 'Trang tính1';
+        $range = 'DATA CRM';
         $response = $service->spreadsheets_values->get($spreadsheetId, $range);
         $values = $response->getValues();
         $key = $bean->phone_number_primary;
         $GLOBALS['log']->fatal($values); 
         foreach ($values as $row => $data) {
             $GLOBALS['log']->fatal($data[2]); 
-            if ($data[2] == substr($key, 1)) {
+            if ($data[3] == substr($key, 1)) {
                 $GLOBALS['log']->fatal("hello key"); 
-                $rangeToDelete = 'Trang tính1!A' . ($row + 1) . ':Y' . ($row + 1);
+                $rangeToDelete = 'DATA CRM!A' . ($row + 1) . ':Z' . ($row + 1);
                 $clear = new \Google_Service_Sheets_ClearValuesRequest();
                 $service->spreadsheets_values->clear($spreadsheetId, $rangeToDelete, $clear);
                 break;

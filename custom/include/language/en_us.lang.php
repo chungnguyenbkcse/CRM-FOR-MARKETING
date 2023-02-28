@@ -169,9 +169,12 @@ $app_list_strings = array(
         '' => '',
         '1' => 'FACEBOOK ADS',
         '2' => 'GOOGLE ADS',
-        '3' => 'FB fanpage - group',
+        '3' => 'Facebook group',
         '4' => 'Zalo group',
         '5' => 'MGM',
+        '6' => 'Facebook Fanpage',
+        '7' => 'Data Center',
+        '8' => 'Facebook UID',
     ),
     'ro_name_dom' => array(
         '' => ''
@@ -286,6 +289,14 @@ $app_list_strings = array(
         '21' => 'RO error',   
         '22' => 'Agent-CTV/Installment', 
         '23' => 'BU not completed',
+        '24' => 'Agent-CTV/Installment/Open Card/Loan',
+        '25' => 'Done/withdrawn with another party',
+        '26' => 'Find out and let me know',
+        '27' => 'Waiting to receive card',
+        '28' => 'No need',
+        '29' => 'Subscriber',
+        '30' => 'Press the wrong link',
+        '31' => 'Wrong number',
     ),
 
     //e.g. en español 'Apparel'=>'Ropa',

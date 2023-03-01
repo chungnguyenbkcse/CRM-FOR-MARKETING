@@ -1,7 +1,6 @@
 <?php
 // Load thư viện
 require_once 'vendor/autoload.php';
-ini_set("allow_url_fopen", true);
 
 // Cấu hình webhook
 $bot_api_key  = '6173643097:AAFUsQUZJfbs8lFL_fzmEmhRoBptAl8IEI0';
@@ -18,10 +17,10 @@ try {
 
 
 // Xử lý tin nhắn
-$update = json_decode(file_get_contents('php://input'));
-$message = isset($update['message']) ? $update['message'] : null;
+$update = file_get_contents('php://input');
+$update = json_decode($update, true);
 
-var_dump($update);
+$message = isset($update['message']) ? $update['message'] : null;
 
 if ($message !== null) {
     //lấy thông tin về tin nhắn
@@ -34,9 +33,12 @@ if ($message !== null) {
     $date = isset($message['date']) ? $message['date'] : "";
     $text = isset($message['text']) ? $message['text'] : "";
 
-    echo "123";
-
     // Xử lý tin nhắn ở đây
-    $telegram->sendMessage($chatId, 'Bạn vừa gửi tin nhắn: ' . $text);
+    $telegram->sendMessage($chatId, 'Bạn vừa gửi tin nhắn: ' . $chatId);
+    
     //echo $text;
 }
+
+
+header("Content-Type: application/json");
+echo json_encode(["status" => "success"]);

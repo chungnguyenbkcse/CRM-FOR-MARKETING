@@ -47,7 +47,7 @@ class MyWebSocket implements MessageComponentInterface {
         else if ($_COOKIE['role'] == 'RO') {
             if (isset($_COOKIE['ck_login_id_20'])) {
                 $user = BeanFactory::getBean('Users', $_COOKIE['ck_login_id_20']);
-                $query = "SELECT * FROM leads WHERE ro_name = '{$user->user_name}' AND sale_stage = '10' AND deleted = 0";
+                $query = "SELECT * FROM leads WHERE ro_name = '{$user->id}' AND sale_stage = '10' AND deleted = 0";
                 $result = $GLOBALS['db']->query($query);
                 while($rows = $GLOBALS['db']->fetchByAssoc($result)){
                     if ($rows['modified_user_id'] != $user->id) {

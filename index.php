@@ -48,31 +48,6 @@ require_once 'include/entryPoint.php';
 ob_start();
 require_once 'include/MVC/SugarApplication.php';
 
-// Load thư viện
-require_once 'vendor/autoload.php';
-
-// Cấu hình webhook
-$bot_api_key  = '6173643097:AAFUsQUZJfbs8lFL_fzmEmhRoBptAl8IEI0';
-$bot_username = 'ChungNguyen10012000_bot';
-$hook_url     = 'https://mkt.tranthu.vn/index.php?module=Leads&entryPoint=handle_telegram';
-
-try {
-    echo "Success";
-    $telegram = new \TelegramBot\Api\BotApi($bot_api_key);
-    $telegram->setWebhook($hook_url);
-} catch (\TelegramBot\Api\Exception $e) {
-    echo $e->getMessage();
-}
-
-// Xử lý tin nhắn
-$update = json_decode(file_get_contents('php://input'), true);
-$message = isset($update['message']) ? $update['message'] : null;
-if ($message !== null) {
-    $chat_id = $message['chat']['id'];
-    $text = $message['text'];
-    // Xử lý tin nhắn ở đây
-    $telegram->sendMessage($chat_id, 'Bạn vừa gửi tin nhắn: ' . $text);
-}
 
 $app = new SugarApplication();
 $app->startSession();

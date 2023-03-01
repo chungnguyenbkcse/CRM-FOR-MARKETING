@@ -40,7 +40,7 @@ function getStates()
             $query_users = "SELECT * FROM users WHERE deleted = '0' AND id IN (SELECT user_id FROM securitygroups_users WHERE deleted = 0 AND securitygroup_id = '{$groupSecurityId}')";
             $result_users = $GLOBALS['db']->query($query_users);
             while($row_users = $GLOBALS['db']->fetchByAssoc($result_users)){
-                $list[$row_users['user_name']] = $row_users['user_name'];
+                $list[$row_users['id']] = $row_users['user_name'];
             }
         }
 
@@ -93,7 +93,7 @@ function getRoForCreate()
             $GLOBALS['log']->fatal("hello"); 
             while($rows = $GLOBALS['db']->fetchByAssoc($result_1)){
                 $ro_name = $rows['lead_id'];
-                $query_users2 = "SELECT * FROM users WHERE deleted = '0' AND user_name = '{$ro_name}' ";
+                $query_users2 = "SELECT * FROM users WHERE deleted = '0' AND id = '{$ro_name}' ";
                 $result_users2 = $GLOBALS['db']->query($query_users2);
                 while($row_users2 = $GLOBALS['db']->fetchByAssoc($result_users2)){
                     $ro_id = $row_users2['id'];
@@ -108,12 +108,11 @@ function getRoForCreate()
                             $result_users = $GLOBALS['db']->query($query_users);
                             $idx = 0;
                             while($row_users = $GLOBALS['db']->fetchByAssoc($result_users)){
-                                $list[$row_users['user_name']] = $row_users['user_name'];
-                                if ($row_users1['user_name'] == $row_users['user_name']) {
-                                    $html = sprintf("<option value='%s' selected>%s</option>", $row_users['user_name'], $row_users['user_name']) .  $html;
+                                if ($row_users1['id'] == $row_users['id']) {
+                                    $html = sprintf("<option value='%s' selected>%s</option>", $row_users['id'], $row_users['user_name']) .  $html;
                                 }
                                 else {
-                                    $html .= sprintf("<option value='%s'>%s</option>", $row_users['user_name'], $row_users['user_name']);
+                                    $html .= sprintf("<option value='%s'>%s</option>", $row_users['id'], $row_users['user_name']);
                                 }
                                 
                                 $idx += 1;
@@ -128,12 +127,11 @@ function getRoForCreate()
                             $result_users = $GLOBALS['db']->query($query_users);
                             $idx = 0;
                             while($row_users = $GLOBALS['db']->fetchByAssoc($result_users)){
-                                $list[$row_users['user_name']] = $row_users['user_name'];
-                                if ($row_users1['user_name'] == $row_users['user_name']) {
-                                    $html = sprintf("<option value='%s' selected>%s</option>", $row_users['user_name'], $row_users['user_name']) .  $html;
+                                if ($row_users1['id'] == $row_users['id']) {
+                                    $html = sprintf("<option value='%s' selected>%s</option>", $row_users['id'], $row_users['user_name']) .  $html;
                                 }
                                 else {
-                                    $html .= sprintf("<option value='%s'>%s</option>", $row_users['user_name'], $row_users['user_name']);
+                                    $html .= sprintf("<option value='%s'>%s</option>", $row_users['id'], $row_users['user_name']);
                                 }
                                 
                                 $idx += 1;

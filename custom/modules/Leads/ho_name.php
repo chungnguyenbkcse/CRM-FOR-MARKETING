@@ -40,7 +40,7 @@ function getStates()
             $query_users = "SELECT * FROM users WHERE deleted = '0' AND id IN (SELECT user_id FROM securitygroups_users WHERE deleted = 0 AND securitygroup_id = '{$groupSecurityId}')";
             $result_users = $GLOBALS['db']->query($query_users);
             while($row_users = $GLOBALS['db']->fetchByAssoc($result_users)){
-                $list[$row_users['user_name']] = $row_users['user_name'];
+                $list[$row_users['id']] = $row_users['user_name'];
             }
         }
 

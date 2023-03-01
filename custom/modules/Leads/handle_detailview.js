@@ -4,7 +4,17 @@ $(document).ready(function () {
     var fullname = $("#lead_fullname").val();
     console.log('hello')
     var ro_name_val = $("#ro_name_val").val();
-    $("[field='ro_name']").html(ro_name_val)
+   
+
+    $.ajax({
+        url: "index.php?module=Leads&entryPoint=get_ro_detail",
+        data: { ro_id: ro_name_val },
+        success: function (data) {
+            console.log(data);
+            $("[field='ro_name']").html(data)
+        },
+        dataType: 'html'
+    });
     
     $(".module-title-text").html(fullname)
     $.ajax({

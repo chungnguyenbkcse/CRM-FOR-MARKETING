@@ -33,8 +33,35 @@ if ($message !== null) {
     $date = isset($message['date']) ? $message['date'] : "";
     $text = isset($message['text']) ? $message['text'] : "";
 
+    $str = $text;
+    $find = 'Số';
+    if ($chatId < 0) {
+        if (strpos($str, $find) !== false) {
+            $phone_number_primary = mb_substr($str,3,10);
+            //$leadBean = BeanFactory::newBean('Leads');
+
+            $query = "SELECT COUNT(*) AS total FROM leads WHERE deleted = 0 AND phone_number_primary = '{$phone_number_primary}'";
+            $result = $GLOBALS['db']->query($query); 
+            $data = $GLOBALS['db']->fetchByAssoc($result); 
+            if ($data['total'] == 0) {
+
+                $leadBean = BeanFactory::newBean('Leads');
+                $leadBean->facebook_or_zalo_name = "telegram";
+                $leadBean->assigned_user_id = "aacec1bd-6737-81e3-7365-631aa18cd430";
+                $leadBean->phone_number_primary = $phone_number_primary;
+                $leadBean->data_source_id = '1';
+                $leadBean->save();
+
+                
+
+                $telegram->sendMessage($chatId, 'Dữ liệu đã được lưu vào MKTCRM với sđt: ' . $phone_number_primary);
+            }
+
+            
+        } 
+    }
     // Xử lý tin nhắn ở đây
-    $telegram->sendMessage($chatId, 'Bạn vừa gửi tin nhắn: ' . $chatId);
+    
     
     //echo $text;
 }

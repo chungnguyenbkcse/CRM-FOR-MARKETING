@@ -328,7 +328,12 @@ class Handle1
         }
 
         if ($bean->ro_name != null && $bean->ro_name != "") {
-            $lst[13] = $bean->ro_name;
+            $lst[13] = "";
+            $query_1 = "SELECT * FROM users WHERE deleted = 0 AND id = '{$bean->ro_name}'";
+            $result_1 = $GLOBALS['db']->query($query_1);   
+            while($rows = $GLOBALS['db']->fetchByAssoc($result_1)){
+                $lst[13] .= $rows['user_name'];
+            }
         }
         else {
             $lst[13] = "";

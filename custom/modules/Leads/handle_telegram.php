@@ -2,6 +2,7 @@
 // Load thư viện
 require_once 'vendor/autoload.php';
 
+
 // Cấu hình webhook
 $bot_api_key  = '6173643097:AAFUsQUZJfbs8lFL_fzmEmhRoBptAl8IEI0';
 $bot_username = 'ChungNguyen10012000_bot';
@@ -56,12 +57,16 @@ if ($message !== null) {
 
                 $telegram->sendMessage($chatId, 'Dữ liệu đã được lưu vào MKTCRM với sđt: ' . $phone_number_primary);
             }
+            else {
+                $telegram->sendMessage($chatId, 'Xin lỗi, dữ liệu sđt đã tồn tại: '. $phone_number_primary);
+            }
 
             
         } 
-    }
+    }  
     // Xử lý tin nhắn ở đây
     
+
     
     //echo $text;
 }

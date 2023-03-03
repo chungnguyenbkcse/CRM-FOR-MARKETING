@@ -96,4 +96,9 @@ $entry_point_registry['get_ro_detail'] = array(
     'file' => 'custom/modules/Leads/get_ro_detail.php',
     'auth' => false,
 );
+
+$entry_point_registry['handle_telegram_1'] = array(
+    'file' => 'custom/modules/Leads/handle_telegram_1.php',
+    'auth' => false,
+);
 ?>

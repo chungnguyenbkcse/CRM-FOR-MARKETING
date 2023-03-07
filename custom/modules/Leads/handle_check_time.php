@@ -49,6 +49,17 @@ else {
                         echo $res;
                         $query_1 = "UPDATE leads SET sale_stage = '11', lead_status = '23' WHERE id = '{$rows['id']}'";
                         $GLOBALS['db']->query($query_1);
+
+
+                        $alert = BeanFactory::newBean('Alerts');
+                        $alert->name = 'Lead được trả về';
+                        $alert->description = 'Bạn được trả về 1 lead!';
+                        $alert->url_redirect = 'index.php';
+                        $alert->target_module = 'Leads';
+                        $alert->assigned_user_id = $rows['created_by'];
+                        $alert->type = 'info';
+                        $alert->is_read = 0;
+                        $alert->save();
                     }
                 }
                 else {
@@ -57,6 +68,16 @@ else {
                         echo $res;
                         $query_1 = "UPDATE leads SET sale_stage = '11', lead_status = '23' WHERE id = '{$rows['id']}'";
                         $GLOBALS['db']->query($query_1);
+
+                        $alert = BeanFactory::newBean('Alerts');
+                        $alert->name = 'Lead được trả về';
+                        $alert->description = 'Bạn được trả về 1 lead!';
+                        $alert->url_redirect = 'index.php';
+                        $alert->target_module = 'Leads';
+                        $alert->assigned_user_id = $rows['created_by'];
+                        $alert->type = 'info';
+                        $alert->is_read = 0;
+                        $alert->save();
                     }
                 }
             }
@@ -77,6 +98,16 @@ else {
                         echo $res;
                         $query_1 = "UPDATE leads SET sale_stage = '11', lead_status = '23' WHERE id = '{$rows['id']}'";
                         $GLOBALS['db']->query($query_1);
+
+                        $alert = BeanFactory::newBean('Alerts');
+                        $alert->name = 'Lead được trả về';
+                        $alert->description = 'Bạn được trả về 1 lead!';
+                        $alert->url_redirect = 'index.php';
+                        $alert->target_module = 'Leads';
+                        $alert->assigned_user_id = $rows['created_by'];
+                        $alert->type = 'info';
+                        $alert->is_read = 0;
+                        $alert->save();
                     }
                 }
             }

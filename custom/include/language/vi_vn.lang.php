@@ -636,6 +636,7 @@ $app_list_strings = array(
         '3' => 'Tân Bình',
         '4' => 'TELE',
         '5' => 'DL TB',
+        '6' => 'Đồng nai',
     ),
     'receiving_branch_dom_1' => array(
         '' => '',

@@ -43,6 +43,16 @@ $(document).ready(function () {
         }
     });
     
+    $("[alt='zalo']").click(function(){
+        var phone = $("#phone_number_primary").val().replace(/ /g,'');
+        window.open(`zalo://conversation?phone=${phone}`);
+    })
+
+    $("[alt='zalo_extra']").click(function(){
+        var phone = $("#phone_number_extra").val().replace(/ /g,'');
+        window.open(`zalo://conversation?phone=${phone}`);
+    })
+
     $(".card-number-add-button").click(function() {
         $(`
             <div class="col-xs-12 mr-4 card-number-lines-container">

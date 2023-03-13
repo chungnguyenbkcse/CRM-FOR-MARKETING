@@ -107,11 +107,15 @@ $viewdefs['Leads'] =
               ),
               'customCode' => '  
                 <div class="row">
-                  <div class="col-xs-7 input_phone_number_primary">
+                  <div class="col-xs-6 input_phone_number_primary">
                     <input id="phone_number_primary" type="text" title value="{$fields.phone_number_primary.value}" name="phone_number_primary""> 
                   </div>
-                  <div class="col-xs-5 btn-phone">
+                  <div class="col-xs-3 btn-phone">
                     <i class="glyphicon glyphicon-earphone"></i>
+                  </div>
+
+                  <div class="col-xs-3 btn-phone">
+                    <img src="icons8-zalo-48.png" alt="zalo" width="36px" height="36px">
                   </div>
                 </div>
                 ',
@@ -196,11 +200,15 @@ $viewdefs['Leads'] =
               'name' => 'phone_number_extra',
               'customCode' => '  
                 <div class="row">
-                  <div class="col-xs-7 input_phone_number_extra">
+                  <div class="col-xs-6 input_phone_number_extra">
                     <input id="phone_number_extra" type="text" title value="{$fields.phone_number_extra.value}" name="phone_number_extra""> 
                   </div>
-                  <div class="col-xs-5 btn-phone_number_extra">
+                  <div class="col-xs-3 btn-phone_number_extra">
                     <i class="glyphicon glyphicon-earphone"></i>
+                  </div>
+
+                  <div class="col-xs-3 btn-phone">
+                    <img src="icons8-zalo-48.png" alt="zalo_extra" width="36px" height="36px">
                   </div>
                 </div>
                 ',

@@ -510,7 +510,7 @@ $(document).ready(function () {
     
             $("select").map(function (idx) {
                 console.log(idx)
-                if (idx <= 8) {
+                if (idx < 8) {
                     return $(this).attr("disabled", true);
                 }
                 return idx++;

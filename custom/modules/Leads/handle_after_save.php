@@ -53,6 +53,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 //}
 
 date_default_timezone_set('Asia/Ho_Chi_Minh');
+// Load thư viện
+require_once 'vendor/autoload.php';
 
 
 class Handle
@@ -144,19 +146,36 @@ class Handle
             if ($role == "BU" || $role == "MKT" || $role  == "SUPER_MKT") {
                 if ($bean->ro_name != "" && $bean->ro_name != null) {
                     if ($bean->sale_stage == "10") {
-                        $query = "SELECT id FROM users WHERE user_name = '{$bean->ro_name}'";
-                        $result = $GLOBALS['db']->query($query);
-                        while($rows = $GLOBALS['db']->fetchByAssoc($result)){
-                            $alert = BeanFactory::newBean('Alerts');
-                            $alert->name = 'Khách hàng mới';
-                            $alert->description = 'Bạn được giao 1 khách hàng mới!';
-                            $alert->url_redirect = 'index.php';
-                            $alert->target_module = 'Leads';
-                            $alert->assigned_user_id = $rows['id'];
-                            $alert->type = 'info';
-                            $alert->is_read = 0;
-                            $alert->save();
+
+                        $alert = BeanFactory::newBean('Alerts');
+                        $alert->name = 'Khách hàng mới';
+                        $alert->description = 'Bạn được giao 1 khách hàng mới có facebook/zalo là: ' . $bean->facebook_or_zalo_name . ' vào lúc ' . $bean->date_modified . ' !';
+                        $alert->url_redirect = 'index.php';
+                        $alert->target_module = 'Leads';
+                        $alert->assigned_user_id = $bean->ro_name;
+                        $alert->type = 'info';
+                        $alert->is_read = 0;
+                        $alert->save();
+
+                        // Cấu hình webhook
+                        $bot_api_key  = '6173643097:AAFUsQUZJfbs8lFL_fzmEmhRoBptAl8IEI0';
+                        $bot_username = 'ChungNguyen10012000_bot';
+                        $hook_url     = 'https://mkt.tranthu.vn/index.php?module=Leads&entryPoint=handle_telegram';
+
+                        try {
+                            //echo "Success";
+                            $telegram = new \TelegramBot\Api\BotApi($bot_api_key);
+                            $telegram->setWebhook($hook_url);
+                        } catch (\TelegramBot\Api\Exception $e) {
+                            //echo $e->getMessage($hook_url);
                         }
+
+                        $query_ro_1 = "SELECT * FROM users WHERE deleted = 0 AND id = '{$bean->ro_name}'";
+                        $result_ro_1 = $GLOBALS['db']->query($query_ro_1);   
+                        while($rows_ro_1 = $GLOBALS['db']->fetchByAssoc($result_ro_1)){
+                            $telegram->sendMessage('-727735502', 'RO ' . $rows_ro_1['last_name'] . ' có khách hàng lúc ' . $bean->date_modified . ' !');
+                        }
+
                     }
                 }
             }
@@ -434,7 +453,7 @@ class Handle
 
 
             if ($bean->fullname != null && $bean->fullname != "") {
-                $lst[15] = $bean->fullname;
+                $lst[15] = $rows['fullname'];
             }
             else {
                 $lst[15] = "";
@@ -455,7 +474,7 @@ class Handle
             }
 
             if ($bean->citizen_identification_issuance_place != null && $bean->citizen_identification_issuance_place != "") {
-                $lst[18] = $bean->citizen_identification_issuance_place;
+                $lst[18] = $rows['citizen_identification_issuance_place'];
             }
             else {
                 $lst[18] = "";
@@ -497,14 +516,14 @@ class Handle
             }
 
             if ($bean->career != null && $bean->career != "") {
-                $lst[24] = $bean->career;
+                $lst[24] = $rows['career'];
             }
             else {
                 $lst[24] = "";
             }
 
             if ($bean->district_customer_live != null && $bean->district_customer_live != "") {
-                $lst[25] = $bean->district_customer_live;
+                $lst[25] = $rows['district_customer_live'];
             }
             else {
                 $lst[25] = "";

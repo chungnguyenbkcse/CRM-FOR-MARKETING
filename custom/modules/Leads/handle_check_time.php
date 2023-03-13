@@ -53,7 +53,7 @@ else {
 
                         $alert = BeanFactory::newBean('Alerts');
                         $alert->name = 'Lead được trả về';
-                        $alert->description = 'Bạn được trả về 1 lead!';
+                        $alert->description = 'Bạn được trả về 1 lead! có facebook/zalo là: ' . $rows['facebook_or_zalo_name'] . ' vào lúc ' . $rows['date_modified'] . ' !';
                         $alert->url_redirect = 'index.php';
                         $alert->target_module = 'Leads';
                         $alert->assigned_user_id = $rows['created_by'];

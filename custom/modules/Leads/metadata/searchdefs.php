@@ -116,6 +116,13 @@ $searchdefs ['Leads'] =
                                 'label' => 'LBL_CARD_NUMBER',
                                 'width' => '10%',
                             ),
+                        'date_modified' =>
+                            array(
+                                'name' => 'date_modified',
+                                'default' => false,
+                                'label' => 'LBL_DATE_MODIFIED',
+                                'width' => '10%',
+                            ),
 
 
                     ),

@@ -66,6 +66,15 @@ class Handle
         date_default_timezone_set('Asia/Ho_Chi_Minh');
         $now = new DateTime();
 
+        if ($bean->date_entered == $bean->date_modified) {
+            $query_1 = "UPDATE leads SET date_modified = '{$now->format(\DateTime::ISO8601)}', date_entered = '{$now->format(\DateTime::ISO8601)}'  WHERE id = '{$bean->id}' AND deleted = '0'";
+            $GLOBALS['db']->query($query_1);
+        }
+        else {
+            $query_1 = "UPDATE leads SET date_modified = '{$now->format(\DateTime::ISO8601)}'  WHERE id = '{$bean->id}' AND deleted = '0'";
+            $GLOBALS['db']->query($query_1);
+        }
+
         /* if ($_COOKIE['ro_modified_sale_stage']) {  
             $ro_modified_sale_stage =  $_COOKIE['ro_modified_sale_stage'];
             if ($ro_modified_sale_stage == '1') {
@@ -76,6 +85,7 @@ class Handle
             }              
         
         } */
+        
         
         if ($bean->ro_name != "" && $bean->ro_name != null) {
 
@@ -104,8 +114,7 @@ class Handle
             }
         }
 
-        $query_1 = "UPDATE leads SET date_modified = '{$now->format(\DateTime::ISO8601)}'  WHERE id = '{$bean->id}' AND deleted = '0'";
-        $GLOBALS['db']->query($query_1);
+        
         if ($_COOKIE['role']){
             $role = $_COOKIE['role'];
 

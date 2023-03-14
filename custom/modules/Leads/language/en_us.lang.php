@@ -49,4 +49,5 @@ $mod_strings = array(
     'LBL_IS_RECORD' => 'Record',
     'LBL_LEAD_STATUS_RO' => 'Lead status ro',
     'LBL_CARD_NUMBER' => 'Card number',
+    'LBL_DATE_MODIFIED' => 'Date modified',
 );

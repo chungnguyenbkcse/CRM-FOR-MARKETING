@@ -1,7 +1,5 @@
 <?php 
 $curl = curl_init();
-$start_date = $_GET['start_date'];
-$end_date = $_GET['end_date'];
 $field_name = 'dst';
 $field_pattern = $_GET['field_pattern'];
 $sip = $_GET['sip'];
@@ -17,7 +15,7 @@ curl_setopt_array($curl, array(
   CURLOPT_FOLLOWLOCATION => true,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'POST',
-  CURLOPT_POSTFIELDS => "status=" . $status . "&field_pattern=" . $field_pattern . "&field_name=" . $field_name . "&sip=" . $sip . "&end_date=". $end_date . '&start_date=' . $start_date . '&limit=1&offset=0',
+  CURLOPT_POSTFIELDS => "status=" . $status . "&field_pattern=" . $field_pattern . "&field_name=" . $field_name . "&sip=" . $sip . '&limit=1&offset=0',
   CURLOPT_HTTPHEADER => array(
     'Authorization: Bearer 4Sl3iFxgpfx7LV4xAf5FUh4eoBUbmKVg6gHeQr3U2loj0ne3mQ',
     'Content-Type: application/x-www-form-urlencoded'

@@ -101,4 +101,9 @@ $entry_point_registry['handle_telegram_1'] = array(
     'file' => 'custom/modules/Leads/handle_telegram_1.php',
     'auth' => false,
 );
+
+$entry_point_registry['get_sip'] = array(
+    'file' => 'custom/modules/Leads/get_sip.php',
+    'auth' => false,
+);
 ?>

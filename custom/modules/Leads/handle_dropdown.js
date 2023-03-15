@@ -118,148 +118,188 @@ $(document).ready(function () {
     else {
 
         $("[data-label='LBL_IS_RECORD']").html("")
+        if (role == "RO") {
+            var sip = getCookie("sip");
+            var date = new Date();
+            // Get year, month, and day part from the date
+            var year = date.toLocaleString("default", { year: "numeric" });
+            var month = date.toLocaleString("default", { month: "2-digit" });
+            var day = date.toLocaleString("default", { day: "2-digit" });
+            // Generate yyyy-mm-dd date string
+            var start_date = year + "-" + month + "-" + day + " 00:00:00";
+            var end_date = year + "-" + month + "-" + day + " 23:59:59";
 
-        var sip = getCookie("sip");
+            var phone = $('#phone_number_primary').val();
 
-        var date = new Date();
-        // Get year, month, and day part from the date
-        var year = date.toLocaleString("default", { year: "numeric" });
-        var month = date.toLocaleString("default", { month: "2-digit" });
-        var day = date.toLocaleString("default", { day: "2-digit" });
-        // Generate yyyy-mm-dd date string
-        var start_date = year + "-" + month + "-" + day + " 00:00:00";
-        var end_date = year + "-" + month + "-" + day + " 23:59:59";
-
-        var phone = $('#phone_number_primary').val();
-
-        var formData = {
-            sip: parseInt(sip),
-            start_date: start_date,
-            end_date: end_date,
-            field_name: "dst",
-            field_pattern: parseInt(phone),
-            status: "ANSWERED",
-            limit: 1,
-            offset: 0,
-        }; //Array 
-
-        console.log(formData)
-
-        /* $.ajax({
-            url: "http://51.3.9.124/apibkk/apimaster/api.php?cmd=cdrreport",
-            type: "POST",
-            contentType: "application/x-www-form-urlencoded",
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader("Authorization", "Bearer 4Sl3iFxgpfx7LV4xAf5FUh4eoBUbmKVg6gHeQr3U2loj0ne3mQ");
-            },
-            data: formData,
-            success: function (data, textStatus, jqXHR) {
-                console.log(data)
-                var res = data[0];
-                const recording_file = "/" + year + "/" + month + "/" + day +  "/" + (res.recordingfile);
-                console.log(recording_file)
-                fetch(`http://51.3.9.124/apibkk/apimaster/api.php?cmd=getwavfile&name=${recording_file}`, {
-                    headers: {
-                        Authorization: "Bearer 4Sl3iFxgpfx7LV4xAf5FUh4eoBUbmKVg6gHeQr3U2loj0ne3mQ",
-                    }
-                })
-                    .then(response => response.blob())
-                    .then(blob => {
-                        //$("#source").attr('src', URL.createObjectURL(blob));
-                        let name_file = new Date().getTime();
-                        console.log(name_file)
-                        let file = new File([blob], `${name_file}.wav`, {
-                            type: "audio/x-wav", lastModified: new Date().getTime()
-                        });
-
-                        var form_data = new FormData();
-                        form_data.append("files[]", file);
-                        form_data.append('lead_id', lead_id);
-                        $.ajax({
-                            url: "index.php?module=Leads&entryPoint=handle_upload_file",
-                            contentType: false,
-                            processData: false,
-                            data: form_data,
-                            type: 'post',
-                            success: function (data) {
-                                //alert(data);
-                                var url = "http://mkt.tranthu.vn/upload1/" + `${name_file}.wav`;
-                                //$("#source").attr('src', url);
-        
-                                $(".btn-record").html(
-                                    `<audio id="audio" controls autoplay muted><source id="source" src="${url}" type="audio/wav" /></audio>`
-                                )
-                            },
-
-                        });
-                        // do stuff with `file`
-                    })
-
-                console.log(`http://51.3.9.124/apibkk/apimaster/api.php?cmd=getwavfile&name=${recording_file}`)
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                console.log('Error')
-            }
-        }); */
-
-        $.ajax({
-            url: "index.php?module=Leads&entryPoint=CdrReport",
-            type: "GET",
-            data: {
+            var formData = {
                 sip: parseInt(sip),
-                start_date: start_date,
-                end_date: end_date,
                 field_name: "dst",
                 field_pattern: parseInt(phone),
                 status: "ANSWERED",
                 limit: 1,
-                offset: 0
-            },
-            success: function (data, textStatus, jqXHR) {
-                console.log('Susscess')
-                console.log(data)
-                
-                var res = jQuery.parseJSON(data)[0];
-                console.log(res)
-                const recording_file = "/" + year + "/" + month + "/" + day +  "/" + (res.recordingfile);
-                fetch(`index.php?module=Leads&entryPoint=GetWarfile&data=${recording_file}`)
-                    .then(response => response.blob())
-                    .then(blob => {
-                        //$("#source").attr('src', URL.createObjectURL(blob));
-                        let name_file = new Date().getTime();
-                        console.log(name_file)
-                        let file = new File([blob], `${name_file}.wav`, {
-                            type: "audio/x-wav", lastModified: new Date().getTime()
-                        });
+                offset: 0,
+            }; //Array 
 
-                        var form_data = new FormData();
-                        form_data.append("files[]", file);
-                        form_data.append('lead_id', lead_id);
-                        $.ajax({
-                            url: "index.php?module=Leads&entryPoint=handle_upload_file",
-                            contentType: false,
-                            processData: false,
-                            data: form_data,
-                            type: 'post',
-                            success: function (data) {
-                                //alert(data);
-                                var url = "https://mkt.tranthu.vn/upload1/" + `${name_file}.wav`;
-                                //$("#source").attr('src', url);
+            console.log(formData)
+
+
+            $.ajax({
+                url: "index.php?module=Leads&entryPoint=CdrReport",
+                type: "GET",
+                data: {
+                    sip: parseInt(sip),
+                    field_name: "dst",
+                    field_pattern: parseInt(phone),
+                    status: "ANSWERED",
+                    limit: 1,
+                    offset: 0
+                },
+                success: function (data, textStatus, jqXHR) {
+                    console.log('Susscess')
+                    console.log(data)
+
+                    var res = jQuery.parseJSON(data)[0];
+                    console.log(res)
+                    "/" + (res.calldate.substring(0,4)) + "/" + (res.calldate.substring(5,7)) + "/" + (res.calldate.substring(8,10)) +  "/" + (res.recordingfile);
+                    fetch(`index.php?module=Leads&entryPoint=GetWarfile&data=${recording_file}`)
+                        .then(response => response.blob())
+                        .then(blob => {
+                            //$("#source").attr('src', URL.createObjectURL(blob));
+                            let name_file = new Date().getTime();
+                            console.log(name_file)
+                            let file = new File([blob], `${name_file}.wav`, {
+                                type: "audio/x-wav", lastModified: new Date().getTime()
+                            });
+
+                            var form_data = new FormData();
+                            form_data.append("files[]", file);
+                            form_data.append('lead_id', lead_id);
+                            $.ajax({
+                                url: "index.php?module=Leads&entryPoint=handle_upload_file",
+                                contentType: false,
+                                processData: false,
+                                data: form_data,
+                                type: 'post',
+                                success: function (data) {
+                                    //alert(data);
+                                    var url = "https://mkt.tranthu.vn/upload1/" + `${name_file}.wav`;
+                                    //$("#source").attr('src', url);
+                                
+                                    $(".btn-record").html(
+                                        `<audio id="audio" controls autoplay muted><source id="source" src="${url}" type="audio/wav" /></audio>`
+                                    )
+                                },
+
+                            });
+                            // do stuff with `file`
+                        })
+
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log('Error')
+                }
+            });
+        }
+        else if (role == "MKT") {
+            var ro_name_val = $("#ro_name_val").val();
+            var sip = getCookie("sip");
+
+            $.ajax({
+                url: "index.php?module=Leads&entryPoint=get_sip",
+                data: { ro_id: ro_name_val },
+                success: function (data) {
+                    console.log(data);
+                    sip = data;
+                },
+                async: false
+            });
+
+            console.log(sip);
+
+            var date = new Date();
+            // Get year, month, and day part from the date
+            var year = date.toLocaleString("default", { year: "numeric" });
+            var month = date.toLocaleString("default", { month: "2-digit" });
+            var day = date.toLocaleString("default", { day: "2-digit" });
+            // Generate yyyy-mm-dd date string
+            var start_date = year + "-" + month + "-" + day + " 00:00:00";
+            var end_date = year + "-" + month + "-" + day + " 23:59:59";
+            
+            var phone = $('#phone_number_primary').val();
+            
+            var formData = {
+                sip: parseInt(sip),
+                field_name: "dst",
+                field_pattern: parseInt(phone),
+                status: "ANSWERED",
+                limit: 1,
+                offset: 0,
+            }; //Array 
         
-                                $(".btn-record").html(
-                                    `<audio id="audio" controls autoplay muted><source id="source" src="${url}" type="audio/wav" /></audio>`
-                                )
-                            },
-
-                        });
-                        // do stuff with `file`
-                    })
-
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                console.log('Error')
-            }
-        });
+            console.log(formData)
+        
+        
+            $.ajax({
+                url: "index.php?module=Leads&entryPoint=CdrReport",
+                type: "GET",
+                data: {
+                    sip: parseInt(sip),
+                    start_date: start_date,
+                    end_date: end_date,
+                    field_name: "dst",
+                    field_pattern: parseInt(phone),
+                    status: "ANSWERED",
+                    limit: 1,
+                    offset: 0
+                },
+                success: function (data, textStatus, jqXHR) {
+                    console.log('Susscess')
+                    console.log(data)
+                    
+                    var res = jQuery.parseJSON(data)[0];
+                    console.log(res.calldate.substring(0,4))
+                    console.log(res.calldate.substring(5,7))
+                    console.log(res.calldate.substring(8,10))
+                    const recording_file = "/" + (res.calldate.substring(0,4)) + "/" + (res.calldate.substring(5,7)) + "/" + (res.calldate.substring(8,10)) +  "/" + (res.recordingfile);
+                    fetch(`index.php?module=Leads&entryPoint=GetWarfile&data=${recording_file}`)
+                        .then(response => response.blob())
+                        .then(blob => {
+                            //$("#source").attr('src', URL.createObjectURL(blob));
+                            let name_file = new Date().getTime();
+                            console.log(name_file)
+                            let file = new File([blob], `${name_file}.wav`, {
+                                type: "audio/x-wav", lastModified: new Date().getTime()
+                            });
+                        
+                            var form_data = new FormData();
+                            form_data.append("files[]", file);
+                            form_data.append('lead_id', lead_id);
+                            $.ajax({
+                                url: "index.php?module=Leads&entryPoint=handle_upload_file",
+                                contentType: false,
+                                processData: false,
+                                data: form_data,
+                                type: 'post',
+                                success: function (data) {
+                                    //alert(data);
+                                    var url = "https://mkt.tranthu.vn/upload1/" + `${name_file}.wav`;
+                                    //$("#source").attr('src', url);
+                                
+                                    $(".btn-record").html(
+                                        `<audio id="audio" controls autoplay muted><source id="source" src="${url}" type="audio/wav" /></audio>`
+                                    )
+                                },
+                            
+                            });
+                            // do stuff with `file`
+                        })
+                    
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log('Error')
+                }
+            });
+        }
 
     }
 

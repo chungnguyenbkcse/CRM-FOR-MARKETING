@@ -316,7 +316,7 @@ class Handle
                     '31' => 'PVCombank',
                     '32' => 'BIDV',
                     '33' => 'SeaBank',
-                    '24' => 'MaritimeBank',
+                    '34' => 'MaritimeBank',
                 );
                 foreach ($banks as $key => $data) {
                     if ($key == $bank_id) {

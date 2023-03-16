@@ -48,4 +48,5 @@ $mod_strings = array(
     'LBL_IS_RECORD' => 'Bản ghi',
     'LBL_CARD_NUMBER' => 'Số thẻ',
     'LBL_DATE_MODIFIED' => 'Ngày chỉnh sửa',
+    'LBL_DAY_RO_MODIFIED_SALE_STAGE' => 'Ngày RO tác động',
 );

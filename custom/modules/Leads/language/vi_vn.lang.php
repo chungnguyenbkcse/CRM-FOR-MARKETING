@@ -50,4 +50,5 @@ $mod_strings = array(
     'LBL_LEAD_STATUS_RO' => 'Lead status ro',
     'LBL_CARD_NUMBER' => 'Số thẻ',
     'LBL_DATE_MODIFIED' => 'Ngày chỉnh sửa',
+    'LBL_DAY_RO_MODIFIED_SALE_STAGE' => 'Ngày RO tác động',
 );

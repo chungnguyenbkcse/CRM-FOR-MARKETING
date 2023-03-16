@@ -250,6 +250,20 @@ $viewdefs['Leads'] =
             0 => "lead_status",
             1 => "MKT_day_shared_BU",
           ),
+          11 =>
+          array(
+            0 => array(
+              'name' => 'day_ro_modified_sale_stage',
+              'customCode' => '  
+                <div class="row">
+                  <div class="col-xs-12">
+                    <p>{$fields.day_ro_modified_sale_stage.value}</p>
+                  </div>
+                </div>
+                ',
+            ),
+            1 => ""
+          ),
         ),
       ),
     ),

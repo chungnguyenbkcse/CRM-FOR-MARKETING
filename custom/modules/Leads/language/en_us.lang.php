@@ -50,4 +50,5 @@ $mod_strings = array(
     'LBL_LEAD_STATUS_RO' => 'Lead status ro',
     'LBL_CARD_NUMBER' => 'Card number',
     'LBL_DATE_MODIFIED' => 'Date modified',
+    'LBL_DAY_RO_MODIFIED_SALE_STAGE' => 'Day RO modified sale stage',
 );

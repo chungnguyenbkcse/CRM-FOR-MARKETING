@@ -160,7 +160,7 @@ $(document).ready(function () {
 
                     var res = jQuery.parseJSON(data)[0];
                     console.log(res)
-                    "/" + (res.calldate.substring(0,4)) + "/" + (res.calldate.substring(5,7)) + "/" + (res.calldate.substring(8,10)) +  "/" + (res.recordingfile);
+                    const recording_file = "/" + (res.calldate.substring(0,4)) + "/" + (res.calldate.substring(5,7)) + "/" + (res.calldate.substring(8,10)) +  "/" + (res.recordingfile);
                     fetch(`index.php?module=Leads&entryPoint=GetWarfile&data=${recording_file}`)
                         .then(response => response.blob())
                         .then(blob => {
@@ -2123,6 +2123,55 @@ function handle_check_leads_status_empty() {
     return isCheck;
 }
 
+function handle_check_record_in_day() {
+
+    var isCheck = false;
+    var sip = getCookie("sip");
+    var date = new Date();
+    // Get year, month, and day part from the date
+    var year = date.toLocaleString("default", { year: "numeric" });
+    var month = date.toLocaleString("default", { month: "2-digit" });
+    var day = date.toLocaleString("default", { day: "2-digit" });
+    // Generate yyyy-mm-dd date string
+    var start_date = year + "-" + month + "-" + day + " 00:00:00";
+    var end_date = year + "-" + month + "-" + day + " 23:59:59"
+    var phone = $('#phone_number_primary').val();
+
+
+
+    $.ajax({
+        url: "index.php?module=Leads&entryPoint=CdrReportRO",
+        type: "GET",
+        async: false,
+        data: {
+            sip: parseInt(sip),
+            field_name: "dst",
+            start_date: start_date,
+            end_date: end_date,
+            field_pattern: parseInt(phone),
+            status: "ANSWERED",
+            limit: 1,
+            offset: 0
+        },
+        success: function (data, textStatus, jqXHR) {
+            console.log('Susscess')
+            console.log(data);
+            var res = jQuery.parseJSON(data)[0];
+            console.log(res)
+            var recording_file = res.recordingfile;
+            
+            if (recording_file != undefined && recording_file != null && recording_file != "") {
+                isCheck = true;
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log('Error')
+        }
+    });
+
+    return isCheck;
+}
+
 function handle_check_service_empty() {
     var isCheck = false;
     $('[name="service"]').map(function (idx) {
@@ -2398,6 +2447,11 @@ function check_form(form_name) {
     })
     console.log(sale_stage)
     console.log(lead_status)
+    if (role == "RO") {
+        if (handle_check_record_in_day() == false) {
+            return false;
+        }
+    }
     if ((role === "RO" || role === "BU") && sale_stage == '7' && lead_status == '18' ) {
         if (handle_check_form_role_ro() == false) {
             return false;

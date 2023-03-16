@@ -259,7 +259,7 @@ $viewdefs['Leads'] =
           9 =>
           array(
             0 => "lead_status",
-            1 => "date_modified"
+            1 => "day_ro_modified_sale_stage"
           )
         ),
         'LBL_PANEL_ADVANCED' =>

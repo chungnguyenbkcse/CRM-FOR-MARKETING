@@ -972,6 +972,16 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
             'comment' => 'How did the lead status come about',
         ), 
 
+        'day_ro_modified_sale_stage'=>
+            array(
+                'name' => 'day_ro_modified_sale_stage',
+                'vname' => 'LBL_DAY_RO_MODIFIED_SALE_STAGE',
+                'massupdate' => false,
+                'type' => 'datetime',
+                'audited' => true,
+                'comment' => 'The birthday of the contact'
+            ), 
+
     )
 , 'indices' => array(
         array('name' => 'idx_lead_acct_name_first', 'type' => 'index', 'fields' => array('account_name', 'deleted')),

@@ -1000,7 +1000,7 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'name' => 'day_ro_modified_sale_stage',
                 'vname' => 'LBL_DAY_RO_MODIFIED_SALE_STAGE',
                 'massupdate' => false,
-                'type' => 'datetime',
+                'type' => 'date',
                 'audited' => true,
                 'comment' => 'The birthday of the contact'
             ), 

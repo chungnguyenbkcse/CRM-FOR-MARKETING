@@ -106,4 +106,9 @@ $entry_point_registry['get_sip'] = array(
     'file' => 'custom/modules/Leads/get_sip.php',
     'auth' => false,
 );
+
+$entry_point_registry['CdrReportRO'] = array(
+    'file' => 'custom/modules/Leads/CdrReportRO.php',
+    'auth' => false,
+);
 ?>

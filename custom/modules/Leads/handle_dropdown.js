@@ -45,12 +45,22 @@ $(document).ready(function () {
     
     $("[alt='zalo']").click(function(){
         var phone = $("#phone_number_primary").val().replace(/ /g,'');
-        window.open(`zalo://conversation?phone=${phone}`);
+        if (phone.length < 10) {
+            window.open(`zalo://conversation?phone=${'0' + phone}`);
+        }
+        else {
+            window.open(`zalo://conversation?phone=${phone}`);
+        }      
     })
 
     $("[alt='zalo_extra']").click(function(){
         var phone = $("#phone_number_extra").val().replace(/ /g,'');
-        window.open(`zalo://conversation?phone=${phone}`);
+        if (phone.length < 10) {
+            window.open(`zalo://conversation?phone=${'0' + phone}`);
+        }
+        else {
+            window.open(`zalo://conversation?phone=${phone}`);
+        }  
     })
 
     $(".card-number-add-button").click(function() {
@@ -307,6 +317,9 @@ $(document).ready(function () {
         if (idx == 0) {
             $(this).click(function () {
                 var phone = $("#phone_number_primary").val().replace(/ /g,'');
+                if (phone.length < 10) {
+                    phone = '0' + phone;
+                }
                 var formData = { phone_number: phone }; //Array 
         
                 $.ajax({
@@ -326,6 +339,9 @@ $(document).ready(function () {
         else {
             $(this).click(function () {
                 var phone = $("#phone_number_extra").val().replace(/ /g,'');
+                if (phone.length < 10) {
+                    phone = '0' + phone;
+                }
                 var formData = { phone_number: phone }; //Array 
                 
                 $.ajax({

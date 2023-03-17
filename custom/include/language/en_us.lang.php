@@ -175,6 +175,7 @@ $app_list_strings = array(
         '6' => 'Facebook Fanpage',
         '7' => 'Data Center',
         '8' => 'Facebook UID',
+        '9' => 'inactive',
     ),
     'ro_name_dom' => array(
         '' => ''
@@ -248,6 +249,7 @@ $app_list_strings = array(
         '32' => 'BIDV',
         '33' => 'SeaBank',
         '34' => 'MaritimeBank',
+        '35' => 'Agribank',
     ),
 
     'sale_stage_dom' => array (

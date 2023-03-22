@@ -242,6 +242,8 @@ class Handle
                 '6' => 'Facebook Fanpage',
                 '7' => 'Data Center',
                 '8' => 'Facebook UID',
+                '9' => 'inactive',
+                '10' => 'old MKT source',
             );
 
             foreach ($data_sources as $key => $data) {
@@ -268,6 +270,7 @@ class Handle
                     '3' => 'Mở thẻ',
                     '4' => 'Trả góp',
                     '5' => 'Đại lý',
+                    '6' => 'Vay',
                 );
                 foreach ($services as $key => $data) {
                     if ($key == $service_id) {
@@ -317,6 +320,15 @@ class Handle
                     '32' => 'BIDV',
                     '33' => 'SeaBank',
                     '34' => 'MaritimeBank',
+                    '35' => 'Agribank',
+                    '36' => 'STB Bank',
+                    '37' => 'AMERICAN EXPRESS',
+                    '38' => ' Mirae Asset',
+                    '39' => 'Bank of America',
+                    '40' => 'TMCP Bắc Á',
+                    '41' => 'VIETCREDIT',
+                    '42' => 'NCB',
+                    '43' => 'Timo',
                 );
                 foreach ($banks as $key => $data) {
                     if ($key == $bank_id) {
@@ -410,6 +422,7 @@ class Handle
                     '29' => 'Thuê bao',
                     '30' => 'Ấn nhầm link',
                     '31' => 'Nhầm số',
+                    '32' => 'Hủy thẻ',
                 );
                 foreach ($lead_statuss as $key => $data) {
                     if ($key == $lead_status_id) {
@@ -430,6 +443,8 @@ class Handle
                     '3' => 'Tân Bình',
                     '4' => 'TELE',
                     '5' => 'DL TB',
+                    '6' => 'Đồng nai',
+                    '7' => 'Song Thao',
                 );
                 foreach ($owned_branchs as $key => $data) {
                     if ($key == $owned_branch_id) {

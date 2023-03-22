@@ -176,6 +176,7 @@ $app_list_strings = array(
         '7' => 'Data Center',
         '8' => 'Facebook UID',
         '9' => 'inactive',
+        '10' => 'old MKT source',
     ),
     'ro_name_dom' => array(
         '' => ''
@@ -192,6 +193,7 @@ $app_list_strings = array(
         '4' => 'TELE',
         '5' => 'DL TB',
         '6' => 'Đồng nai',
+        '7' => 'Song Thao',
     ),
     'receiving_branch_dom_1' => array(
         '' => '',
@@ -205,6 +207,7 @@ $app_list_strings = array(
         '3' => 'Open card',
         '4' => 'Installment',
         '5' => 'Agency',
+        '6' => 'Loan',
     ),
     'type_card_bank_dom' => array (
         '' => '',
@@ -250,6 +253,14 @@ $app_list_strings = array(
         '33' => 'SeaBank',
         '34' => 'MaritimeBank',
         '35' => 'Agribank',
+        '36' => 'STB Bank',
+        '37' => 'AMERICAN EXPRESS',
+        '38' => ' Mirae Asset',
+        '39' => 'Bank of America',
+        '40' => 'TMCP Bắc Á',
+        '41' => 'VIETCREDIT',
+        '42' => 'NCB',
+        '43' => 'Timo',
     ),
 
     'sale_stage_dom' => array (

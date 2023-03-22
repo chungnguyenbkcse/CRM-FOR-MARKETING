@@ -90,7 +90,7 @@
     //The label is located under the update/delete buttons
     function fillInLabels() {
         //this javascript runs and populates values in savedSearchForm.tpl
-        x = document.getElementById('saved_search_select');
+        x = document.getElementsByName('saved_search_select');
         if ((typeof(x) != 'undefined' && x != null) && x.selectedIndex != 0) {
             curr_search_name = document.getElementById('curr_search_name');
             curr_search_name.innerHTML = '';

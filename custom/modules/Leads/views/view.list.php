@@ -12,6 +12,8 @@
             $GLOBALS['log']->fatal("WHERE: "); 
             $GLOBALS['log']->fatal($this->where);
 
+            
+
             if ($_COOKIE['role']){
                 $role = $_COOKIE['role'];
                 if ($role == "RO"){
@@ -33,9 +35,8 @@
                 }
                 
             }
-
-            $this->processSearchForm();
             $this->lv->searchColumns = $this->searchForm->searchColumns;
+            $this->processSearchForm();
             
             if (!$this->headers) {
                 return;

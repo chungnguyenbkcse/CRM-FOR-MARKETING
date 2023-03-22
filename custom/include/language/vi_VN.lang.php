@@ -661,6 +661,7 @@ $app_list_strings = array(
         '7' => 'Data Center',
         '8' => 'Facebook UID',
         '9' => 'inactive',
+        '10' => 'MKT cũ',
     ),
 
     'receiving_branch_dom' => array(
@@ -671,6 +672,7 @@ $app_list_strings = array(
         '4' => 'TELE',
         '5' => 'DL TB',
         '6' => 'Đồng nai',
+        '7' => 'Song Thao',
     ),
     'receiving_branch_dom_1' => array(
         '' => '',
@@ -684,6 +686,7 @@ $app_list_strings = array(
         '3' => 'Mở thẻ',
         '4' => 'Trả góp',
         '5' => 'Đại lý',
+        '6' => 'Vay',
     ),
     'type_card_bank_dom' => array (
         '' => '',

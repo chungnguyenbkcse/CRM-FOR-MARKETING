@@ -2222,6 +2222,56 @@ function handle_check_sale_stage_empty() {
     return isCheck;
 }
 
+function handle_check_owned_branch() {
+
+    var lead_id = $("#lead_id").val();
+    if (lead_id.length === 0) {
+        var sale_stage_id = $('#sale_stage').val();
+        var owned_branch = $("#owned_branch").val();
+        if (sale_stage_id == '10') {
+            if (owned_branch == "" || owned_branch == null ) {
+                return false;
+            }
+        }
+    }
+    else {
+        
+        var sale_stage_id_01 = $('#sale_stages_val').val();
+        var owned_branch_01 = $("#owned_branch").val();
+        if (sale_stage_id_01 == '10') {
+            if (owned_branch_01 == "" || owned_branch_01 == null ) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+function handle_check_ro_name() {
+    
+
+    var lead_id = $("#lead_id").val();
+    if (lead_id.length === 0) {
+        var sale_stage_id = $('#sale_stage').val();
+        var ro_name = $("#ro_name").val();
+        if (sale_stage_id == '10') {
+            if (ro_name == "" || ro_name == null || ro_name == "0") {
+                return false;
+            }
+        }
+    }
+    else {
+        var sale_stage_id_01 = $('#sale_stages_val').val();
+        var ro_name_01 = $("#ro_name").val();
+        if (sale_stage_id_01 == '10') {
+            if (ro_name_01 == "" || ro_name_01 == null || ro_name_01 == "0") {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 function handle_check_form_role_ro() {
     var fullname = $("#fullname").val();
     var bank = $("#bank").val();
@@ -2417,9 +2467,31 @@ function check_form(form_name) {
                 return false;
             }
         }
+
+        if (handle_check_owned_branch() == false) {
+            alert("Vui lòng nhập giá trị chi nhánh nhận!")
+            return false;
+        }
+
+        if (handle_check_ro_name() == false) {
+            alert("Vui lòng nhập giá trị RO!")
+            return false;
+        }
         
     }
     else {
+
+        if (handle_check_owned_branch() == false) {
+            alert("Vui lòng nhập giá trị chi nhánh nhận!")
+            return false;
+        }
+
+        if (handle_check_ro_name() == false) {
+            alert("Vui lòng nhập giá trị RO!")
+            return false;
+        }
+        
+
         if ($('#facebook_or_zalo_name').val().length == 0) {
             alert("Vui lòng nhập tên FB/Zalo!")
             return false;

@@ -270,7 +270,7 @@ class SavedSearch extends SugarBean
 
             $savedSearchData['module'] = $module;
 
-            return $sugarSmarty->fetch('custom/modules/SavedSearch/CustomSavedSearchSelects.tpl');
+            return $sugarSmarty->fetch('modules/SavedSearch/SavedSearchSelects.tpl');
         } else {
             $query = 'SELECT id, name FROM saved_search
             WHERE

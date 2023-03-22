@@ -132,6 +132,7 @@ function getStatesBuAndMkt($sale_stage)
         '29' => 'Subscriber',
         '30' => 'Press the wrong link',
         '31' => 'Wrong number',
+        '32' => 'Cancel the card',
     );
 
     if ($ck_login_language_20 == "vi_VN") {
@@ -169,6 +170,7 @@ function getStatesBuAndMkt($sale_stage)
             '29' => 'Thuê bao',
             '30' => 'Ấn nhầm link',
             '31' => 'Nhầm số',
+            '32' => 'Hủy thẻ',
         );
     }
     global $db;
@@ -229,6 +231,7 @@ function getStatesSuperMkt($sale_stage)
         '29' => 'Subscriber',
         '30' => 'Press the wrong link',
         '31' => 'Wrong number',
+        '32' => 'Cancel the card',
     );
 
     if ($ck_login_language_20 == "vi_VN") {
@@ -251,7 +254,7 @@ function getStatesSuperMkt($sale_stage)
             '14' => 'Giao dịch ngoài giờ làm việc',
             '15' => 'Phí đáo/rút cao',
             '16' => 'Khách hàng đổi ý',
-            '17' => 'Khác hàng quan tâm',
+            '17' => 'Khách hàng quan tâm',
             '18' => 'Giao dịch thành công',
             '19' => 'Sai Rule',
             '20' => 'Lừa đảo',
@@ -266,6 +269,7 @@ function getStatesSuperMkt($sale_stage)
             '29' => 'Thuê bao',
             '30' => 'Ấn nhầm link',
             '31' => 'Nhầm số',
+            '32' => 'Hủy thẻ',
         );
     }
     global $db;

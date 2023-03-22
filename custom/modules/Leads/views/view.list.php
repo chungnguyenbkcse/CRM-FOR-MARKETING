@@ -4,6 +4,9 @@
 
     class CustomLeadsViewList extends ViewList
     {
+
+        
+
         public function listViewProcess()
         {
             global $current_user;
@@ -16,6 +19,16 @@
 
             if ($_COOKIE['role']){
                 $role = $_COOKIE['role'];
+
+                if ($role == "MKT"){
+                    if ($this->where == ""){
+                        $this->where .= " (leads.created_by = '{$user->id}' OR leads.modified_user_id = '{$user->id}') AND leads.data_sources != '9' AND leads.data_sources != '10'";
+                    }
+                    else {
+                        $this->where .= " OR leads.created_by = '{$user->id}' OR leads.modified_user_id = '{$user->id}' AND leads.data_sources != '9' AND leads.data_sources != '10'";
+                    }
+                }
+
                 if ($role == "RO"){
                     if ($this->where == ""){
                         $this->where .= " (leads.created_by = '{$user->id}') OR (leads.modified_user_id = '{$user->id}' AND leads.ro_modified_sale_stage = true)  OR (leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != '')";

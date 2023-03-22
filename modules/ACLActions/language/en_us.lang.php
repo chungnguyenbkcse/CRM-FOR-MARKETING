@@ -73,6 +73,7 @@ $mod_strings = array(
     'LBL_ALLOW_MKT' => 'MKT',
     'LBL_ALLOW_BU' => 'BU',
     'LBL_ACTION_MKT' => 'MKT',
+    'LBL_ACTION_SUPER_MKT' => 'SUPER_MKT',
     'LBL_ACCESS_BRANCH_Q10' => 'Branch Q10',
     'LBL_ACCESS_BRANCH_TB' => 'Branch TB',
     'LBL_ACCESS_BRANCH_NTT' => 'Branch NTT',

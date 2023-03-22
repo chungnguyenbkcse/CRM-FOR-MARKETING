@@ -54,6 +54,14 @@ class HandleDB
                                     break;
                                 }
                             }
+
+                            else if ($rows_get_name_action['name'] == 'super_mkt' && $rows_get_name_action['category'] == 'Leads') {
+                                if ($rows_acl_roles_actions['access_override'] == 89) {
+                                    $lst =  "SUPER_MKT";
+                                    $security =  $groupSecurityId;
+                                    break;
+                                }
+                            }
                             
                         }
                     }
@@ -76,7 +84,7 @@ class HandleDB
         }
         else {
             $cookie_name = "role";
-            $cookie_value = "SUPER_MKT";
+            $cookie_value = "ADMIN";
             // Set the expiration date to one hour ago
             setcookie("role", "", time() - 3600);
             setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");

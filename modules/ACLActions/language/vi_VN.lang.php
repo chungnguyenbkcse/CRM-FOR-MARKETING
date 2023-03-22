@@ -79,4 +79,5 @@ $mod_strings = array(
     'LBL_ACCESS_BRANCH_DL_TB' => 'Chi nhánh DL TB',
     'LBL_ACTION_RO' => 'RO',
     'LBL_ACTION_HO' => 'HO',
+    'LBL_ACTION_SUPER_MKT' => 'SUPER_MKT',
 );

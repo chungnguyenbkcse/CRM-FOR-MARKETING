@@ -1,6 +1,6 @@
 <?php
-$listViewDefs ['Leads'] = 
-array (
+$listViewDefs ['Leads'] = [];
+$listViewDefs ['Leads']= array (
   'FACEBOOK_OR_ZALO_NAME' => 
   array (
     'width' => '10%',
@@ -17,13 +17,13 @@ array (
     'orderBy' => 'fullname',
     'default' => true,
   ),
-  'SALE_STAGE' => 
+  'sale_stage' => 
   array (
     'width' => '10%',
     'label' => 'LBL_SALE_STAGE',
     'default' => true,
   ),
-  'DATA_SOURCES' => 
+  'data_sources' => 
   array (
     'width' => '10%',
     'label' => 'LBL_DATA_SOURCES',
@@ -36,5 +36,4 @@ array (
     'default' => true,
   ),
 );
-;
-?>
+

@@ -56,7 +56,7 @@
                             <li role="presentation" data-test="1">
                                 {capture name=moduleTabId assign=moduleTabId}moduleTab_{$smarty.foreach.moduleList.index}_{$module}{/capture}
                                 {if $module == "Leads"}
-                                    <a href="http://mkt.tranthu.vn/index.php?action=index&module=Leads&searchFormTab=advanced_search&query=true&clear_query=true">Leads</a>
+                                    <a href="https://mkt.tranthu.vn/index.php?action=index&module=Leads&searchFormTab=advanced_search&query=true&clear_query=true">Leads</a>
                                 {else}
                                     <a href="javascript:void(0)" onclick="window.location.href = '{sugar_link id=$moduleTabId module=$modulekey link_only=1 data=$module extraparams=$extraparams}'">
                                         {$module}
@@ -286,7 +286,7 @@
                                 {foreach from=$modules.modules item=module key=modulekey}
                                     {if $module == "Leads" || $module == "Đầu mối"}
                                         <li>
-                                            <a href="http://mkt.tranthu.vn/index.php?action=index&module=Leads&searchFormTab=advanced_search&query=true&clear_query=true">{$module}</a>
+                                            <a href="https://mkt.tranthu.vn/index.php?action=index&module=Leads&searchFormTab=advanced_search&query=true&clear_query=true">{$module}</a>
                                         </li>
                                     {else}
                                         <li>
@@ -299,7 +299,7 @@
                                 {foreach from=$modules.extra item=submodulename key=submodule}
                                     {if $module == "Leads" || $module == "Đầu mối"}
                                         <li>
-                                            <a href="http://mkt.tranthu.vn/index.php?action=index&module=Leads&searchFormTab=advanced_search&query=true&clear_query=true">{$submodulename}</a>
+                                            <a href="https://mkt.tranthu.vn/index.php?action=index&module=Leads&searchFormTab=advanced_search&query=true&clear_query=true">{$submodulename}</a>
                                         </li>
                                     {else}
                                         <li>

@@ -59,7 +59,7 @@ $GLOBALS['studioDefs']['Leads'] = array(
                 ),
     'LBL_LISTVIEW'=>array(
                 'template'=>'listview',
-                'meta_file'=>'modules/Leads/listviewdefs.php',
+                'meta_file'=>'custom/modules/Leads/listviewdefs.php',
                 'type'=>'ListView',
                 ),
     'LBL_SEARCHFORM'=>array(

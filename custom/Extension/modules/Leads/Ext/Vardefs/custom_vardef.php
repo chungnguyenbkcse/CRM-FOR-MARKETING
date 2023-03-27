@@ -183,6 +183,7 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
             array(
                 'name' => 'fullname',
                 'vname' => 'LBL_FULLNAME',
+                'inline_edit' =>false,
                 'type' => 'varchar',
                 'len' => '255',
                 'comment' => 'Account name for lead',
@@ -671,6 +672,7 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'vname' => 'LBL_DATA_SOURCES',
                 'type' => 'enum',
                 'audited' => true,
+                'inline_edit' =>false,
                 'options' => 'data_source_dom',
                 'len' => '255',
                 'comment' => 'How did the data source call come about',
@@ -681,6 +683,7 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'vname' => 'LBL_RO_NAME',
                 'audited' => true,
                 'type' => 'enum',
+                'inline_edit' =>false,
                 'options' => 'ro_name_dom',
                 'len' => '255',
                 'comment' => 'The ro name of the contact'
@@ -691,6 +694,7 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'vname' => 'LBL_HO_NAME',
                 'audited' => true,
                 'type' => 'enum',
+                'inline_edit' =>false,
                 'options' => 'ho_name_dom',
                 'len' => '255',
                 'comment' => 'The ho name of the contact'
@@ -701,6 +705,7 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'vname' => 'LBL_OWNED_BRANCH',
                 'type' => 'enum',
                 'audited' => true,
+                'inline_edit' =>false,
                 'options' => 'receiving_branch_dom',
                 'len' => '255',
                 'comment' => 'How did the data source call come about',
@@ -710,6 +715,7 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'name' => 'receiving_branch',
                 'vname' => 'LBL_RECEIVING_BRANCH',
                 'type' => 'enum',
+                'inline_edit' =>false,
                 'options' => 'receiving_branch_dom',
                 'len' => '255',
                 'audited' => true,
@@ -720,6 +726,7 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'name' => 'facebook_or_zalo_name',
                 'vname' => 'LBL_FACEBOOK_OR_ZALO_NAME',
                 'massupdate' => false,
+                'inline_edit' =>false,
                 'type' => 'varchar',
                 'len' => '255',
                 'audited' => true,
@@ -730,6 +737,7 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'name' => 'facebook_url',
                 'vname' => 'LBL_FACEBOOK_URL',
                 'massupdate' => false,
+                'inline_edit' =>false,
                 'type' => 'varchar',
                 'len' => '255',
                 'audited' => true,
@@ -742,6 +750,7 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'massupdate' => false,
                 'type' => 'varchar',
                 'len' => '255',
+                'inline_edit' =>false,
                 'audited' => true,
                 'isnull' => 'false',
                 'comment' => 'The phone primary of the contact'
@@ -752,6 +761,7 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'vname' => 'LBL_PHONE_NUMBER_EXTRA',
                 'massupdate' => false,
                 'type' => 'varchar',
+                'inline_edit' =>false,
                 'audited' => true,
                 'len' => '255',
                 'comment' => 'The phone extra of the contact'
@@ -761,6 +771,7 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'name' => 'citizen_identification',
                 'vname' => 'LBL_CITIZEN_IDENTIFICATION',
                 'massupdate' => false,
+                'inline_edit' =>false,
                 'type' => 'varchar',
                 'audited' => true,
                 'len' => '255',
@@ -771,6 +782,7 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'name' => 'birthday',
                 'vname' => 'LBL_BIRTHDAY',
                 'massupdate' => false,
+                'inline_edit' =>false,
                 'audited' => true,
                 'type' => 'date',
                 'comment' => 'The birthday of the contact'
@@ -781,6 +793,7 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'name' => 'contact_date',
                 'vname' => 'LBL_CONTACT_DATE',
                 'massupdate' => false,
+                'inline_edit' =>false,
                 'audited' => true,
                 'type' => 'date',
                 'comment' => 'The birthday of the contact'
@@ -791,6 +804,7 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'name' => 'MKT_day_shared_BU',
                 'vname' => 'LBL_MKT_DAY_SHARED_FOR_BU',
                 'massupdate' => false,
+                'inline_edit' =>false,
                 'type' => 'datetime',
                 'audited' => true,
                 'comment' => 'The birthday of the contact'
@@ -802,6 +816,7 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'vname' => 'LBL_DAY_SHARED_FOR_RO',
                 'massupdate' => false,
                 'type' => 'datetime',
+                'inline_edit' =>false,
                 'audited' => true,
                 'comment' => 'The birthday of the contact'
             ), 
@@ -821,6 +836,7 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'vname' => 'LBL_CITIZEN_IDENTIFICATION_ISSUANCE_DATE',
                 'massupdate' => false,
                 'type' => 'date',
+                'inline_edit' =>false,
                 'audited' => true,
                 'comment' => 'The citizen identification issuance date of the contact'
             ), 
@@ -830,6 +846,7 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'vname' => 'LBL_CITIZEN_IDENTIFICATION_ISSUANCE_PLACE',
                 'massupdate' => false,
                 'type' => 'varchar',
+                'inline_edit' =>false,
                 'len' => '255',
                 'audited' => true,
                 'comment' => 'The citizen identification issuance place of the contact'
@@ -840,6 +857,7 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'vname' => 'LBL_ADDRESS_FOLLOW_CITIZEN_IDENTIFICATION',
                 'massupdate' => false,
                 'type' => 'varchar',
+                'inline_edit' =>false,
                 'len' => '255',
                 'audited' => true,
                 'comment' => 'The citizen identification issuance place of the contact'
@@ -850,6 +868,7 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'vname' => 'LBL_DISTRICT_CUSTOMER_LIVE',
                 'massupdate' => false,
                 'type' => 'varchar',
+                'inline_edit' =>false,
                 'len' => '255',
                 'audited' => true,
                 'comment' => 'The citizen identification issuance place of the contact'
@@ -860,6 +879,7 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'vname' => 'LBL_CAREER',
                 'massupdate' => false,
                 'type' => 'varchar',
+                'inline_edit' =>false,
                 'len' => '255',
                 'audited' => true,
                 'comment' => 'The career of the contact'
@@ -869,6 +889,7 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'name' => 'service',
                 'vname' => 'LBL_SERVICE',
                 'type' => 'enum',
+                'inline_edit' =>false,
                 'audited' => true,
                 'options' => 'service_dom',
                 'len' => '255',
@@ -878,6 +899,7 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
             array(
                 'name' => 'fee',
                 'vname' => 'LBL_FEE',
+                'inline_edit' =>false,
                 'massupdate' => false,
                 'type' => 'double',
                 'len' => '255',
@@ -889,6 +911,7 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'name' => 'real_fee',
                 'vname' => 'LBL_REAL_FEE',
                 'massupdate' => false,
+                'inline_edit' =>false,
                 'type' => 'double',
                 'audited' => true,
                 'len' => '255',
@@ -901,6 +924,7 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'type' => 'enum',
                 'options' => 'type_card_bank_dom',
                 'len' => '255',
+                'inline_edit' =>false,
                 'audited' => true,
                 'comment' => 'How did the card bank type come about',
             ),
@@ -909,6 +933,7 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'name' => 'bank',
                 'vname' => 'LBL_BANK',
                 'type' => 'enum',
+                'inline_edit' =>false,
                 'audited' => true,
                 'options' => 'bank_dom',
                 'len' => '255',
@@ -920,6 +945,7 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'vname' => 'LBL_PAYMENT_DAY',
                 'massupdate' => false,
                 'audited' => true,
+                'inline_edit' =>false,
                 'type' => 'int',
                 'comment' => 'The payment day of the contact'
             ), 
@@ -929,6 +955,7 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'vname' => 'LBL_TRANSACTION_AMOUNT',
                 'massupdate' => false,
                 'type' => 'double',
+                'inline_edit' =>false,
                 'audited' => true,
                 'len' => '255',
                 'comment' => 'The real fee of the contact'
@@ -940,6 +967,7 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'massupdate' => false,
                 'type' => 'double',
                 'audited' => true,
+                'inline_edit' =>false,
                 'len' => '255',
                 'comment' => 'The real fee of the contact'
             ), 
@@ -949,6 +977,7 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'vname' => 'LBL_NOTE',
                 'massupdate' => false,
                 'audited' => true,
+                'inline_edit' =>false,
                 'type' => 'text',
                 'comment' => 'The note of the contact'
             ),
@@ -957,6 +986,7 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
             'vname' => 'LBL_SALE_STAGE',
             'type' => 'enum',
             'audited' => true,
+            'inline_edit' =>false,
             'options' => 'sale_stage_dom',
             'len' => '255',
             'comment' => 'How did the sale stage come about',
@@ -967,6 +997,7 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
             'vname' => 'LBL_LEAD_STATUS',
             'type' => 'enum',
             'audited' => true,
+            'inline_edit' =>false,
             'options' => 'lead_status_new_dom',
             'len' => '255',
             'comment' => 'How did the lead status come about',
@@ -978,6 +1009,7 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'vname' => 'LBL_DAY_RO_MODIFIED_SALE_STAGE',
                 'massupdate' => false,
                 'type' => 'date',
+                'inline_edit' =>false,
                 'audited' => true,
                 'comment' => 'The birthday of the contact'
             ), 

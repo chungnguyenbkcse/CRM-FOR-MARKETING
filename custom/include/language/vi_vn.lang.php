@@ -640,6 +640,7 @@ $app_list_strings = array(
         '5' => 'DL TB',
         '6' => 'Đồng nai',
         '7' => 'Song Thao',
+        '8' => 'Nha trang',
     ),
     'receiving_branch_dom_1' => array(
         '' => '',
@@ -1083,6 +1084,7 @@ $app_list_strings = array(
             '29' => 'Thuê bao',
             '30' => 'Ấn nhầm link',
             '31' => 'Nhầm số',
+            '32' => 'Hủy thẻ',
     ),
 
     'projects_status_options' => array(

@@ -30,7 +30,10 @@
                 }
 
                 if ($role == "RO"){
-                    if ($this->where == ""){
+                    if ($user->user_name = 'HOA_NDTNH') {
+                        $this->where .= "((leads.data_sources = '9' OR leads.data_sources = '10') AND leads.lead_status = '17') OR (leads.created_by = '{$user->id}') OR (leads.modified_user_id = '{$user->id}' AND leads.ro_modified_sale_stage = true)  OR (leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != '')";
+                    }
+                    else if ($this->where == ""){
                         $this->where .= " (leads.created_by = '{$user->id}') OR (leads.modified_user_id = '{$user->id}' AND leads.ro_modified_sale_stage = true)  OR (leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != '')";
                     }
                     else {

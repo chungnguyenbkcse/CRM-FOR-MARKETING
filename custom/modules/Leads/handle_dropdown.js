@@ -681,6 +681,16 @@ $(document).ready(function () {
         var ho_name = $('#ho_name_val').val();
         var owner_branch = $('#owner_branch_val').val();
 
+        $('[name="note"]').map(function (idx) {
+            $(this).change(function() {
+                console.log('xxx')
+                let re = $(this).val()
+                $('[name="note"]').map(function (idxx) {
+                    $(this).val(re)
+                })
+            })
+        });
+
         $("#transaction_amount").change(function () {
             var transaction_amount = $(this).val();
             $(this).val(Number(transaction_amount).toLocaleString());

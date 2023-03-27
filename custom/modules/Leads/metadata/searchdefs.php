@@ -119,6 +119,7 @@ $searchdefs ['Leads'] =
                         'data_sources' =>
                             array(
                                 'name' => 'data_sources',
+                                'type' => 'multienum',
                                 'default' => false,
                                 'label' => 'LBL_DATA_SOURCES',
                                 'width' => '10%',

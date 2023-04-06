@@ -220,6 +220,7 @@ class ViewList extends SugarView
             $this->storeQuery->saveFromRequest($this->module);
         }
 
+
         $this->seed = $this->bean;
 
         $displayColumns = array();

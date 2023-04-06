@@ -230,7 +230,7 @@ class SavedSearch extends SugarBean
             if ($_COOKIE['role']) {
                 $role = $_COOKIE['role'];
                 if ($role = "SUPER_MKT") {
-                    $query = 'SELECT id, name FROM saved_search
+                    $query = 'SELECT id, name, contents FROM saved_search
                     WHERE
                       deleted = \'0\' AND
                       search_module =  \'' . $module . '\'
@@ -238,7 +238,7 @@ class SavedSearch extends SugarBean
                     $result = $db->query($query, true, "Error filling in saved search list: ");
                 }
                 else if ($role == "RO") {
-                    $query = 'SELECT id, name FROM saved_search
+                    $query = 'SELECT id, name, contents FROM saved_search
                     WHERE
                       deleted = \'0\' AND
                       search_module =  \'' . $module . '\'
@@ -246,7 +246,7 @@ class SavedSearch extends SugarBean
                     $result = $db->query($query, true, "Error filling in saved search list: ");
                 }
                 else {
-                    $query = 'SELECT id, name FROM saved_search
+                    $query = 'SELECT id, name, contents FROM saved_search
                     WHERE
                       deleted = \'0\' AND
                       assigned_user_id = \'' . $current_user->id . '\' AND
@@ -258,9 +258,151 @@ class SavedSearch extends SugarBean
 
             $savedSearchArray['_none'] = $app_strings['LBL_NONE'];
             $savedSearchData['hasOptions'] = false;
+
+            global $current_user;
+            $user = BeanFactory::getBean('Users', $current_user->id);
+
             while ($row = $db->fetchByAssoc($result, -1, false)) {
-                $savedSearchData['hasOptions'] = true;
-                $savedSearchData['options'][$row['id']] = $savedSearchArray[$row['id']] = htmlspecialchars($row['name'], ENT_QUOTES);
+                $contents = unserialize(base64_decode($row['contents']));
+                $GLOBALS['log']->fatal($contents);
+                $query_check_for_role = "SELECT COUNT(*) AS total FROM leads WHERE deleted = 0 ";
+                if (!empty($contents['citizen_identification_advanced'])) {
+                    $citizen_identification = $contents['citizen_identification_advanced'];
+                    $query_check_for_role .= "AND citizen_identification = '{$citizen_identification}' ";
+                }
+                if (!empty($contents['phone_number_primary_advanced'])) {
+                    $phone_number_primary = $contents['phone_number_primary_advanced'];
+                    $query_check_for_role .= "AND phone_number_primary = '{$phone_number_primary}' ";
+                }
+
+                if (!empty($contents['card_bark_type_advanced'])) {
+                    $card_bark_type = "('" . implode("', '", $contents['card_bark_type_advanced']) . "')";
+                    $query_check_for_role .= " AND card_bark_type IN ({$card_bark_type}) ";
+                }
+
+                if (!empty($contents['bank_advanced'])) {
+                    $bank = implode(",", $contents['bank_advanced']);
+                    $query_check_for_role .= " AND bank IN ({$bank}) ";
+                }
+
+                if (!empty($contents['sale_stage_advanced'])) {
+                    $sale_stage = implode(",", $contents['sale_stage_advanced']);
+                    $query_check_for_role .= " AND sale_stage IN ({$sale_stage}) ";
+                }
+
+                if (!empty($contents['data_sources_advanced'])) {
+                    $data_sources = implode(",", $contents['data_sources_advanced']);
+                    $query_check_for_role .= " AND data_sources IN ({$data_sources}) ";
+                }
+
+
+                if (!empty($contents['date_modified_advanced_range_choice']) && !empty($contents['range_date_modified_advanced'])) {
+                    if ($contents['date_modified_advanced_range_choice'] == "less_than") {
+                        $query_check_for_role .= " AND date_modified < '".$contents['range_date_modified_advanced']."' ";
+                    }
+                    else if ($contents['date_modified_advanced_range_choice'] == "greater_than") {
+                        $query_check_for_role .= " AND date_modified > '".$contents['range_date_modified_advanced']."' ";
+                    }
+                    else if ($contents['date_modified_advanced_range_choice'] == "not_equal") {
+                        $query_check_for_role .= " AND date_modified != '".$contents['range_date_modified_advanced']."' ";
+                    }
+                }
+
+                if (!empty($contents['date_modified_advanced_range_choice']) && $contents['date_modified_advanced_range_choice'] == 'last_7_days') {
+                    $query_check_for_role .= " AND date_modified BETWEEN DATE_SUB(NOW(), INTERVAL 7 DAY) AND NOW() ";
+                }
+
+                if (!empty($contents['date_modified_advanced_range_choice']) && $contents['date_modified_advanced_range_choice'] == 'next_7_days') {
+                    $query_check_for_role .= " AND date_modified BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 7 DAY) ";
+                }
+
+                if (!empty($contents['date_modified_advanced_range_choice']) && $contents['date_modified_advanced_range_choice'] == 'last_30_days') {
+                    $query_check_for_role .= " AND date_modified BETWEEN DATE_SUB(NOW(), INTERVAL 30 DAY) AND NOW() ";
+                }
+
+                if (!empty($contents['date_modified_advanced_range_choice']) && $contents['date_modified_advanced_range_choice'] == 'next_30_days') {
+                    $query_check_for_role .= " AND date_modified BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 30 DAY) ";
+                }
+
+                if (!empty($contents['date_modified_advanced_range_choice']) && $contents['date_modified_advanced_range_choice'] == 'last_month') {
+                    $query_check_for_role .= " AND date_modified BETWEEN DATE_SUB(NOW(), INTERVAL 1 MONTH) AND NOW() ";
+                }
+
+                if (!empty($contents['date_modified_advanced_range_choice']) && $contents['date_modified_advanced_range_choice'] == 'this_month') {
+                    $query_check_for_role .= " AND YEAR(date_modified) = YEAR(NOW()) AND MONTH(date_modified) = MONTH(NOW()) ";
+                }
+
+                if (!empty($contents['date_modified_advanced_range_choice']) && $contents['date_modified_advanced_range_choice'] == 'next_month') {
+                    $query_check_for_role .= " AND date_modified BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 1 MONTH) ";
+                }
+
+                if (!empty($contents['date_modified_advanced_range_choice']) && $contents['date_modified_advanced_range_choice'] == 'last_year') {
+                    $query_check_for_role .= " AND YEAR(date_modified) = YEAR(NOW()) - 1 ";
+                }
+
+                if (!empty($contents['range_date_modified_advanced']) && $contents['date_modified_advanced_range_choice'] == 'equals') {
+                    $query_check_for_role .= " AND date_modified = '".$contents['start_range_date_modified_advanced']."' ";
+                }
+
+                if (!empty($contents['range_date_modified_advanced']) && $contents['date_modified_advanced_range_choice'] == 'this_year') {
+                    $year = date('Y');
+                    $query_check_for_role .= " AND YEAR(date_modified) = $year ";
+                }
+
+                if (!empty($contents['range_date_modified_advanced']) && $contents['date_modified_advanced_range_choice'] == 'next_year') {
+                    $year = date('Y') + 1;
+                    $query_check_for_role .= " AND YEAR(date_modified) = $year ";
+                }
+
+                if (!empty($contents['range_date_modified_advanced']) && $contents['date_modified_advanced_range_choice'] == 'between') {
+                    $query_check_for_role .= " AND date_modified BETWEEN '".$contents['start_range_date_modified_advanced']."' AND '".$contents['end_range_date_modified_advanced']."' ";
+                }
+
+                if ($_COOKIE['role']){
+                    $role = $_COOKIE['role'];
+    
+                    if ($role == "MKT"){
+                        $query_check_for_role .= " AND ((leads.created_by = '{$user->id}' OR leads.modified_user_id = '{$user->id}') AND leads.data_sources != '9' AND leads.data_sources != '10')";
+                    }
+    
+                    if ($role == "RO"){
+                        if ($user->id == '54e005cb-332b-9c26-c173-6406e116558f') {
+                            $query_check_for_role .= "  AND ( (ro_name  = '9232e852-23f5-3a3a-db34-63fdc497d906' AND data_sources = '9')     OR (ro_name  = '9232e852-23f5-3a3a-db34-63fdc497d906' AND data_sources = '10')     OR (ro_name  = 'a5a5f967-0e9e-5d0c-6a51-63fdc413bf45' AND data_sources = '10')     OR (ro_name  = 'a5a5f967-0e9e-5d0c-6a51-63fdc413bf45' AND data_sources = '9')     OR (leads.created_by = '1' AND leads.ro_name = 'a5a5f967-0e9e-5d0c-6a51-63fdc413bf45')     OR (leads.created_by = '1' AND leads.ro_name = '9232e852-23f5-3a3a-db34-63fdc497d906')     OR (leads.created_by = '1' AND leads.ro_name = '{$user->id}')     OR (leads.created_by = '9232e852-23f5-3a3a-db34-63fdc497d906')     OR (leads.created_by = 'a5a5f967-0e9e-5d0c-6a51-63fdc413bf45')     OR (leads.created_by = '{$user->id}')     OR (leads.modified_user_id = '9232e852-23f5-3a3a-db34-63fdc497d906' AND leads.ro_modified_sale_stage = true)      OR (leads.modified_user_id = 'a5a5f967-0e9e-5d0c-6a51-63fdc413bf45' AND leads.ro_modified_sale_stage = true)     OR (leads.modified_user_id = '{$user->id}' AND leads.ro_modified_sale_stage = true)      OR (leads.ro_name = '9232e852-23f5-3a3a-db34-63fdc497d906' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != '')     OR (leads.ro_name = 'a5a5f967-0e9e-5d0c-6a51-63fdc413bf45' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != '')     OR (leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != ''))"; 
+                        }
+                        else if ($user->id == 'a5a5f967-0e9e-5d0c-6a51-63fdc413bf45') {
+                            $query_check_for_role .= " AND ((ro_name  = 'a5a5f967-0e9e-5d0c-6a51-63fdc413bf45' AND data_sources = '10') OR (ro_name  = 'a5a5f967-0e9e-5d0c-6a51-63fdc413bf45' AND data_sources = '9') OR (leads.created_by = '1' AND leads.ro_name = '{$user->id}') OR (leads.created_by = '{$user->id}') OR (leads.modified_user_id = '{$user->id}' AND leads.ro_modified_sale_stage = true)  OR (leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != ''))";
+                        }
+                        else if ($user->id == '9232e852-23f5-3a3a-db34-63fdc497d906') {
+                            $query_check_for_role .= " AND ((ro_name  = '9232e852-23f5-3a3a-db34-63fdc497d906' AND data_sources = '9') OR (ro_name  = '9232e852-23f5-3a3a-db34-63fdc497d906' AND data_sources = '10') OR (leads.created_by = '1' AND leads.ro_name = '{$user->id}') OR (leads.created_by = '{$user->id}') OR (leads.modified_user_id = '{$user->id}' AND leads.ro_modified_sale_stage = true)  OR (leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != ''))";
+                        }
+                        else if ($user->id == '497f0e21-37eb-a875-75b2-63fdb2c03264') {
+                            $query_check_for_role .= " AND ((leads.data_sources = '9' OR leads.data_sources = '10') AND leads.lead_status = '17') OR (leads.created_by = '1' AND leads.ro_name = '{$user->id}') OR (leads.created_by = '{$user->id}') OR (leads.modified_user_id = '{$user->id}' AND leads.ro_modified_sale_stage = true)  OR (leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != ''))";
+                        }
+                        else if ($query_check_for_role == ""){
+                            $query_check_for_role .= " AND ((leads.created_by = '1' AND leads.ro_name = '{$user->id}') OR (leads.created_by = '{$user->id}') OR (leads.modified_user_id = '{$user->id}' AND leads.ro_modified_sale_stage = true)  OR (leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != ''))";
+                        }
+                        else {
+                            $query_check_for_role .= " AND ((leads.created_by = '1' AND leads.ro_name = '{$user->id}') OR (leads.created_by = '{$user->id}') OR (leads.modified_user_id = '{$user->id}' AND leads.ro_modified_sale_stage = true) OR leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != '')";
+                        }
+                    }
+    
+                    if ($role == "HO"){
+                        $query_check_for_role .= " AND (leads.ho_name = '{$user->id}' AND leads.service = '1')";
+                    }
+
+
+                    $GLOBALS['log']->fatal("This query: " . $query_check_for_role);
+
+                    $result_check_for_role = $GLOBALS['db']->query($query_check_for_role);
+                    $rows_check_for_role = $GLOBALS['db']->fetchByAssoc($result_check_for_role);
+                    $total = $rows_check_for_role['total'];
+                    $GLOBALS['log']->fatal("total: " . $total);
+                    if ($total > 0) {
+                        $savedSearchData['hasOptions'] = true;
+                        $savedSearchData['options'][$row['id']] = $savedSearchArray[$row['id']] = htmlspecialchars($row['name'], ENT_QUOTES);
+                    }
+                    
+                }
             }
 
             $sugarSmarty = new Sugar_Smarty();

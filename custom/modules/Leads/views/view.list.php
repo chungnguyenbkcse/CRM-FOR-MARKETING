@@ -71,7 +71,7 @@
             if (empty($_REQUEST['search_form_only']) || $_REQUEST['search_form_only'] == false) {
                 $this->lv->ss->assign("SEARCH", true);
                 $this->lv->ss->assign('savedSearchData', $this->searchForm->getSavedSearchData());
-                $GLOBALS['log']->fatal("WHERE1: "); 
+                //$GLOBALS['log']->fatal($this->searchForm->getSavedSearchData()); 
                 $GLOBALS['log']->fatal($this->where);
                 $this->lv->setup($this->seed, 'include/ListView/ListViewGeneric.tpl', $this->where, $this->params);
                 $savedSearchName = empty($_REQUEST['saved_search_select_name']) ? '' : (' - ' . $_REQUEST['saved_search_select_name']);

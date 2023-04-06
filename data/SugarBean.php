@@ -4602,6 +4602,31 @@ class SugarBean
         return $this;
     }
 
+
+    public function printRetrieve($id = -1, $encode = true, $deleted = true)
+    {
+        $custom_logic_arguments['id'] = $id;
+        $this->call_custom_logic('before_retrieve', $custom_logic_arguments);
+
+        if ($id == -1) {
+            $id = $this->id;
+        }
+        $custom_join = $this->getCustomJoin();
+
+        $query = "SELECT $this->table_name.*" . $custom_join['select'] . " FROM $this->table_name ";
+
+        $query .= $custom_join['join'];
+        $query .= " WHERE $this->table_name.id = " . $this->db->quoted($id);
+        if ($deleted) {
+            $query .= " AND $this->table_name.deleted=0";
+        }
+        $GLOBALS['log']->fatal("this");
+        $GLOBALS['log']->fatal($query);
+        $GLOBALS['log']->fatal("end");
+
+        return $query;
+    }
+
     /**
      * Proxy method for DynamicField::getJOIN
      * @param bool $expandedList

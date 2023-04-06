@@ -30,14 +30,25 @@
                 }
 
                 if ($role == "RO"){
-                    if ($user->user_name = 'HOA_NDTNH') {
-                        $this->where .= "((leads.data_sources = '9' OR leads.data_sources = '10') AND leads.lead_status = '17') OR (leads.created_by = '{$user->id}') OR (leads.modified_user_id = '{$user->id}' AND leads.ro_modified_sale_stage = true)  OR (leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != '')";
+                    if ($user->id == '54e005cb-332b-9c26-c173-6406e116558f') {
+                        $GLOBALS['log']->fatal("D_TDT"); 
+                        $this->where .= "    (ro_name  = '9232e852-23f5-3a3a-db34-63fdc497d906' AND data_sources = '9')     OR (ro_name  = '9232e852-23f5-3a3a-db34-63fdc497d906' AND data_sources = '10')     OR (ro_name  = 'a5a5f967-0e9e-5d0c-6a51-63fdc413bf45' AND data_sources = '10')     OR (ro_name  = 'a5a5f967-0e9e-5d0c-6a51-63fdc413bf45' AND data_sources = '9')     OR (leads.created_by = '1' AND leads.ro_name = 'a5a5f967-0e9e-5d0c-6a51-63fdc413bf45')     OR (leads.created_by = '1' AND leads.ro_name = '9232e852-23f5-3a3a-db34-63fdc497d906')     OR (leads.created_by = '1' AND leads.ro_name = '{$user->id}')     OR (leads.created_by = '9232e852-23f5-3a3a-db34-63fdc497d906')     OR (leads.created_by = 'a5a5f967-0e9e-5d0c-6a51-63fdc413bf45')     OR (leads.created_by = '{$user->id}')     OR (leads.modified_user_id = '9232e852-23f5-3a3a-db34-63fdc497d906' AND leads.ro_modified_sale_stage = true)      OR (leads.modified_user_id = 'a5a5f967-0e9e-5d0c-6a51-63fdc413bf45' AND leads.ro_modified_sale_stage = true)     OR (leads.modified_user_id = '{$user->id}' AND leads.ro_modified_sale_stage = true)      OR (leads.ro_name = '9232e852-23f5-3a3a-db34-63fdc497d906' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != '')     OR (leads.ro_name = 'a5a5f967-0e9e-5d0c-6a51-63fdc413bf45' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != '')     OR (leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != '')";
+                       
+                    }
+                    else if ($user->id == 'a5a5f967-0e9e-5d0c-6a51-63fdc413bf45') {
+                        $this->where .= " (ro_name  = 'a5a5f967-0e9e-5d0c-6a51-63fdc413bf45' AND data_sources = '10') OR (ro_name  = 'a5a5f967-0e9e-5d0c-6a51-63fdc413bf45' AND data_sources = '9') OR (leads.created_by = '1' AND leads.ro_name = '{$user->id}') OR (leads.created_by = '{$user->id}') OR (leads.modified_user_id = '{$user->id}' AND leads.ro_modified_sale_stage = true)  OR (leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != '')";
+                    }
+                    else if ($user->id == '9232e852-23f5-3a3a-db34-63fdc497d906') {
+                        $this->where .= " (ro_name  = '9232e852-23f5-3a3a-db34-63fdc497d906' AND data_sources = '9') OR (ro_name  = '9232e852-23f5-3a3a-db34-63fdc497d906' AND data_sources = '10') OR (leads.created_by = '1' AND leads.ro_name = '{$user->id}') OR (leads.created_by = '{$user->id}') OR (leads.modified_user_id = '{$user->id}' AND leads.ro_modified_sale_stage = true)  OR (leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != '')";
+                    }
+                    else if ($user->id == '497f0e21-37eb-a875-75b2-63fdb2c03264') {
+                        $this->where .= "((leads.data_sources = '9' OR leads.data_sources = '10') AND leads.lead_status = '17') OR (leads.created_by = '1' AND leads.ro_name = '{$user->id}') OR (leads.created_by = '{$user->id}') OR (leads.modified_user_id = '{$user->id}' AND leads.ro_modified_sale_stage = true)  OR (leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != '')";
                     }
                     else if ($this->where == ""){
-                        $this->where .= " (leads.created_by = '{$user->id}') OR (leads.modified_user_id = '{$user->id}' AND leads.ro_modified_sale_stage = true)  OR (leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != '')";
+                        $this->where .= " (leads.created_by = '1' AND leads.ro_name = '{$user->id}') OR (leads.created_by = '{$user->id}') OR (leads.modified_user_id = '{$user->id}' AND leads.ro_modified_sale_stage = true)  OR (leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != '')";
                     }
                     else {
-                        $this->where .= " OR (leads.created_by = '{$user->id}') OR (leads.modified_user_id = '{$user->id}' AND leads.ro_modified_sale_stage = true) OR leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != ''";
+                        $this->where .= " OR (leads.created_by = '1' AND leads.ro_name = '{$user->id}') OR (leads.created_by = '{$user->id}') OR (leads.modified_user_id = '{$user->id}' AND leads.ro_modified_sale_stage = true) OR leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != ''";
                     }
                 }
 
@@ -77,8 +88,12 @@
             formLetter::LVPopupHtml('Leads');
             $GLOBALS['log']->fatal("CALL AJAX: ");
             echo '<script type="text/javascript" src="custom/modules/Leads/handle_realtime.js"></script>';
+            //$this->params['custom_select'] = " DISTINCT leads.fullname";
             parent::preDisplay();
 
             $this->lv = new LeadsListViewSmarty();
         }
+
+
+    
     }

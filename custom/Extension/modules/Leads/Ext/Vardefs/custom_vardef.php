@@ -184,6 +184,7 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'name' => 'fullname',
                 'vname' => 'LBL_FULLNAME',
                 'inline_edit' =>false,
+                'basic_search' => true,
                 'type' => 'varchar',
                 'len' => '255',
                 'comment' => 'Account name for lead',
@@ -906,6 +907,17 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'audited' => true,
                 'comment' => 'The fee of the contact'
             ),
+        'expected_fee' =>
+            array(
+                'name' => 'expected_fee',
+                'vname' => 'LBL_EXPECTED_FEE',
+                'inline_edit' =>false,
+                'massupdate' => false,
+                'type' => 'double',
+                'len' => '255',
+                'audited' => true,
+                'comment' => 'The fee of the contact'
+            ),
         'real_fee' => 
             array(
                 'name' => 'real_fee',
@@ -953,6 +965,17 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
             array(
                 'name' => 'transaction_amount',
                 'vname' => 'LBL_TRANSACTION_AMOUNT',
+                'massupdate' => false,
+                'type' => 'double',
+                'inline_edit' =>false,
+                'audited' => true,
+                'len' => '255',
+                'comment' => 'The real fee of the contact'
+            ), 
+        'expected_transaction_amount' => 
+            array(
+                'name' => 'expected_transaction_amount',
+                'vname' => 'LBL_EXPECTED_TRANSACTION_AMOUNT',
                 'massupdate' => false,
                 'type' => 'double',
                 'inline_edit' =>false,

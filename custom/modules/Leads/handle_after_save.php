@@ -69,8 +69,7 @@ class Handle
         if ($bean->date_entered == $bean->date_modified) {
             $query_1 = "UPDATE leads SET date_modified = '{$now->format(\DateTime::ISO8601)}', date_entered = '{$now->format(\DateTime::ISO8601)}'  WHERE id = '{$bean->id}' AND deleted = '0'";
             $GLOBALS['db']->query($query_1);
-        }
-        else {
+        } else {
             $query_1 = "UPDATE leads SET date_modified = '{$now->format(\DateTime::ISO8601)}'  WHERE id = '{$bean->id}' AND deleted = '0'";
             $GLOBALS['db']->query($query_1);
         }
@@ -85,8 +84,8 @@ class Handle
             }              
         
         } */
-        
-        
+
+
         if ($bean->ro_name != "" && $bean->ro_name != null) {
 
 
@@ -103,8 +102,7 @@ class Handle
                 $time = $rows_6['date_entered'];
                 /* $query_5 = "INSERT INTO ro_least (id, time, bu) VALUES ('1', '{$time}', '{$bean->owned_branch}');";
                 $GLOBALS['db']->query($query_5); */
-            }
-            else {
+            } else {
                 $query_6 = "SELECT * FROM users WHERE deleted = 0 AND user_name = '{$bean->ro_name}'";
                 $result_6 = $GLOBALS['db']->query($query_6);
                 $rows_6 = $GLOBALS['db']->fetchByAssoc($result_6);
@@ -114,14 +112,14 @@ class Handle
             }
         }
 
-        
-        if ($_COOKIE['role']){
+
+        if ($_COOKIE['role']) {
             $role = $_COOKIE['role'];
 
-            if ($_COOKIE['role']){
+            if ($_COOKIE['role']) {
                 $role = $_COOKIE['role'];
                 if ($role == "MKT" || $role  == "SUPER_MKT") {
-                    if ($bean->sale_stage == "10") { 
+                    if ($bean->sale_stage == "10") {
                         if ($bean->owned_branch != null && $bean->owned_branch != "") {
                             $query_3 = "UPDATE leads SET MKT_day_shared_BU = '{$now->format(\DateTime::ISO8601)}'  WHERE id = '{$bean->id}' AND deleted = '0'";
                             $GLOBALS['db']->query($query_3);
@@ -131,8 +129,7 @@ class Handle
                             $GLOBALS['db']->query($query_2);
                         }
                     }
-                }
-                else if ($role == "BU") {
+                } else if ($role == "BU") {
                     if ($bean->sale_stage == "10") {
                         if ($bean->owned_branch != null && $bean->owned_branch != "" && $bean->ro_name != null && $bean->ro_name != "") {
                             $query_2 = "UPDATE leads SET day_shared_RO = '{$now->format(\DateTime::ISO8601)}' WHERE id = '{$bean->id}' AND deleted = '0'";
@@ -140,15 +137,13 @@ class Handle
                         }
                     }
                 }
-                
-    
             }
-            if ($bean->last_name == null || $bean->last_name == ""){
+            if ($bean->last_name == null || $bean->last_name == "") {
                 $query_2 = "UPDATE leads SET last_name = '{$bean->fullname}' WHERE id = '{$bean->id}' AND deleted = '0'";
                 $GLOBALS['db']->query($query_2);
             }
-            
-            if ($role == "BU"){
+
+            if ($role == "BU") {
                 SugarApplication::redirect("index.php?module=Leads&action=detail_bu&record={$bean->id}");
             }
 
@@ -158,7 +153,7 @@ class Handle
 
                         $alert = BeanFactory::newBean('Alerts');
                         $alert->name = 'Khách hàng mới';
-                        $alert->description = 'Bạn được giao 1 khách hàng mới có facebook/zalo là: ' . $bean->facebook_or_zalo_name . ' vào lúc ' . $bean->date_modified . ' !';
+                        $alert->description = 'Bạn được giao 1 khách hàng mới có facebook/zalo là: ' . $bean->facebook_or_zalo_name . ' vào lúc ' . str_replace(array('T', '+0700'), ' ', $now->format(\DateTime::ISO8601)) . ' !';
                         $alert->url_redirect = 'index.php';
                         $alert->target_module = 'Leads';
                         $alert->assigned_user_id = $bean->ro_name;
@@ -180,11 +175,10 @@ class Handle
                         }
 
                         $query_ro_1 = "SELECT * FROM users WHERE deleted = 0 AND id = '{$bean->ro_name}'";
-                        $result_ro_1 = $GLOBALS['db']->query($query_ro_1);   
-                        while($rows_ro_1 = $GLOBALS['db']->fetchByAssoc($result_ro_1)){
-                            $telegram->sendMessage('-727735502', 'RO ' . $rows_ro_1['last_name'] . ' có khách hàng lúc ' . $bean->date_modified . ' !');
+                        $result_ro_1 = $GLOBALS['db']->query($query_ro_1);
+                        while ($rows_ro_1 = $GLOBALS['db']->fetchByAssoc($result_ro_1)) {
+                            $telegram->sendMessage('-727735502', 'RO ' . $rows_ro_1['last_name'] . ' có khách hàng lúc ' . str_replace(array('T', '+0700'), ' ', $now->format(\DateTime::ISO8601)) . ' !');
                         }
-
                     }
                 }
             }
@@ -201,7 +195,7 @@ class Handle
         $path = '/home/www/html/mkt.tranthu.vn/dataleadmkt-906bd32bac02.json';
         $client->setAuthConfig($path);
 
-        
+
 
         // configure the Sheets Service
         $service = new \Google_Service_Sheets($client);
@@ -209,8 +203,8 @@ class Handle
         // the spreadsheet id can be found in the url https://docs.google.com/spreadsheets/d/10qhcaru2svtbiLYmpZlMtsILS0HFbN7RZh7eMTtGs7M/edit
         $spreadsheetId = '10qhcaru2svtbiLYmpZlMtsILS0HFbN7RZh7eMTtGs7M';
 
-        
-        
+
+
         /* $values = [
             [$bean->facebook_or_zalo_name, $bean->data_sources, $bean->phone_number_primary, $bean->card_bark_type, $bean->bank, $bean->payment_day, $bean->transaction_amount, $bean->fee, $bean->sale_stage, $bean->lead_status, $bean->owned_branch, $bean->ro_name, $bean->contact_date, $bean->note, $bean->fullname, $bean->citizen_identificationj, $bean->citizen_identification_issuance_date, $bean->citizen_identification_issuance_place, $bean->real_transaction_amount, $bean->real_fee, $bean->payment_day, $bean->birthday, $bean->successful_trading_day, $bean->phone_number_extra, $bean->career, $bean->district_customer_live]
         ]; */
@@ -220,15 +214,14 @@ class Handle
 
         $query_lead = "SELECT * FROM leads WHERE id = '{$bean->id}'";
         $result_lead = $GLOBALS['db']->query($query_lead);
-        while($rows = $GLOBALS['db']->fetchByAssoc($result_lead)){
+        while ($rows = $GLOBALS['db']->fetchByAssoc($result_lead)) {
 
             if ($bean->contact_date != null && $bean->contact_date != "") {
                 $lst[0] = $bean->contact_date;
-            }
-            else {
+            } else {
                 $lst[0] = "";
             }
-            
+
             $lst[1] = $rows['facebook_or_zalo_name'];
 
             $data_source_id = $bean->data_sources;
@@ -244,6 +237,7 @@ class Handle
                 '8' => 'Facebook UID',
                 '9' => 'inactive',
                 '10' => 'old MKT source',
+                '11' => 'Partner',
             );
 
             foreach ($data_sources as $key => $data) {
@@ -256,12 +250,11 @@ class Handle
 
             if ($bean->card_bark_type != null && $bean->card_bark_type != "") {
                 $lst[4] = $bean->card_bark_type;
-            }
-            else {
+            } else {
                 $lst[4] = "";
             }
 
-            if ($bean->service != null && $bean->service != "") {         
+            if ($bean->service != null && $bean->service != "") {
                 $service_id = $bean->service;
                 $services = array(
                     '' => '',
@@ -277,14 +270,13 @@ class Handle
                         $lst[5] = $data;
                     }
                 }
-            }
-            else {
+            } else {
                 $lst[5] = "";
             }
 
             if ($bean->bank != null && $bean->bank != "") {
                 $bank_id = $bean->bank;
-                $banks = array (
+                $banks = array(
                     '' => '',
                     '1' => 'HSBC',
                     '2' => 'KienLongBank',
@@ -329,41 +321,39 @@ class Handle
                     '41' => 'VIETCREDIT',
                     '42' => 'NCB',
                     '43' => 'Timo',
+                    '44' => 'SHB',
+                    '45' => 'Public Bank Vietnam',
                 );
                 foreach ($banks as $key => $data) {
                     if ($key == $bank_id) {
                         $lst[6] = $data;
                     }
                 }
-            }
-            else {
+            } else {
                 $lst[6] = "";
             }
 
             if ($bean->payment_day != null && $bean->payment_day != "") {
                 $lst[7] = $bean->payment_day;
-            }
-            else {
+            } else {
                 $lst[7] = "";
             }
 
             if ($bean->transaction_amount != null && $bean->transaction_amount != "") {
                 $lst[8] = $bean->transaction_amount;
-            }
-            else {
+            } else {
                 $lst[8] = "";
             }
 
             if ($bean->fee != null && $bean->fee != "") {
                 $lst[9] = $bean->fee;
-            }
-            else {
+            } else {
                 $lst[9] = "";
             }
 
             if ($bean->sale_stage != null && $bean->sale_stage != "") {
                 $sale_stage_id = $bean->sale_stage;
-                $sale_stages = array (
+                $sale_stages = array(
                     '0' => 'Choose',
                     '1' => 'New',
                     '2' => 'Theo dõi 1',
@@ -382,8 +372,7 @@ class Handle
                         $lst[10] = $data;
                     }
                 }
-            }
-            else {
+            } else {
                 $lst[10] = "";
             }
 
@@ -429,8 +418,7 @@ class Handle
                         $lst[11] = $data;
                     }
                 }
-            }
-            else {
+            } else {
                 $lst[11] = "";
             }
 
@@ -439,133 +427,119 @@ class Handle
                 $owned_branchs = array(
                     '' => '',
                     '1' => 'NTT',
-                    '2' => 'Quận 10',
+                    '2' => 'District 10',
                     '3' => 'Tân Bình',
                     '4' => 'TELE',
                     '5' => 'DL TB',
                     '6' => 'Đồng nai',
                     '7' => 'Song Thao',
+                    '8' => 'Nha trang',
+                    '9' => 'LVS',
                 );
                 foreach ($owned_branchs as $key => $data) {
                     if ($key == $owned_branch_id) {
                         $lst[12] = $data;
                     }
                 }
-            }
-            else {
+            } else {
                 $lst[12] = "";
             }
 
             if ($bean->ro_name != null && $bean->ro_name != "") {
                 $lst[13] = "";
                 $query_1 = "SELECT * FROM users WHERE deleted = 0 AND id = '{$bean->ro_name}'";
-                $result_1 = $GLOBALS['db']->query($query_1);   
-                while($rowsx = $GLOBALS['db']->fetchByAssoc($result_1)){
+                $result_1 = $GLOBALS['db']->query($query_1);
+                while ($rowsx = $GLOBALS['db']->fetchByAssoc($result_1)) {
                     $lst[13] .= $rowsx['user_name'];
                 }
-            }
-            else {
+            } else {
                 $lst[13] = "";
             }
 
             if ($bean->note != null && $bean->note != "") {
                 $lst[14] = $rows['note'];
-            }
-            else {
+            } else {
                 $lst[14] = "";
             }
 
 
             if ($bean->fullname != null && $bean->fullname != "") {
                 $lst[15] = $rows['fullname'];
-            }
-            else {
+            } else {
                 $lst[15] = "";
             }
 
             if ($bean->citizen_identification != null && $bean->citizen_identification != "") {
                 $lst[16] = $bean->citizen_identification;
-            }
-            else {
+            } else {
                 $lst[16] = "";
             }
 
             if ($bean->citizen_identification_issuance_date != null && $bean->citizen_identification_issuance_date != "") {
                 $lst[17] = $bean->citizen_identification_issuance_date;
-            }
-            else {
+            } else {
                 $lst[17] = "";
             }
 
             if ($bean->citizen_identification_issuance_place != null && $bean->citizen_identification_issuance_place != "") {
                 $lst[18] = $rows['citizen_identification_issuance_place'];
-            }
-            else {
+            } else {
                 $lst[18] = "";
             }
 
             if ($bean->real_transaction_amount != null && $bean->real_transaction_amount != "") {
                 $lst[19] = $bean->real_transaction_amount;
-            }
-            else {
+            } else {
                 $lst[19] = "";
             }
 
             if ($bean->real_fee != null && $bean->real_fee != "") {
                 $lst[20] = $bean->real_fee;
-            }
-            else {
+            } else {
                 $lst[20] = "";
             }
 
             if ($bean->birthday != null && $bean->birthday != "") {
                 $lst[21] = $bean->birthday;
-            }
-            else {
+            } else {
                 $lst[21] = "";
             }
 
             if ($bean->successful_trading_day != null && $bean->successful_trading_day != "") {
                 $lst[22] = $bean->successful_trading_day;
-            }
-            else {
+            } else {
                 $lst[22] = "";
             }
 
             if ($bean->phone_number_extra != null && $bean->phone_number_extra != "") {
                 $lst[23] = $bean->phone_number_extra;
-            }
-            else {
+            } else {
                 $lst[23] = "";
             }
 
             if ($bean->career != null && $bean->career != "") {
                 $lst[24] = $rows['career'];
-            }
-            else {
+            } else {
                 $lst[24] = "";
             }
 
             if ($bean->district_customer_live != null && $bean->district_customer_live != "") {
                 $lst[25] = $rows['district_customer_live'];
-            }
-            else {
+            } else {
                 $lst[25] = "";
             }
-
-        
         }
 
         $values = [
             $lst
         ];
-        
-        $GLOBALS['log']->fatal($values); 
+
+        $GLOBALS['log']->fatal($values);
 
         $body = new Google_Service_Sheets_ValueRange([
             'values' => $values
         ]);
-        
+
         $params = [
             'valueInputOption' => 'RAW'
         ];
@@ -578,28 +552,26 @@ class Handle
                 // Delete ro choose last
                 $query_ro_choose = "DELETE FROM ro_choose";
                 $GLOBALS['db']->query($query_ro_choose);
-                
+
                 $query_insert_ro_choose = "INSERT INTO ro_choose  (lead_id) VALUES ('{$bean->ro_name}')";
                 $GLOBALS['db']->query($query_insert_ro_choose);
             }
-            
+
             $range = 'DATA CRM';
             $response = $service->spreadsheets_values->get($spreadsheetId, $range);
-            $values = $response->getValues();    
+            $values = $response->getValues();
             $rangeToInsert = 'DATA CRM!A' . (count($values) + 1);
             $result = $service->spreadsheets_values->append($spreadsheetId, $rangeToInsert, $body, $params);
-
-        }
-        else {
+        } else {
             $range = 'DATA CRM';
             $response = $service->spreadsheets_values->get($spreadsheetId, $range);
             $values = $response->getValues();
             $key = $bean->phone_number_primary;
 
             foreach ($values as $row => $data) {
-                $GLOBALS['log']->fatal($data[2]); 
+                $GLOBALS['log']->fatal($data[2]);
                 if ($data[3] == substr($key, 1)) {
-                    $GLOBALS['log']->fatal("hello key"); 
+                    $GLOBALS['log']->fatal("hello key");
                     $rangeToUpdate = 'DATA CRM!A' . ($row + 1) . ':Z' . ($row + 1);
                     $result = $service->spreadsheets_values->update($spreadsheetId, $rangeToUpdate, $body, $params);
                     printf("%d cells updated.\n", $result->getUpdatedCells());

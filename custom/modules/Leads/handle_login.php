@@ -92,7 +92,7 @@ class HandleDB
 
         $GLOBALS['log']->fatal($_COOKIE['role']);
 
-        $query_1x = "SELECT COUNT(*) AS total  FROM relationship_sale_stage_lead_status";
+        /* $query_1x = "SELECT COUNT(*) AS total  FROM relationship_sale_stage_lead_status";
         $result_1x = $GLOBALS['db']->query($query_1x);
         $row_1x = $GLOBALS['db']->fetchByAssoc($result_1x);
         $total_1x = $row_1x['total'];
@@ -138,9 +138,13 @@ class HandleDB
                                 ('39', '8', '28'),
                                 ('40', '8', '29'),
                                 ('41', '8', '30'),
-                                ('42', '8', '31');
+                                ('42', '8', '31'),
+                                ('43', '6', '33'),
+                                ('44', '6', '28'),
+                                ('45', '7', '34'),
+                                ;
             ";
             $GLOBALS['db']->query($query_6);
-        }
+        } */
     }
 }

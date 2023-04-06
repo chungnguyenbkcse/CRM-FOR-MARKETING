@@ -35,6 +35,12 @@ array (
     'label' => 'LBL_DATE_ENTERED',
     'default' => true,
   ),
+  'DAY_RO_MODIFIED_SALE_STAGE' => 
+  array (
+    'width' => '10%',
+    'label' => 'LBL_DAY_RO_MODIFIED_SALE_STAGE',
+    'default' => true,
+  ),
 );
 ;
 ?>

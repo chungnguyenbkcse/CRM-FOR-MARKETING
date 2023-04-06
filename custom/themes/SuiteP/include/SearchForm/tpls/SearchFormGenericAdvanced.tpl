@@ -121,22 +121,28 @@
                            onclick='SUGAR.savedViews.setChooser(); return SUGAR.savedViews.saved_search_action("save");'>
                 </div>
             </div>
-            <div class="hideUnusedSavedSearchElements" scope='row' width='10%'
-                 nowrap="nowrap"{if !$savedSearchData.selected} style="display: none;"{/if}>
-                <label>{sugar_translate label='LBL_MODIFY_CURRENT_FILTER' module='SavedSearch'}: <span
-                            id='curr_search_name'>"{$savedSearchData.options[$savedSearchData.selected]}"</span></label>
-            </div>
-            <div class="hideUnusedSavedSearchElements" width='30%'
-                 nowrap{if !$savedSearchData.selected} style="display: none;"{/if}>
-                <input class='button'
-                       onclick='SUGAR.savedViews.setChooser(); return SUGAR.savedViews.saved_search_action("update")'
-                       value='{$APP.LBL_UPDATE}' title='{$APP.LBL_UPDATE}' name='ss_update' id='ss_update'
-                       type='button'>
-                <input class='button'
-                       onclick='return SUGAR.savedViews.saved_search_action("delete", "{sugar_translate label='LBL_DELETE_CONFIRM' module='SavedSearch'}")'
-                       value='{$APP.LBL_DELETE}' title='{$APP.LBL_DELETE}' name='ss_delete' id='ss_delete'
-                       type='button'>
-            </div>
+
+            {if $ROLE == 'RO'}
+                
+            {else}
+                <div class="hideUnusedSavedSearchElements" scope='row' width='10%'
+            nowrap="nowrap"{if !$savedSearchData.selected} style="display: none;"{/if}>
+           <label>{sugar_translate label='LBL_MODIFY_CURRENT_FILTER' module='SavedSearch'}: <span
+                       id='curr_search_name'>"{$savedSearchData.options[$savedSearchData.selected]}"</span></label>
+       </div>
+       <div class="hideUnusedSavedSearchElements" width='30%'
+            nowrap{if !$savedSearchData.selected} style="display: none;"{/if}>
+           <input class='button'
+                  onclick='SUGAR.savedViews.setChooser(); return SUGAR.savedViews.saved_search_action("update")'
+                  value='{$APP.LBL_UPDATE}' title='{$APP.LBL_UPDATE}' name='ss_update' id='ss_update'
+                  type='button'>
+           <input class='button'
+                  onclick='return SUGAR.savedViews.saved_search_action("delete", "{sugar_translate label='LBL_DELETE_CONFIRM' module='SavedSearch'}")'
+                  value='{$APP.LBL_DELETE}' title='{$APP.LBL_DELETE}' name='ss_delete' id='ss_delete'
+                  type='button'>
+       </div>
+            {/if}
+            
         </div>
         <div>
             <div colspan='6'>

@@ -629,6 +629,7 @@ $app_list_strings = array(
         '8' => 'Facebook UID',
         '9' => 'inactive',
         '10' => 'MKT cũ',
+        '11' => 'Đối tác',
     ),
 
     'receiving_branch_dom' => array(
@@ -641,6 +642,7 @@ $app_list_strings = array(
         '6' => 'Đồng nai',
         '7' => 'Song Thao',
         '8' => 'Nha trang',
+        '9' => 'LVS',
     ),
     'receiving_branch_dom_1' => array(
         '' => '',
@@ -700,7 +702,17 @@ $app_list_strings = array(
         '33' => 'SeaBank',
         '34' => 'MaritimeBank',
         '35' => 'Agribank',
-     ),
+        '36' => 'STB Bank',
+        '37' => 'AMERICAN EXPRESS',
+        '38' => ' Mirae Asset',
+        '39' => 'Bank of America',
+        '40' => 'TMCP Bắc Á',
+        '41' => 'VIETCREDIT',
+        '42' => 'NCB',
+        '43' => 'Timo',
+        '44' => 'SHB',
+        '45' => 'Public Bank Vietnam',
+    ),
 
     'sale_stage_dom' => array (
         '' => '',

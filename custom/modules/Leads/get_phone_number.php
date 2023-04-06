@@ -1,7 +1,7 @@
 <?php
 function checkPhoneNumber($phone_number)
 {
-    $query = "SELECT phone_number_primary FROM leads";
+    $query = "SELECT phone_number_primary FROM leads WHERE deleted = 0";
     $result = $GLOBALS['db']->query($query);
     $res = true;
     while($rows = $GLOBALS['db']->fetchByAssoc($result)){
@@ -14,7 +14,7 @@ function checkPhoneNumber($phone_number)
 
 function checkPhoneNumber1($id, $phone_number)
 {
-    $query = "SELECT phone_number_primary FROM leads WHERE id != '{$id}'";
+    $query = "SELECT phone_number_primary FROM leads WHERE id != '{$id}' AND deleted = 0";
     $result = $GLOBALS['db']->query($query);
     $res = true;
     while($rows = $GLOBALS['db']->fetchByAssoc($result)){

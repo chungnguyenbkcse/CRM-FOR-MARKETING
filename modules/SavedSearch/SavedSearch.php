@@ -229,7 +229,15 @@ class SavedSearch extends SugarBean
         if ($module == 'Leads') {
             if ($_COOKIE['role']) {
                 $role = $_COOKIE['role'];
-                if ($role == "RO") {
+                if ($role = "SUPER_MKT") {
+                    $query = 'SELECT id, name FROM saved_search
+                    WHERE
+                      deleted = \'0\' AND
+                      search_module =  \'' . $module . '\'
+                    ORDER BY name';
+                    $result = $db->query($query, true, "Error filling in saved search list: ");
+                }
+                else if ($role == "RO") {
                     $query = 'SELECT id, name FROM saved_search
                     WHERE
                       deleted = \'0\' AND

@@ -1,6 +1,9 @@
 $(document).ready(function () {
 
     var lead_id = $("#lead_id").val();
+    var created_by = $("#created_by_val").val();
+
+    console.log(created_by)
 
     
     $.ajax({
@@ -15,7 +18,7 @@ $(document).ready(function () {
                     <div class="col-xs-12 template card-number-line-container">
                       <div class="col-xs-12 col-sm-12  card-number-input-container {if $module == "Leads"} card-number-users-profile{/if}">
                         <div class="input-group card-number-input-group">
-                          <input type="text" value=${ele} class="form-control card-number-input" placeholder="" title="">
+                          <input type="text" value="${x[idx]}" class="form-control card-number-input" placeholder="" title="">
                           <span class="input-group-btn">
                           <button type="button" class="btn btn-danger card-number-remove-button" onclick="this.parentNode.parentNode.remove()" name="" title="{$app_strings.LBL_ID_FF_REMOVE_EMAIL}">
                             <span class="suitepicon suitepicon-action-minus"></span>
@@ -45,6 +48,12 @@ $(document).ready(function () {
     
     $("[alt='zalo']").click(function(){
         var phone = $("#phone_number_primary").val().replace(/ /g,'');
+        if (phone.length > 10 && phone.slice(0, 2) == '84') {
+            phone = '0' + phone.slice(2);
+        }
+        if (phone.length < 10) {
+            phone = '0' + phone;
+        }
         if (phone.length < 10) {
             window.open(`zalo://conversation?phone=${'0' + phone}`);
         }
@@ -55,6 +64,12 @@ $(document).ready(function () {
 
     $("[alt='zalo_extra']").click(function(){
         var phone = $("#phone_number_extra").val().replace(/ /g,'');
+        if (phone.length > 10 && phone.slice(0, 2) == '84') {
+            phone = '0' + phone.slice(2);
+        }
+        if (phone.length < 10) {
+            phone = '0' + phone;
+        }
         if (phone.length < 10) {
             window.open(`zalo://conversation?phone=${'0' + phone}`);
         }
@@ -140,6 +155,12 @@ $(document).ready(function () {
             var end_date = year + "-" + month + "-" + day + " 23:59:59";
 
             var phone = $('#phone_number_primary').val();
+            if (phone.length > 10 && phone.slice(0, 2) == '84') {
+                phone = '0' + phone.slice(2);
+            }
+            if (phone.length < 10) {
+                phone = '0' + phone;
+            }
 
             var formData = {
                 sip: parseInt(sip),
@@ -236,6 +257,12 @@ $(document).ready(function () {
             var end_date = year + "-" + month + "-" + day + " 23:59:59";
             
             var phone = $('#phone_number_primary').val();
+            if (phone.length > 10 && phone.slice(0, 2) == '84') {
+                phone = '0' + phone.slice(2);
+            }
+            if (phone.length < 10) {
+                phone = '0' + phone;
+            }
             
             var formData = {
                 sip: parseInt(sip),
@@ -317,6 +344,12 @@ $(document).ready(function () {
         if (idx == 0) {
             $(this).click(function () {
                 var phone = $("#phone_number_primary").val().replace(/ /g,'');
+                if (phone.length > 10 && phone.slice(0, 2) == '84') {
+                    phone = '0' + phone.slice(2);
+                }
+                if (phone.length < 10) {
+                    phone = '0' + phone;
+                }
                 if (phone.length < 10) {
                     phone = '0' + phone;
                 }
@@ -339,6 +372,9 @@ $(document).ready(function () {
         else {
             $(this).click(function () {
                 var phone = $("#phone_number_extra").val().replace(/ /g,'');
+                if (phone.length > 10 && phone.slice(0, 2) == '84') {
+                    phone = '0' + phone.slice(2);
+                }
                 if (phone.length < 10) {
                     phone = '0' + phone;
                 }
@@ -635,7 +671,7 @@ $(document).ready(function () {
 
         $.ajax({
             url: "index.php?module=Leads&entryPoint=lead_status",
-            data: { id: sale_stage_id, lead_status_id: lead_status_id },
+            data: { id: sale_stage_id, lead_status_id: lead_status_id, created_by: created_by },
             success: function (data) {
                 console.log(data);
                 $('[name = "lead_status"]').map(function (idx) {
@@ -656,7 +692,7 @@ $(document).ready(function () {
                     console.log(sale_stage_change_id)
                     $.ajax({
                         url: "index.php?module=Leads&entryPoint=lead_status",
-                        data: { id: sale_stage_change_id, lead_status_id: lead_status_id },
+                        data: { id: sale_stage_change_id, lead_status_id: lead_status_id, created_by: created_by },
                         success: function (data) {
                             console.log(data);
                             //$("#lead_status").html(data);
@@ -1104,7 +1140,7 @@ $(document).ready(function () {
 
                 $.ajax({
                     url: "index.php?module=Leads&entryPoint=lead_status",
-                    data: { id: sale_stage_id, lead_status_id: lead_status_id },
+                    data: { id: sale_stage_id, lead_status_id: lead_status_id, created_by: created_by },
                     success: function (data) {
                         console.log(data);
                         $('[name = "lead_status"]').map(function (idx) {
@@ -1125,7 +1161,7 @@ $(document).ready(function () {
                             console.log(sale_stage_change_id)
                             $.ajax({
                                 url: "index.php?module=Leads&entryPoint=lead_status",
-                                data: { id: sale_stage_change_id, lead_status_id: lead_status_id },
+                                data: { id: sale_stage_change_id, lead_status_id: lead_status_id, created_by: created_by },
                                 success: function (data) {
                                     console.log(data);
                                     //$("#lead_status").html(data);
@@ -1257,7 +1293,7 @@ $(document).ready(function () {
 
                 $.ajax({
                     url: "index.php?module=Leads&entryPoint=lead_status",
-                    data: { id: sale_stage_id, lead_status_id: lead_status_id },
+                    data: { id: sale_stage_id, lead_status_id: lead_status_id, created_by: created_by },
                     success: function (data) {
                         console.log(data);
                         $('[name="lead_status"]').map(function (idx) {
@@ -1278,7 +1314,7 @@ $(document).ready(function () {
                     })
                     $.ajax({
                         url: "index.php?module=Leads&entryPoint=lead_status",
-                        data: { id: sale_stage_change_id, lead_status_id: lead_status_id },
+                        data: { id: sale_stage_change_id, lead_status_id: lead_status_id, created_by: created_by },
                         success: function (data) {
                             console.log(data);
                             $('[name="lead_status"]').map(function (idx) {
@@ -1338,7 +1374,7 @@ $(document).ready(function () {
 
         $.ajax({
             url: "index.php?module=Leads&entryPoint=lead_status",
-            data: { id: sale_stage_id, lead_status_id: lead_status_id },
+            data: { id: sale_stage_id, lead_status_id: lead_status_id, created_by: created_by },
             success: function (data) {
                 console.log(data);
                 $('[name="lead_status"]').map(function (idx) {
@@ -1367,7 +1403,7 @@ $(document).ready(function () {
             var sale_stage_change_id = $("option:selected", this).val();
             $.ajax({
                 url: "index.php?module=Leads&entryPoint=lead_status",
-                data: { id: sale_stage_change_id, lead_status_id: lead_status_id },
+                data: { id: sale_stage_change_id, lead_status_id: lead_status_id, created_by: created_by },
                 success: function (data) {
                     console.log(data);
                     $("#lead_status").html(data);
@@ -1447,6 +1483,13 @@ function handle_check_record_in_day() {
     var start_date = year + "-" + month + "-" + day + " 00:00:00";
     var end_date = year + "-" + month + "-" + day + " 23:59:59"
     var phone = $('#phone_number_primary').val();
+
+    if (phone.length > 10 && phone.slice(0, 2) == '84') {
+        phone = '0' + phone.slice(2);
+    }
+    if (phone.length < 10) {
+        phone = '0' + phone;
+    }
 
 
 
@@ -1663,33 +1706,39 @@ function check_cmdd() {
     var res = true;
     var citizen_identification = $("#citizen_identification").val();
     var lead_id = $("#lead_id").val();
-    if (lead_id.length === 0) {
-        $.ajax({
-            url: "index.php?module=Leads&entryPoint=get_cmdd",
-            data: { cmdd: citizen_identification },
-            success: function (data) {
-                console.log(data);
-                if (data == false) {
-                    alert("Số CMNN bị trùng! Vui lòng nhập lại!")
-                    res = false
-                }
-            },
-            async: false
-        });
+    if (citizen_identification == null || citizen_identification == "" || citizen_identification.length == 0) {
+        alert("Vui lòng nhập CCCD!")
+        res = false
     }
     else {
-        $.ajax({
-            url: "index.php?module=Leads&entryPoint=get_cmdd",
-            data: { id: lead_id, cmdd: citizen_identification },
-            success: function (data) {
-                console.log(data);
-                if (data == false) {
-                    alert("Số CMNN bị trùng! Vui lòng nhập lại!")
-                    res = false
-                }
-            },
-            async: false
-        });
+        if (lead_id.length === 0) {
+            $.ajax({
+                url: "index.php?module=Leads&entryPoint=get_cmdd",
+                data: { cmdd: citizen_identification },
+                success: function (data) {
+                    console.log(data);
+                    if (data == false) {
+                        alert("Số CMNN bị trùng! Vui lòng nhập lại!")
+                        res = false
+                    }
+                },
+                async: false
+            });
+        }
+        else {
+            $.ajax({
+                url: "index.php?module=Leads&entryPoint=get_cmdd",
+                data: { id: lead_id, cmdd: citizen_identification },
+                success: function (data) {
+                    console.log(data);
+                    if (data == false) {
+                        alert("Số CMNN bị trùng! Vui lòng nhập lại!")
+                        res = false
+                    }
+                },
+                async: false
+            });
+        }
     }
     return res;
 }
@@ -1697,44 +1746,152 @@ function check_cmdd() {
 
 function checkCardNumber() {
     let res = []
-    $('.card-number-input').map(function (idx) {
-        res.push($(this).val())   
+    let arr = []
+    let checked = false;
+    $('.form-control.card-number-input').map(function (idx) {
+        console.log($(this).val())
+        if ($(this).val() != null && $(this).val() != "") {
+            checked = true;
+        }  
+        else {
+            arr.push($(this).val());
+        }
     })
 
-    return new Set(res).size == res.length
+    console.log(checked)
+
+    if (checked == true) {
+        arr.map(function (idx) {
+            res.push($(this).val())      
+        })
+
+        console.log(new Set(res))
+        console.log(res)
+        return new Set(arr).size == res.length
+    }
+    else {
+        return true;
+    }
 }
 
 function check_phone_number() {
     var res = true;
-    var phone_number_primary = $("#phone_number_primary").val();
-    var lead_id = $("#lead_id").val();
-    if (lead_id.length === 0) {
-        $.ajax({
-            url: "index.php?module=Leads&entryPoint=get_phone_number",
-            data: { phone_number: phone_number_primary },
-            success: function (data) {
-                console.log(data);
-                if (data == false) {
-                    alert("Số điện thoại bị trùng! Vui lòng nhập lại!")
-                    res = false
-                }
-            },
-            async: false
-        });
+    var phone1 = $("#phone_number_primary").val();
+    var phone = []
+    phone.push(phone1)
+    var phone2 = 0;
+    var phone3 = 0;
+    if (phone1.length > 10 && phone1.slice(0, 2) == '84') {
+        phone2 = '0' + phone1.slice(2);
+        phone3 = phone1.slice(2);
+        phone.push(phone2)
+        phone.push(phone3)
+    }
+    else if (phone1.length < 10) {
+        phone3 = '0' + phone1;
+        phone2 = '84' + phone1;
+        phone.push(phone3)
+        phone.push(phone2)
     }
     else {
+        phone2 = '0' + phone1.slice(1);
+        phone3 = '84' + phone1.slice(1);
+        phone.push(phone3)
+        phone.push(phone2)
+    }
+
+    console.log(phone)
+
+    
+
+    var lead_id = $("#lead_id").val();
+    if (lead_id.length === 0) {
+                $.ajax({
+                    url: "index.php?module=Leads&entryPoint=get_phone_number",
+                    data: { phone_number: phone[0] },
+                    success: function (data) {
+                        console.log(data);
+                        if (data == false) {
+                            alert("Số điện thoại bị trùng! Vui lòng nhập lại!")
+                            res = false
+                        }
+                        else {
+                            $.ajax({
+                                url: "index.php?module=Leads&entryPoint=get_phone_number",
+                                data: { phone_number: phone[1] },
+                                success: function (data) {
+                                    console.log(data);
+                                    if (data == false) {
+                                        alert("Số điện thoại bị trùng! Vui lòng nhập lại!")
+                                        res = false
+                                    }
+                                    else {
+                                        $.ajax({
+                                            url: "index.php?module=Leads&entryPoint=get_phone_number",
+                                            data: { phone_number: phone[2] },
+                                            success: function (data) {
+                                                console.log(data);
+                                                if (data == false) {
+                                                    alert("Số điện thoại bị trùng! Vui lòng nhập lại!")
+                                                    res = false
+                                                }
+                                            },
+                                            async: false
+                                        });
+                                    }
+                                },
+                                async: false
+                            });
+                        }
+                    },
+                    async: false
+                });
+
+    }
+    else {
+        
+
         $.ajax({
             url: "index.php?module=Leads&entryPoint=get_phone_number",
-            data: { id: lead_id, phone_number: phone_number_primaryx },
+            data: { id: lead_id, phone_number: phone[0] },
             success: function (data) {
                 console.log(data);
                 if (data == false) {
                     alert("Số điện thoại bị trùng! Vui lòng nhập lại!")
                     res = false
                 }
+                else {
+                    $.ajax({
+                        url: "index.php?module=Leads&entryPoint=get_phone_number",
+                        data: { id: lead_id, phone_number: phone[1] },
+                        success: function (data) {
+                            console.log(data);
+                            if (data == false) {
+                                alert("Số điện thoại bị trùng! Vui lòng nhập lại!")
+                                res = false
+                            }
+                            else {
+                                $.ajax({
+                                    url: "index.php?module=Leads&entryPoint=get_phone_number",
+                                    data: { id: lead_id, phone_number: phone[2] },
+                                    success: function (data) {
+                                        console.log(data);
+                                        if (data == false) {
+                                            alert("Số điện thoại bị trùng! Vui lòng nhập lại!")
+                                            res = false
+                                        }
+                                    },
+                                    async: false
+                                });
+                            }
+                        },
+                        async: false
+                    });
+                }
             },
             async: false
         });
+        
     }
     return res;
 }
@@ -1818,7 +1975,7 @@ function check_form(form_name) {
     }
 
     if (checkCardNumber() == false) {
-        alert("Số chứng minh thư bị trùng! Vui lòng nhập lại!")
+        alert("Số thẻ bị trùng! Vui lòng nhập lại!")
         return false;
     }
 

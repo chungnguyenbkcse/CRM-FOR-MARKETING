@@ -20,6 +20,7 @@ $viewdefs['Leads'] =
             8 => '<input type="hidden" name="phone_number_primaryx" id = "phone_number_primaryx" value="{$bean->phone_number_primary}">',
             9 => '<input type="hidden" name="sale_stages_val" id = "sale_stages_val" value="{$bean->sale_stage}">',
             10 => '<input type="hidden" name="ho_name_val" id = "ho_name_val" value="{$bean->ho_name}">',
+            11 => '<input type="hidden" name="created_by_val" id = "created_by_val" value="{$bean->created_by}">',
           ),
           'buttons' =>
           array(

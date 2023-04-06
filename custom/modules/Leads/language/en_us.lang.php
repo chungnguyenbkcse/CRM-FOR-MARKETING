@@ -51,4 +51,6 @@ $mod_strings = array(
     'LBL_CARD_NUMBER' => 'Card number',
     'LBL_DATE_MODIFIED' => 'Date modified',
     'LBL_DAY_RO_MODIFIED_SALE_STAGE' => 'Day RO modified sale stage',
+    'LBL_EXPECTED_FEE' => 'Expected fee',
+    'LBL_EXPECTED_TRANSACTION_AMOUNT' => 'Expected transaction amount',
 );

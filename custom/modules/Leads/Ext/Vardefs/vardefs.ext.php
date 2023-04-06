@@ -207,6 +207,7 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'name' => 'fullname',
                 'vname' => 'LBL_FULLNAME',
                 'inline_edit' =>false,
+                'basic_search' => true,
                 'type' => 'varchar',
                 'len' => '255',
                 'comment' => 'Account name for lead',

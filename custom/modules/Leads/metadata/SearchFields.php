@@ -1,5 +1,5 @@
 <?php
-// created: 2022-12-09 14:07:49
+// created: 2023-03-30 11:09:47
 $searchFields['Leads'] = array (
   'first_name' => 
   array (
@@ -9,13 +9,16 @@ $searchFields['Leads'] = array (
   array (
     'query_type' => 'default',
   ),
+  'fullname' => 
+  array (
+    'query_type' => 'default',
+  ),
   'search_name' => 
   array (
     'query_type' => 'default',
     'db_field' => 
     array (
-      0 => 'first_name',
-      1 => 'last_name',
+      0 => 'fullname',
     ),
     'force_unifiedsearch' => true,
   ),
@@ -54,7 +57,10 @@ $searchFields['Leads'] = array (
   ),
   'email' => 
   array (
-    'db_field' => ['id'],
+    'db_field' => 
+    array (
+      0 => 'id',
+    ),
     'operator' => 'subquery',
     'query_type' => 'format',
     'subquery' => 'SELECT eabr.lead_id FROM relationship_card_lead eabr WHERE eabr.card_number = \'{0}\'',
@@ -213,19 +219,3 @@ $searchFields['Leads'] = array (
     'is_date_field' => true,
   ),
 );
-
-
-function composeQuery($searchTag) {
-  return "SELECT  leads.id , leads.assigned_user_id , 
-                  leads.facebook_or_zalo_name , leads.fullname , 
-                  leads.account_name , leads.account_id  , 
-                  jt0.user_name assigned_user_name , jt0.created_by assigned_user_name_owner  , 
-                  'Users' assigned_user_name_mod, leads.date_entered , 
-                  leads.created_by  FROM leads  
-                  LEFT JOIN leads_cstm ON leads.id = leads_cstm.id_c   
-                  LEFT JOIN  users jt0 ON leads.assigned_user_id=jt0.id AND jt0.deleted=0 AND jt0.deleted=0 
-                  WHERE (
-                    leads.id IN (SELECT eabr.lead_id FROM relationship_card_lead eabr WHERE eabr.card_number = '{$searchTag}')  
-                    AND leads.deleted=0 ORDER BY leads.facebook_or_zalo_name ASC LIMIT 0,21)
-        ";
-}

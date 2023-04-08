@@ -47,6 +47,14 @@ array (
       'card_bark_type' => 
       array (
         'name' => 'card_bark_type',
+        'type' => 'multienum',
+        'default' => true,
+        'width' => '10%',
+      ),
+      'owned_branch' => 
+      array (
+        'name' => 'owned_branch',
+        'type' => 'multienum',
         'default' => true,
         'width' => '10%',
       ),

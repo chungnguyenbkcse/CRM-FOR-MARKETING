@@ -602,7 +602,7 @@ $(document).ready(function () {
         if ($('#lead_id').val().length > 0) {
             $("input").map(function (idx) {
                 console.log(idx)
-                if (idx <= 62 && idx >= 57) {
+                if (idx <= 64 && idx >= 57) {
                     return $(this).attr("disabled", true);
                 }
                 return idx++;

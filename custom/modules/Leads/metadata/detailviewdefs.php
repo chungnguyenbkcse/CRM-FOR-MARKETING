@@ -202,8 +202,8 @@ $viewdefs['Leads'] =
           ),
           8 =>
           array(
-            0 => "note",
-            1 => '',
+            0 => "ctv",
+            1 => 'note',
           ),
         ),
         'LBL_CONTACT_INFORMATION_RO' =>

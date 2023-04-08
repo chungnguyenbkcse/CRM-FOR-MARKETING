@@ -280,6 +280,11 @@ class SavedSearch extends SugarBean
                     $query_check_for_role .= " AND card_bark_type IN ({$card_bark_type}) ";
                 }
 
+                if (!empty($contents['owned_branch_advanced'])) {
+                    $owned_branch = "('" . implode("', '", $contents['owned_branch_advanced']) . "')";
+                    $query_check_for_role .= " AND owned_branch IN ({$owned_branch}) ";
+                }
+
                 if (!empty($contents['bank_advanced'])) {
                     $bank = implode(",", $contents['bank_advanced']);
                     $query_check_for_role .= " AND bank IN ({$bank}) ";

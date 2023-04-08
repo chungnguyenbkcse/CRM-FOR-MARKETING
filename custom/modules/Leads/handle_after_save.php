@@ -177,7 +177,27 @@ class Handle
                         $query_ro_1 = "SELECT * FROM users WHERE deleted = 0 AND id = '{$bean->ro_name}'";
                         $result_ro_1 = $GLOBALS['db']->query($query_ro_1);
                         while ($rows_ro_1 = $GLOBALS['db']->fetchByAssoc($result_ro_1)) {
-                            $telegram->sendMessage('-727735502', 'RO ' . $rows_ro_1['last_name'] . ' có khách hàng lúc ' . str_replace(array('T', '+0700'), ' ', $now->format(\DateTime::ISO8601)) . ' !');
+                            $data_source_id = $bean->data_sources;
+                            $data_sources = array(
+                                '' => '',
+                                '1' => 'FACEBOOK ADS',
+                                '2' => 'GOOGLE ADS',
+                                '3' => 'Facebook group',
+                                '4' => 'Zalo group',
+                                '5' => 'MGM',
+                                '6' => 'Facebook Fanpage',
+                                '7' => 'Data Center',
+                                '8' => 'Facebook UID',
+                                '9' => 'inactive',
+                                '10' => 'old MKT source',
+                                '11' => 'Partner',
+                            );
+                
+                            foreach ($data_sources as $key => $data) {
+                                if ($key == $data_source_id) {
+                                    $telegram->sendMessage('-727735502', 'RO ' . $rows_ro_1['last_name'] . ' có khách hàng lúc ' . str_replace(array('T', '+0700'), ' ', $now->format(\DateTime::ISO8601)) . ' với nguồn data là: ' . $data . ' !');
+                                }
+                            }
                         }
                     }
                 }

@@ -908,6 +908,17 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'audited' => true,
                 'comment' => 'The career of the contact'
             ), 
+        'ctv' =>
+            array(
+                'name' => 'ctv',
+                'vname' => 'LBL_CTV',
+                'massupdate' => false,
+                'type' => 'varchar',
+                'inline_edit' =>false,
+                'len' => '255',
+                'audited' => true,
+                'comment' => 'The career of the contact'
+            ), 
         'service' => 
             array(
                 'name' => 'service',
@@ -923,6 +934,17 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
             array(
                 'name' => 'fee',
                 'vname' => 'LBL_FEE',
+                'inline_edit' =>false,
+                'massupdate' => false,
+                'type' => 'double',
+                'len' => '255',
+                'audited' => true,
+                'comment' => 'The fee of the contact'
+            ),
+        'expected_fee' =>
+            array(
+                'name' => 'expected_fee',
+                'vname' => 'LBL_EXPECTED_FEE',
                 'inline_edit' =>false,
                 'massupdate' => false,
                 'type' => 'double',
@@ -977,6 +999,17 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
             array(
                 'name' => 'transaction_amount',
                 'vname' => 'LBL_TRANSACTION_AMOUNT',
+                'massupdate' => false,
+                'type' => 'double',
+                'inline_edit' =>false,
+                'audited' => true,
+                'len' => '255',
+                'comment' => 'The real fee of the contact'
+            ), 
+        'expected_transaction_amount' => 
+            array(
+                'name' => 'expected_transaction_amount',
+                'vname' => 'LBL_EXPECTED_TRANSACTION_AMOUNT',
                 'massupdate' => false,
                 'type' => 'double',
                 'inline_edit' =>false,

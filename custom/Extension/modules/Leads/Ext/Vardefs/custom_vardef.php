@@ -885,6 +885,17 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'audited' => true,
                 'comment' => 'The career of the contact'
             ), 
+        'ctv' =>
+            array(
+                'name' => 'ctv',
+                'vname' => 'LBL_CTV',
+                'massupdate' => false,
+                'type' => 'varchar',
+                'inline_edit' =>false,
+                'len' => '255',
+                'audited' => true,
+                'comment' => 'The career of the contact'
+            ), 
         'service' => 
             array(
                 'name' => 'service',

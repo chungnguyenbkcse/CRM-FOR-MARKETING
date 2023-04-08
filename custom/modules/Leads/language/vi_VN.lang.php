@@ -53,4 +53,5 @@ $mod_strings = array(
     'LBL_DAY_RO_MODIFIED_SALE_STAGE' => 'Ngày RO tác động',
     'LBL_EXPECTED_FEE' => 'Phí mong đợi',
     'LBL_EXPECTED_TRANSACTION_AMOUNT' => 'Tổng tiền GD mong đợi',
+    'LBL_CTV' => 'CTV',
 );

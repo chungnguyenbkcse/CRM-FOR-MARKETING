@@ -53,4 +53,5 @@ $mod_strings = array(
     'LBL_DAY_RO_MODIFIED_SALE_STAGE' => 'Day RO modified sale stage',
     'LBL_EXPECTED_FEE' => 'Expected fee',
     'LBL_EXPECTED_TRANSACTION_AMOUNT' => 'Expected transaction amount',
+    'LBL_CTV' => 'CTV',
 );

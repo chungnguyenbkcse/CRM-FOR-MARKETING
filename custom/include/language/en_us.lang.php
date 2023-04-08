@@ -178,6 +178,7 @@ $app_list_strings = array(
         '9' => 'inactive',
         '10' => 'old MKT source',
         '11' => 'Partner',
+        '12' => 'TELE',
     ),
     'ro_name_dom' => array(
         '' => ''

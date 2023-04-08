@@ -160,7 +160,11 @@ $viewdefs['Leads'] =
           7 =>
           array(
             0 => "contact_date",
-            1 => "note",
+            1 => "ctv",
+          ),
+          8 =>
+          array(
+            0 => "note",
           )
         ),
         'LBL_EDIT_ROLE_RO' =>

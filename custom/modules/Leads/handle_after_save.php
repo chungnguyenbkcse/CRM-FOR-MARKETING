@@ -191,6 +191,7 @@ class Handle
                                 '9' => 'inactive',
                                 '10' => 'old MKT source',
                                 '11' => 'Partner',
+                                '12' => 'TELE',
                             );
                 
                             foreach ($data_sources as $key => $data) {

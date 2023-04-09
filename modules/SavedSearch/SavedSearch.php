@@ -83,6 +83,49 @@ class SavedSearch extends SugarBean
         }
     }
 
+
+    public function userForRole($role)
+    {
+        $list = array();
+        $query_securitygroups = "SELECT * FROM securitygroups WHERE deleted = 0";
+        $result_securitygroups = $GLOBALS['db']->query($query_securitygroups);
+        while($rows_securitygroups = $GLOBALS['db']->fetchByAssoc($result_securitygroups)){
+            $is_group = false;
+            $groupSecurityId = $rows_securitygroups['id'];
+            $query_securitygroups_acl_roles = "SELECT role_id FROM securitygroups_acl_roles WHERE deleted = 0 AND securitygroup_id = '{$groupSecurityId}'";
+            $result_securitygroups_acl_roles = $GLOBALS['db']->query($query_securitygroups_acl_roles);
+            while ($rows_securitygroups_acl_roles = $GLOBALS['db']->fetchByAssoc($result_securitygroups_acl_roles)) {
+                $role_id = $rows_securitygroups_acl_roles['role_id'];
+                $query_acl_roles_actions = "SELECT action_id, access_override  FROM acl_roles_actions WHERE deleted = 0 AND role_id = '{$role_id}'";
+                $result_acl_roles_actions = $GLOBALS['db']->query($query_acl_roles_actions);
+                while ($rows_acl_roles_actions = $GLOBALS['db']->fetchByAssoc($result_acl_roles_actions)) {
+                    $action_id = $rows_acl_roles_actions['action_id'];
+                    $query_get_name_action = "SELECT name, category FROM acl_actions WHERE deleted = 0 AND id = '{$action_id}'";
+                    $result_get_name_action = $GLOBALS['db']->query($query_get_name_action);
+                    while ($rows_get_name_action = $GLOBALS['db']->fetchByAssoc($result_get_name_action)) {
+                        if ($rows_get_name_action['name'] == $role && $rows_get_name_action['category'] == 'Leads') {
+                            if ($rows_acl_roles_actions['access_override'] == 89) {
+                                $is_group = true;
+                            }
+                        }
+
+                    }
+                }
+            }
+
+            if ($is_group == true) {
+                $query_users = "SELECT * FROM users WHERE deleted = '0' AND id IN (SELECT user_id FROM securitygroups_users WHERE deleted = 0 AND securitygroup_id = '{$groupSecurityId}')";
+                $result_users = $GLOBALS['db']->query($query_users);
+                while($row_users = $GLOBALS['db']->fetchByAssoc($result_users)){
+                    $list[] = $row_users['id'];
+                }
+            }
+
+        }
+
+        return $list;
+    }
+
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
@@ -229,10 +272,11 @@ class SavedSearch extends SugarBean
         if ($module == 'Leads') {
             if ($_COOKIE['role']) {
                 $role = $_COOKIE['role'];
-                if ($role = "SUPER_MKT") {
+                if ($role == "SUPER_MKT") {
                     $query = 'SELECT id, name, contents FROM saved_search
                     WHERE
                       deleted = \'0\' AND
+                      assigned_user_id = \'' . $current_user->id . '\' AND
                       search_module =  \'' . $module . '\'
                     ORDER BY name';
                     $result = $db->query($query, true, "Error filling in saved search list: ");
@@ -246,10 +290,18 @@ class SavedSearch extends SugarBean
                     $result = $db->query($query, true, "Error filling in saved search list: ");
                 }
                 else {
+                    $userSuperMKTs = $this->userForRole('super_mkt');
+                    $listUsers = "('" . implode("', '", $userSuperMKTs) . "')";
+                    $GLOBALS['log']->fatal("THIS"); 
+                    $GLOBALS['log']->fatal($listUsers); 
+                    $GLOBALS['log']->fatal("END"); 
                     $query = 'SELECT id, name, contents FROM saved_search
                     WHERE
                       deleted = \'0\' AND
-                      assigned_user_id = \'' . $current_user->id . '\' AND
+                      (
+                        assigned_user_id = \'' . $current_user->id . '\' OR
+                        assigned_user_id IN (' . $listUsers .')
+                      ) AND
                       search_module =  \'' . $module . '\'
                     ORDER BY name';
                     $result = $db->query($query, true, "Error filling in saved search list: ");

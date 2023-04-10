@@ -745,6 +745,7 @@ $app_list_strings = array(
     ),
 
     'ctv_dom' => array(
+        '' => 'Choose',
         '1' => 'Cao Thị Thuỳ Vân',
         '2' => 'Nguyễn Thị Thu Hương',
         '3' => 'Từ Hoàng Anh Tuấn',

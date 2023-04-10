@@ -187,13 +187,17 @@ $app_list_strings = array(
         '' => '',
     ),
 
+    'ctv_dom' => array(
+        '1' => 'Cao Thị Thuỳ Vân',
+        '2' => 'Nguyễn Thị Thu Hương',
+        '3' => 'Từ Hoàng Anh Tuấn',
+        '4' => 'Nguyễn Thị Bích',
+        '5' => 'Nguyễn Thị Phương',
+    ),
+
     'receiving_branch_dom' => array(
         '' => '',
-        '1' => 'NTT',
-        '2' => 'District 10',
-        '3' => 'Tân Bình',
         '4' => 'TELE',
-        '5' => 'DL TB',
         '6' => 'Đồng nai',
         '7' => 'Song Thao',
         '8' => 'Nha trang',

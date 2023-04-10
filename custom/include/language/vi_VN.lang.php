@@ -668,11 +668,7 @@ $app_list_strings = array(
 
     'receiving_branch_dom' => array(
         '' => '',
-        '1' => 'NTT',
-        '2' => 'Quận 10',
-        '3' => 'Tân Bình',
         '4' => 'TELE',
-        '5' => 'DL TB',
         '6' => 'Đồng nai',
         '7' => 'Song Thao',
         '8' => 'Nha trang',
@@ -746,6 +742,14 @@ $app_list_strings = array(
         '43' => 'Timo',
         '44' => 'SHB',
         '45' => 'Public Bank Vietnam',
+    ),
+
+    'ctv_dom' => array(
+        '1' => 'Cao Thị Thuỳ Vân',
+        '2' => 'Nguyễn Thị Thu Hương',
+        '3' => 'Từ Hoàng Anh Tuấn',
+        '4' => 'Nguyễn Thị Bích',
+        '5' => 'Nguyễn Thị Phương',
     ),
 
     'sale_stage_dom' => array (

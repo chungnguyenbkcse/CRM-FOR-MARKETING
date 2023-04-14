@@ -123,7 +123,22 @@
             </div>
 
             {if $ROLE == 'RO'}
-                
+                    <div class="hideUnusedSavedSearchElements check-edit" scope='row' width='10%'
+            nowrap="nowrap"{if !$savedSearchData.selected} style="display: none;"{/if}>
+           <label>{sugar_translate label='LBL_MODIFY_CURRENT_FILTER' module='SavedSearch'}: <span
+                       id='curr_search_name'>"{$savedSearchData.options[$savedSearchData.selected]}"</span></label>
+       </div>
+       <div class="hideUnusedSavedSearchElements check-edit" width='30%'
+            nowrap{if !$savedSearchData.selected} style="display: none;"{/if}>
+           <input class='button check-edit'
+                  onclick='SUGAR.savedViews.setChooser(); return SUGAR.savedViews.saved_search_action("update")'
+                  value='{$APP.LBL_UPDATE}' title='{$APP.LBL_UPDATE}' name='ss_update' id='ss_update'
+                  type='button'>
+           <input class='button check-edit'
+                  onclick='return SUGAR.savedViews.saved_search_action("delete", "{sugar_translate label='LBL_DELETE_CONFIRM' module='SavedSearch'}")'
+                  value='{$APP.LBL_DELETE}' title='{$APP.LBL_DELETE}' name='ss_delete' id='ss_delete'
+                  type='button'>
+       </div>
             {else}
                 <div class="hideUnusedSavedSearchElements" scope='row' width='10%'
             nowrap="nowrap"{if !$savedSearchData.selected} style="display: none;"{/if}>
@@ -209,6 +224,18 @@
             //alert( "This will be displayed only once." );
             SUGAR.searchForm.searchFormSelect('{/literal}{$module}{literal}|basic_search', '{/literal}{$module}{literal}|advanced_search');
         });
+
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+
+        var check_edit = getCookie("check_edit");
+
+        if (check_edit == "false") {
+            $(".check-edit").removeClass().remove();
+        }
     });
     {/literal}
 </script>

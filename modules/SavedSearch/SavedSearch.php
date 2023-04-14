@@ -292,9 +292,6 @@ class SavedSearch extends SugarBean
                 else {
                     $userSuperMKTs = $this->userForRole('super_mkt');
                     $listUsers = "('" . implode("', '", $userSuperMKTs) . "')";
-                    $GLOBALS['log']->fatal("THIS"); 
-                    $GLOBALS['log']->fatal($listUsers); 
-                    $GLOBALS['log']->fatal("END"); 
                     $query = 'SELECT id, name, contents FROM saved_search
                     WHERE
                       deleted = \'0\' AND
@@ -316,7 +313,6 @@ class SavedSearch extends SugarBean
 
             while ($row = $db->fetchByAssoc($result, -1, false)) {
                 $contents = unserialize(base64_decode($row['contents']));
-                $GLOBALS['log']->fatal($contents);
                 $query_check_for_role = "SELECT COUNT(*) AS total FROM leads WHERE deleted = 0 ";
                 if (!empty($contents['citizen_identification_advanced'])) {
                     $citizen_identification = $contents['citizen_identification_advanced'];
@@ -448,12 +444,10 @@ class SavedSearch extends SugarBean
                     }
 
 
-                    $GLOBALS['log']->fatal("This query: " . $query_check_for_role);
 
                     $result_check_for_role = $GLOBALS['db']->query($query_check_for_role);
                     $rows_check_for_role = $GLOBALS['db']->fetchByAssoc($result_check_for_role);
                     $total = $rows_check_for_role['total'];
-                    $GLOBALS['log']->fatal("total: " . $total);
                     if ($total > 0) {
                         $savedSearchData['hasOptions'] = true;
                         $savedSearchData['options'][$row['id']] = $savedSearchArray[$row['id']] = htmlspecialchars($row['name'], ENT_QUOTES);

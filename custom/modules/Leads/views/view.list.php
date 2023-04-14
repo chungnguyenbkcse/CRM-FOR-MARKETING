@@ -71,8 +71,25 @@
             if (empty($_REQUEST['search_form_only']) || $_REQUEST['search_form_only'] == false) {
                 $this->lv->ss->assign("SEARCH", true);
                 $this->lv->ss->assign('savedSearchData', $this->searchForm->getSavedSearchData());
-                //$GLOBALS['log']->fatal($this->searchForm->getSavedSearchData()); 
-                $GLOBALS['log']->fatal($this->where);
+                $saved_search_id = $this->searchForm->getSavedSearchData()["selected"]; 
+                $check_show_edit = "false";
+                // Truyền biến id vào file tpl
+                if ($current_user->id == "54e005cb-332b-9c26-c173-6406e116558f") {
+                    $query_saved_search = "SELECT * FROM saved_search WHERE id = '{$saved_search_id}' AND deleted = 0";
+                    $result_saved_search = $GLOBALS['db']->query($query_saved_search);
+                    while($rows = $GLOBALS['db']->fetchByAssoc($result_saved_search)){
+                        if ($rows["assigned_user_id"] == "a5a5f967-0e9e-5d0c-6a51-63fdc413bf45" || $rows["assigned_user_id"] == "9232e852-23f5-3a3a-db34-63fdc497d906") {
+                            
+                            $check_show_edit = "true";
+                            
+                        }
+                    }
+                }
+
+                setcookie("check_edit", "", time() - 3600);
+                setcookie("check_edit", $check_show_edit, time() + (86400 * 30), "/");
+                
+                
                 $this->lv->setup($this->seed, 'include/ListView/ListViewGeneric.tpl', $this->where, $this->params);
                 $savedSearchName = empty($_REQUEST['saved_search_select_name']) ? '' : (' - ' . $_REQUEST['saved_search_select_name']);
                 echo $this->lv->display();

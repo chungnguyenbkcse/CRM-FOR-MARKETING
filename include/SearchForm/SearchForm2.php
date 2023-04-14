@@ -80,6 +80,7 @@ class SearchForm
     public $showSavedSearchesOptions = true;
 
     public $displayType = 'searchView';
+    
 
     /**
      * @var array
@@ -121,6 +122,7 @@ class SearchForm
      */
     public function getSavedSearchData()
     {
+        
         return $this->savedSearchData;
     }
 
@@ -173,6 +175,7 @@ class SearchForm
     public function display($header = true)
     {
         global $theme, $timedate, $current_user, $sugar_config;
+        
         $header_txt = '';
         $footer_txt = '';
         $return_txt = '';
@@ -240,11 +243,16 @@ class SearchForm
                     if ($_COOKIE['role']){
                         $role = $_COOKIE['role'];
                         $this->th->ss->assign('ROLE', $role);
+                        
+                        
                     }
                     else {
                         $this->th->ss->assign('ROLE', "");
                     }
+                    $this->th->ss->assign('USER_ID', $current_user->id);
+                
                     $this->th->ss->assign('DISPLAY_SAVED_SEARCH', $this->displaySavedSearch);
+                    
                     $this->th->ss->assign('SAVED_SEARCH', $this->displaySavedSearch($orderBySelectOnly));
                     //this determines whether the saved search subform should be rendered open or not
                     if (isset($_REQUEST['showSSDIV']) && $_REQUEST['showSSDIV'] == 'yes') {

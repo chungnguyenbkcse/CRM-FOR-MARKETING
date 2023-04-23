@@ -238,6 +238,8 @@ $app_list_strings = array(
             '30' => 'Ấn nhầm link',
             '31' => 'Nhầm số',
             '32' => 'Hủy thẻ',
+            '33' => 'Không hợp tác, tiêu cực',
+            '34' => 'Gửi thẻ',
     ),
     'lead_source_default_key' => 'Self Generated',
     'lead_source_dom' => array(
@@ -664,6 +666,9 @@ $app_list_strings = array(
         '9' => 'inactive',
         '10' => 'MKT cũ',
         '11' => 'Đối tác',
+        '12' => 'TELE',
+        '13' => 'old MKT ĐN',
+        '14' => 'inactive ĐN ',
     ),
 
     'receiving_branch_dom' => array(
@@ -742,6 +747,7 @@ $app_list_strings = array(
         '43' => 'Timo',
         '44' => 'SHB',
         '45' => 'Public Bank Vietnam',
+        '46' => 'Cake',
     ),
 
     'ctv_dom' => array(

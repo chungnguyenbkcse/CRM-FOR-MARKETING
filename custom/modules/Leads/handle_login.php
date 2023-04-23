@@ -90,7 +90,6 @@ class HandleDB
             setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
         }
 
-        $GLOBALS['log']->fatal($_COOKIE['role']);
 
         /* $query_1x = "SELECT COUNT(*) AS total  FROM relationship_sale_stage_lead_status";
         $result_1x = $GLOBALS['db']->query($query_1x);

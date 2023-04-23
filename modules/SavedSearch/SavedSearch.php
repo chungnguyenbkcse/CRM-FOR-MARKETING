@@ -282,12 +282,23 @@ class SavedSearch extends SugarBean
                     $result = $db->query($query, true, "Error filling in saved search list: ");
                 }
                 else if ($role == "RO") {
-                    $query = 'SELECT id, name, contents FROM saved_search
-                    WHERE
-                      deleted = \'0\' AND
-                      search_module =  \'' . $module . '\'
-                    ORDER BY name';
-                    $result = $db->query($query, true, "Error filling in saved search list: ");
+                    if ($current_user->id != "54e005cb-332b-9c26-c173-6406e116558f" &&  $current_user->id != "9232e852-23f5-3a3a-db34-63fdc497d906" && $current_user->id != "a5a5f967-0e9e-5d0c-6a51-63fdc413bf45") {
+                        $query = 'SELECT id, name, contents FROM saved_search
+                        WHERE
+                          deleted = \'0\' AND
+                          assigned_user_id != \'54e005cb-332b-9c26-c173-6406e116558f\' AND
+                          search_module =  \'' . $module . '\'
+                        ORDER BY name';
+                        $result = $db->query($query, true, "Error filling in saved search list: ");
+                    }
+                    else {
+                        $query = 'SELECT id, name, contents FROM saved_search
+                        WHERE
+                          deleted = \'0\' AND
+                          search_module =  \'' . $module . '\'
+                        ORDER BY name';
+                        $result = $db->query($query, true, "Error filling in saved search list: ");
+                    }           
                 }
                 else {
                     $userSuperMKTs = $this->userForRole('super_mkt');

@@ -354,7 +354,6 @@ class ViewList extends SugarView
             
             if (!empty($_SERVER['HTTP_REFERER']) && preg_match('/action=EditView/', $_SERVER['HTTP_REFERER'])) { // from EditView cancel
                 $this->searchForm->populateFromArray($this->storeQuery->query);
-                $GLOBALS['log']->fatal("WHERE_SEARCH: " );
                 $GLOBALS['log']->fatal($this->storeQuery->query);
             } else {
                 $this->searchForm->populateFromRequest();
@@ -370,7 +369,6 @@ class ViewList extends SugarView
 
                 if ($role == "RO"){
                     if ($user->id == '54e005cb-332b-9c26-c173-6406e116558f') {
-                        $GLOBALS['log']->fatal("D_TDT"); 
                         array_push($where_clauses, "    (ro_name  = '9232e852-23f5-3a3a-db34-63fdc497d906' AND data_sources = '9')     OR (ro_name  = '9232e852-23f5-3a3a-db34-63fdc497d906' AND data_sources = '10')     OR (ro_name  = 'a5a5f967-0e9e-5d0c-6a51-63fdc413bf45' AND data_sources = '10')     OR (ro_name  = 'a5a5f967-0e9e-5d0c-6a51-63fdc413bf45' AND data_sources = '9')     OR (leads.created_by = '1' AND leads.ro_name = 'a5a5f967-0e9e-5d0c-6a51-63fdc413bf45')     OR (leads.created_by = '1' AND leads.ro_name = '9232e852-23f5-3a3a-db34-63fdc497d906')     OR (leads.created_by = '1' AND leads.ro_name = '{$user->id}')     OR (leads.created_by = '9232e852-23f5-3a3a-db34-63fdc497d906')     OR (leads.created_by = 'a5a5f967-0e9e-5d0c-6a51-63fdc413bf45')     OR (leads.created_by = '{$user->id}')     OR (leads.modified_user_id = '9232e852-23f5-3a3a-db34-63fdc497d906' AND leads.ro_modified_sale_stage = true)      OR (leads.modified_user_id = 'a5a5f967-0e9e-5d0c-6a51-63fdc413bf45' AND leads.ro_modified_sale_stage = true)     OR (leads.modified_user_id = '{$user->id}' AND leads.ro_modified_sale_stage = true)      OR (leads.ro_name = '9232e852-23f5-3a3a-db34-63fdc497d906' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != '')     OR (leads.ro_name = 'a5a5f967-0e9e-5d0c-6a51-63fdc413bf45' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != '')     OR (leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != '')");      
                     }
                     else if ($user->id == 'a5a5f967-0e9e-5d0c-6a51-63fdc413bf45') {
@@ -394,8 +392,6 @@ class ViewList extends SugarView
                 
             }
 
-            $GLOBALS['log']->fatal("WHERE_SEARCH: " );
-            $GLOBALS['log']->fatal($where_clauses);
             if (count($where_clauses) > 0) {
                 $this->where = '(' . implode(' ) AND ( ', $where_clauses) . ')';
             }

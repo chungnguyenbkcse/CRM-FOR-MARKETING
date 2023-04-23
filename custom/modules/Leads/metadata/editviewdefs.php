@@ -21,6 +21,8 @@ $viewdefs['Leads'] =
             9 => '<input type="hidden" name="sale_stages_val" id = "sale_stages_val" value="{$bean->sale_stage}">',
             10 => '<input type="hidden" name="ho_name_val" id = "ho_name_val" value="{$bean->ho_name}">',
             11 => '<input type="hidden" name="created_by_val" id = "created_by_val" value="{$bean->created_by}">',
+            12 => '<input type="hidden" name="sale_stage_follow_level_val" id = "sale_stage_follow_level_val" value="{$bean->sale_stage_follow_level}">',
+            13 => '<input type="hidden" name="lead_status_follow_level_val" id = "lead_status_follow_level_val" value="{$bean->lead_status_follow_level_val}">',
           ),
           'buttons' =>
           array(
@@ -154,15 +156,20 @@ $viewdefs['Leads'] =
           ),
           6 =>
           array(
+            0 => 'sale_stage_follow_level',
+            1 => 'lead_status_follow_level',
+          ),
+          7 =>
+          array(
             0 => 'owned_branch',
             1 => 'ro_name',
           ),
-          7 =>
+          8 =>
           array(
             0 => "contact_date",
             1 => "ctv",
           ),
-          8 =>
+          9 =>
           array(
             0 => "note",
           )

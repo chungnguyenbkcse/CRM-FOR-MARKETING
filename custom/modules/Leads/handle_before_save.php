@@ -68,10 +68,8 @@ class Handle1
                 if ($role == "RO") {
                     $query_1 = "SELECT * FROM leads WHERE id = '{$bean->id}'";
                     $result_1 = $GLOBALS['db']->query($query_1);   
-                    $GLOBALS['log']->fatal("hello"); 
                     while($rows = $GLOBALS['db']->fetchByAssoc($result_1)){
                         if ($bean->sale_stage != $rows['sale_stage']) {
-                            $GLOBALS['log']->fatal("ro_modified_sale_stage"); 
                             $bean->day_ro_modified_sale_stage = $now->format(\DateTime::ISO8601);
                             /* $query_2 = "UPDATE leads SET ro_modified_sale_stage = '1'  WHERE id = '{$bean->id}' AND deleted = '0'";
                             $GLOBALS['db']->query($query_2); */
@@ -81,9 +79,6 @@ class Handle1
                 }
             }
         }
-
-        
-
         
     }
 }

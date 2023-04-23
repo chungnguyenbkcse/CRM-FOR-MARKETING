@@ -54,4 +54,6 @@ $mod_strings = array(
     'LBL_EXPECTED_FEE' => 'Phí mong đợi',
     'LBL_EXPECTED_TRANSACTION_AMOUNT' => 'Tổng tiền GD mong đợi',
     'LBL_CTV' => 'CTV',
+    'LBL_LEAD_STATUS_FOLLOW_LEVEL' => 'Lead status theo level',
+    'LBL_SALE_STAGE_FOLLOW_LEVEL' => 'Sale stage theo level',
 );

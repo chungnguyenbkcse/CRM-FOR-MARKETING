@@ -522,6 +522,14 @@ $(document).ready(function () {
             $(".fa-phone").remove();
             
 
+            $('.edit-view-row-item').each(function() {
+                console.log('hello')
+                if ($(this).find('div[field="sale_stage_follow_level"]').length != 0 || $(this).find('div[field="lead_status_follow_level"]').length != 0) {
+                    console.log('finded')
+                    $(this).remove();
+                }
+            });
+
             let context = $("#receiving_branch").html();
             $('[name="service"]').map(function (idx) {
                 $(this).change(function() {
@@ -602,7 +610,7 @@ $(document).ready(function () {
         if ($('#lead_id').val().length > 0) {
             $("input").map(function (idx) {
                 console.log(idx)
-                if (idx <= 64 && idx >= 57) {
+                if (idx <= 65 && idx >= 57) {
                     return $(this).attr("disabled", true);
                 }
                 return idx++;
@@ -612,7 +620,7 @@ $(document).ready(function () {
     
             $("select").map(function (idx) {
                 console.log(idx)
-                if (idx < 8) {
+                if (idx < 11) {
                     return $(this).attr("disabled", true);
                 }
                 return idx++;
@@ -829,6 +837,14 @@ $(document).ready(function () {
             $('[data-label="LBL_CONTACT_DATE"]').append("<span class='required'>*</span>")
             //$('[data-label="LBL_RO_NAME"]').append("<span class='required'>*</span>")
 
+            $('.edit-view-row-item').each(function() {
+                console.log('hello')
+                if ($(this).find('div[field="sale_stage_follow_level"]').length != 0 || $(this).find('div[field="lead_status_follow_level"]').length != 0) {
+                    console.log('finded')
+                    $(this).remove();
+                }
+            });
+
             $('[name="service"]').map(function (idx) {
                 if (idx == 0) {
                     var service = $(this).val();
@@ -907,6 +923,11 @@ $(document).ready(function () {
                     }
                 }
             })
+
+            
+
+            $('#sale_stage_follow_level').attr('disabled', true);
+            $('#lead_status_follow_level').attr('disabled', true);
             
 
             let context = $("#receiving_branch").html();

@@ -80,11 +80,8 @@ class Handle
         $response = $service->spreadsheets_values->get($spreadsheetId, $range);
         $values = $response->getValues();
         $key = $bean->phone_number_primary;
-        $GLOBALS['log']->fatal($values); 
         foreach ($values as $row => $data) {
-            $GLOBALS['log']->fatal($data[2]); 
             if ($data[3] == substr($key, 1)) {
-                $GLOBALS['log']->fatal("hello key"); 
                 $rangeToDelete = 'DATA CRM!A' . ($row + 1) . ':Z' . ($row + 1);
                 $clear = new \Google_Service_Sheets_ClearValuesRequest();
                 $service->spreadsheets_values->clear($spreadsheetId, $rangeToDelete, $clear);

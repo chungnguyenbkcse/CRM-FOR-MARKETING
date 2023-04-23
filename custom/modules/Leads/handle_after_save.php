@@ -85,6 +85,29 @@ class Handle
         
         } */
 
+        if ($bean->lead_status != null && $bean->lead_status != "" ) {
+            $level_lead_status = 0;
+            $level_lead_status_follow_level = 0;
+            $query_get_lead_status_follow_level = "SELECT * FROM relationship_level_lead_status WHERE lead_status_id = '{$bean->lead_status}'";
+            $result_get_lead_status_follow_level =  $GLOBALS['db']->query($query_get_lead_status_follow_level);   
+            while($row1s = $GLOBALS['db']->fetchByAssoc($result_get_lead_status_follow_level)){
+                $level_lead_status = intval($row1s['level']);
+            }
+
+            $query_get_lead_status_follow_level_1 = "SELECT * FROM relationship_level_lead_status WHERE lead_status_id = '{$bean->lead_status_follow_level}'";
+            $result_get_lead_status_follow_level_1 =  $GLOBALS['db']->query($query_get_lead_status_follow_level_1);   
+            while($row2s = $GLOBALS['db']->fetchByAssoc($result_get_lead_status_follow_level_1)){
+                $level_lead_status_follow_level = intval($row2s['level']);
+            }
+
+            if ($level_lead_status > $level_lead_status_follow_level) {
+                /* $bean->lead_status_follow_level = $bean->lead_status;
+                $bean->sale_stage_follow_level = $bean->sale_stage; */
+                $query_xxx = "UPDATE leads SET lead_status_follow_level = '{$bean->sale_stage_follow_level}' AND sale_stage_follow_level = '{$bean->sale_stage}'  WHERE id = '{$bean->id}' AND deleted = '0'";
+                $GLOBALS['db']->query($query_xxx);
+            }
+        }
+
 
         if ($bean->ro_name != "" && $bean->ro_name != null) {
 
@@ -555,7 +578,6 @@ class Handle
             $lst
         ];
 
-        $GLOBALS['log']->fatal($values);
 
         $body = new Google_Service_Sheets_ValueRange([
             'values' => $values
@@ -590,9 +612,7 @@ class Handle
             $key = $bean->phone_number_primary;
 
             foreach ($values as $row => $data) {
-                $GLOBALS['log']->fatal($data[2]);
                 if ($data[3] == substr($key, 1)) {
-                    $GLOBALS['log']->fatal("hello key");
                     $rangeToUpdate = 'DATA CRM!A' . ($row + 1) . ':Z' . ($row + 1);
                     $result = $service->spreadsheets_values->update($spreadsheetId, $rangeToUpdate, $body, $params);
                     printf("%d cells updated.\n", $result->getUpdatedCells());

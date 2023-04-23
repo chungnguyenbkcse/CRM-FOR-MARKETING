@@ -179,6 +179,8 @@ $app_list_strings = array(
         '10' => 'old MKT source',
         '11' => 'Partner',
         '12' => 'TELE',
+        '13' => 'old MKT ĐN',
+        '14' => 'inactive ĐN ',
     ),
     'ro_name_dom' => array(
         '' => ''
@@ -272,6 +274,7 @@ $app_list_strings = array(
         '43' => 'Timo',
         '44' => 'SHB',
         '45' => 'Public Bank Vietnam',
+        '46' => 'Cake',
     ),
 
     'sale_stage_dom' => array (
@@ -323,6 +326,8 @@ $app_list_strings = array(
         '30' => 'Press the wrong link',
         '31' => 'Wrong number',
         '32' => 'Cancel the card',
+        '33' => 'Uncooperative, negative',
+        '34' => 'Send card'
     ),
 
     //e.g. en español 'Apparel'=>'Ropa',

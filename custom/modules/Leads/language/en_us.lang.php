@@ -54,4 +54,6 @@ $mod_strings = array(
     'LBL_EXPECTED_FEE' => 'Expected fee',
     'LBL_EXPECTED_TRANSACTION_AMOUNT' => 'Expected transaction amount',
     'LBL_CTV' => 'CTV',
+    'LBL_LEAD_STATUS_FOLLOW_LEVEL' => 'Lead status follow level',
+    'LBL_SALE_STAGE_FOLLOW_LEVEL' => 'Sale stage follow level',
 );

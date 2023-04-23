@@ -1038,6 +1038,30 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
             'comment' => 'How did the lead status come about',
         ), 
 
+
+        'sale_stage_follow_level' => array(
+            'name' => 'sale_stage_follow_level',
+            'vname' => 'LBL_SALE_STAGE_FOLLOW_LEVEL',
+            'type' => 'enum',
+            'audited' => true,
+            'inline_edit' =>false,
+            'options' => 'sale_stage_dom',
+            'len' => '255',
+            'comment' => 'How did the sale stage come about',
+        ),
+
+
+        'lead_status_follow_level' => array(
+            'name' => 'lead_status_follow_level',
+            'vname' => 'LBL_LEAD_STATUS_FOLLOW_LEVEL',
+            'type' => 'enum',
+            'audited' => true,
+            'inline_edit' =>false,
+            'options' => 'lead_status_new_dom',
+            'len' => '255',
+            'comment' => 'How did the lead status come about',
+        ),
+
         'day_ro_modified_sale_stage'=>
             array(
                 'name' => 'day_ro_modified_sale_stage',

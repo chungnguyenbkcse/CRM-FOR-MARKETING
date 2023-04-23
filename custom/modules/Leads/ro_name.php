@@ -90,7 +90,6 @@ function getRoForCreate()
         if ($is_group_ro == true) {
             $query_1 = "SELECT * FROM ro_choose";
             $result_1 = $GLOBALS['db']->query($query_1);   
-            $GLOBALS['log']->fatal("hello"); 
             while($rows = $GLOBALS['db']->fetchByAssoc($result_1)){
                 $ro_name = $rows['lead_id'];
                 $query_users2 = "SELECT * FROM users WHERE deleted = '0' AND id = '{$ro_name}' ";

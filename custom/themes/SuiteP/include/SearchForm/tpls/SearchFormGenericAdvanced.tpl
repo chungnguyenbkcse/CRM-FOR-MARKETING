@@ -129,7 +129,7 @@
                        id='curr_search_name'>"{$savedSearchData.options[$savedSearchData.selected]}"</span></label>
        </div>
        <div class="hideUnusedSavedSearchElements check-edit" width='30%'
-            nowrap{if !$savedSearchData.selected} style="display: none;"{/if}>
+            nowrap>
            <input class='button check-edit'
                   onclick='SUGAR.savedViews.setChooser(); return SUGAR.savedViews.saved_search_action("update")'
                   value='{$APP.LBL_UPDATE}' title='{$APP.LBL_UPDATE}' name='ss_update' id='ss_update'

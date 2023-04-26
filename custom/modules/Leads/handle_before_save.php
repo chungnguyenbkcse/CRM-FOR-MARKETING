@@ -62,6 +62,14 @@ class Handle1
     {
         date_default_timezone_set('Asia/Ho_Chi_Minh');
         $now = new DateTime();
+        if ($bean->date_entered == $bean->date_modified) {
+            $bean->date_entered = $now->format(\DateTime::ISO8601);
+            $bean->date_modified = $now->format(\DateTime::ISO8601);
+        }
+        else {
+            $bean->date_modified = $now->format(\DateTime::ISO8601);
+        }
+        
         if ($bean->ro_name != "" && $bean->ro_name != null) {
             if ($_COOKIE['role']){
                 $role = $_COOKIE['role'];

@@ -31,7 +31,8 @@
     "symfony/validator": "^3.4",
     "ezyang/htmlpurifier": "^4.10",
     "cboden/ratchet": "^0.4.4",
-    "telegram-bot/api": "^2.3"
+    "telegram-bot/api": "^2.3",
+    "phpoffice/phpexcel": "^1.8"
   },
   "require-dev": {
     "leafo/scssphp": "dev-master",

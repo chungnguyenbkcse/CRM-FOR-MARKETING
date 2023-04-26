@@ -205,7 +205,11 @@ $app_list_strings = array(
         '7' => 'Song Thao',
         '8' => 'Nha trang',
         '9' => 'LVS',
+        '10' => 'HCM1',
+        '11' => 'HCM2',
+        '12' => 'MKT',
     ),
+
     'receiving_branch_dom_1' => array(
         '' => '',
         '4' => 'TELE',

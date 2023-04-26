@@ -61,6 +61,15 @@ class Handle
 {
     public $module = 'Leads';
 
+    function num2alpha($n) {
+        $r = '';
+        for ($i = 1; $n >= 0 && $i < 10; $i++) {
+            $r = chr(65 + ($n % pow(26, $i)) / pow(26, $i - 1)) . $r;
+            $n -= pow(26, $i);
+        }
+        return $r;
+    }
+
     public function handle_after_save($bean, $event, $arguments)
     {
         date_default_timezone_set('Asia/Ho_Chi_Minh');
@@ -103,9 +112,13 @@ class Handle
             if ($level_lead_status > $level_lead_status_follow_level) {
                 /* $bean->lead_status_follow_level = $bean->lead_status;
                 $bean->sale_stage_follow_level = $bean->sale_stage; */
-                $query_xxx = "UPDATE leads SET lead_status_follow_level = '{$bean->sale_stage_follow_level}' AND sale_stage_follow_level = '{$bean->sale_stage}'  WHERE id = '{$bean->id}' AND deleted = '0'";
+                $query_xxx = "UPDATE leads SET lead_status_follow_level = '{$bean->lead_status}', sale_stage_follow_level = '{$bean->sale_stage}'  WHERE id = '{$bean->id}' AND deleted = '0'";
                 $GLOBALS['db']->query($query_xxx);
             }
+        }
+        else {
+            $query_xxxxx = "UPDATE leads SET lead_status_follow_level = '{$bean->lead_status}', sale_stage_follow_level = '{$bean->sale_stage}'  WHERE id = '{$bean->id}' AND deleted = '0'";
+            $GLOBALS['db']->query($query_xxxxx);
         }
 
 
@@ -572,6 +585,77 @@ class Handle
             } else {
                 $lst[25] = "";
             }
+
+            if ($bean->sale_stage_follow_level != null && $bean->sale_stage_follow_level != "") {
+                $sale_stage_follow_level_id = $bean->sale_stage_follow_level;
+                $sale_stage_follow_levels = array(
+                    '0' => 'Choose',
+                    '1' => 'New',
+                    '2' => 'Theo dõi 1',
+                    '3' => 'Theo dõi 2',
+                    '4' => 'Theo dõi 3',
+                    '5' => 'Hẹn',
+                    '6' => 'Từ chối',
+                    '7' => 'Đồng ý giao dịch',
+                    '8' => 'Cancel',
+                    '9' => 'Bán chéo sp',
+                    '10' => 'Chuyển BU',
+                    '11' => 'Sai quy định'
+                );
+                foreach ($sale_stage_follow_levels as $key => $data) {
+                    if ($key == $sale_stage_follow_level_id) {
+                        $lst[26] = $data;
+                    }
+                }
+            } else {
+                $lst[26] = "";
+            }
+
+            if ($bean->lead_status_follow_level != null && $bean->lead_status_follow_level != "") {
+                $lead_status_follow_level_id = $bean->lead_status_follow_level;
+                $lead_status_follow_levels = array(
+                    '' => '',
+                    '1' => 'NONE',
+                    '2' => 'Không nghe ',
+                    '3' => 'Thuê bao',
+                    '4' => 'Đang bận hẹn gọi lại sau',
+                    '5' => 'Đang cân nhắc ',
+                    '6' => 'Hỗ trợ ship',
+                    '7' => 'Cần thì liên hệ lại',
+                    '8' => 'Không có shipper',
+                    '9' => 'Không có máy pos',
+                    '10' => 'Phí ship cao',
+                    '11' => 'Văn phòng xa, khách không tiện ghé',
+                    '12' => 'Không muốn gửi thẻ lại',
+                    '13' => 'Thẻ bị khoá/Hết hạn/Trễ hạn thanh toán',
+                    '14' => 'Giao dịch ngoài giờ làm việc',
+                    '15' => 'Phí đáo/rút cao',
+                    '16' => 'Khách hàng đổi ý',
+                    '17' => 'Khác hàng quan tâm',
+                    '18' => 'Giao dịch thành công',
+                    '19' => 'Sai Rule',
+                    '20' => 'Lừa đảo',
+                    '21' => 'Lỗi RO',
+                    '22' => 'Đại lý-CTV/Trả góp',
+                    '23' => 'BU không hoàn thành Lead',
+                    '24' => 'Đại lý-CTV/Trả góp/Mở thẻ/Vay',
+                    '25' => 'Đã đáo/rút với bên khác',
+                    '26' => 'Tìm hiểu thử cho biết',
+                    '27' => 'Đang chờ để nhận thẻ',
+                    '28' => 'Không nhu cầu',
+                    '29' => 'Thuê bao',
+                    '30' => 'Ấn nhầm link',
+                    '31' => 'Nhầm số',
+                    '32' => 'Hủy thẻ',
+                );
+                foreach ($lead_status_follow_levels as $key => $data) {
+                    if ($key == $lead_status_follow_level_id) {
+                        $lst[27] = $data;
+                    }
+                }
+            } else {
+                $lst[27] = "";
+            }
         }
 
         $values = [
@@ -603,7 +687,8 @@ class Handle
             $range = 'DATA CRM';
             $response = $service->spreadsheets_values->get($spreadsheetId, $range);
             $values = $response->getValues();
-            $rangeToInsert = 'DATA CRM!A' . (count($values) + 1);
+            //$rangeToInsert = 'DATA CRM!A' . (count($values) + 1);
+            $rangeToInsert = 'DATA CRM!A' . (count($values) + 1) . ':AB' . (count($values) + 1);
             $result = $service->spreadsheets_values->append($spreadsheetId, $rangeToInsert, $body, $params);
         } else {
             $range = 'DATA CRM';
@@ -613,7 +698,8 @@ class Handle
 
             foreach ($values as $row => $data) {
                 if ($data[3] == substr($key, 1)) {
-                    $rangeToUpdate = 'DATA CRM!A' . ($row + 1) . ':Z' . ($row + 1);
+                    //$rangeToUpdate = 'DATA CRM!A' . ($row + 1) . ':Z' . ($row + 1);
+                    $rangeToUpdate = 'DATA CRM!A' . ($row + 1) . ':AB' . ($row + 1);
                     $result = $service->spreadsheets_values->update($spreadsheetId, $rangeToUpdate, $body, $params);
                     printf("%d cells updated.\n", $result->getUpdatedCells());
                     break;

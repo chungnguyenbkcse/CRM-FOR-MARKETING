@@ -50,10 +50,12 @@ $mod_strings = array(
     'LBL_LEAD_STATUS_RO' => 'Lead status ro',
     'LBL_CARD_NUMBER' => 'Card number',
     'LBL_DATE_MODIFIED' => 'Date modified',
+    'LBL_DATE_CREATED' => 'Date created',
     'LBL_DAY_RO_MODIFIED_SALE_STAGE' => 'Day RO modified sale stage',
     'LBL_EXPECTED_FEE' => 'Expected fee',
     'LBL_EXPECTED_TRANSACTION_AMOUNT' => 'Expected transaction amount',
     'LBL_CTV' => 'CTV',
     'LBL_LEAD_STATUS_FOLLOW_LEVEL' => 'Lead status follow level',
     'LBL_SALE_STAGE_FOLLOW_LEVEL' => 'Sale stage follow level',
+    'LBL_HOW_GET_PHONE_NUMBER' => 'How to get phone',
 );

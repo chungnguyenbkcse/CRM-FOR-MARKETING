@@ -25,7 +25,7 @@ export function handle_dropdown_super_mkt() {
         url: "index.php?module=Leads&entryPoint=sale_stage&role=super_mkt",
         data: {id: sale_stage_id, lead_status_id: lead_status_id},
         success: function(data){
-            console.log(data);
+            //console.log(data);
             $("#sale_stage").html(data);
             
         },
@@ -36,7 +36,7 @@ export function handle_dropdown_super_mkt() {
         url: "index.php?module=Leads&entryPoint=lead_status&role=super_mkt",
         data: {id: sale_stage_id, lead_status_id: lead_status_id},
         success: function(data){
-            console.log(data);
+            //console.log(data);
             $("#lead_status").html(data);
         },
         dataType: 'html'
@@ -48,7 +48,7 @@ export function handle_dropdown_super_mkt() {
             url: "index.php?module=Leads&entryPoint=lead_status&role=super_mkt",
             data: {id: sale_stage_change_id, lead_status_id: lead_status_id},
             success: function(data){
-                console.log(data);
+                //console.log(data);
                 $("#lead_status").html(data);
             },
             dataType: 'html'

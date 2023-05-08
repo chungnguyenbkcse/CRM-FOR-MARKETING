@@ -5,7 +5,7 @@ $(document).ready(function () {
         if (parts.length === 2) return parts.pop().split(';').shift();
     }
 
-    console.log("HELLO1")
+    //console.log("HELLO1")
 
     var role = getCookie("role");
 
@@ -14,7 +14,7 @@ $(document).ready(function () {
             url: "index.php?module=Leads&entryPoint=handle_check_time",
             data: { },
             success: function (data) {
-                console.log(data)
+                //console.log(data)
                 if (data != "") {
                     if (role === "MKT" || role === "SUPER_MKT") {
                         alert(`Tồn tại Data vượt quá thời gian tác động`)
@@ -26,6 +26,6 @@ $(document).ready(function () {
                 }
             }
         });
-        console.log("HELLO")
+        //console.log("HELLO")
     }, 1000);
 })

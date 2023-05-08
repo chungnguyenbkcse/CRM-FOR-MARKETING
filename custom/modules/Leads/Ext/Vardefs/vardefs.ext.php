@@ -647,7 +647,7 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'vname' => 'LBL_DAY_HAS_PHONE_NUMBER',
                 'massupdate' => false,
                 'type' => 'date',
-                'audited' => true,
+                'audited' => true,                'audited' => true,
                 'comment' => 'The day has phone number of the contact'
             ),
         'month_has_phone_number' =>
@@ -1083,6 +1083,17 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
             'options' => 'lead_status_new_dom',
             'len' => '255',
             'comment' => 'How did the lead status come about',
+        ),
+
+        'how_get_phone_number' => array(
+            'name' => 'how_get_phone_number',
+            'vname' => 'LBL_HOW_GET_PHONE_NUMBER',
+            'type' => 'enum',
+            'audited' => true,
+            'inline_edit' =>false,
+            'options' => 'how_get_phone_number_dom',
+            'len' => '255',
+            'comment' => 'How did the sale stage come about',
         ),
 
         'day_ro_modified_sale_stage'=>

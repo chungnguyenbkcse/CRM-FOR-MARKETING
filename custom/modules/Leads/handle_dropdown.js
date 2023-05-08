@@ -3,7 +3,7 @@ $(document).ready(function () {
     var lead_id = $("#lead_id").val();
     var created_by = $("#created_by_val").val();
 
-    console.log(created_by)
+    ////console.log(created_by)
 
     
     $.ajax({
@@ -11,7 +11,7 @@ $(document).ready(function () {
         data: {lead_id: lead_id},
         success: function (data) {
             let x = JSON.parse(data)
-            console.log(x);
+            ////console.log(x);
             x.map((ele, idx) => {
                 $(`
                 <div class="col-xs-12 mr-4 card-number-lines-container">
@@ -171,7 +171,7 @@ $(document).ready(function () {
                 offset: 0,
             }; //Array 
 
-            console.log(formData)
+            ////console.log(formData)
 
 
             $.ajax({
@@ -186,18 +186,18 @@ $(document).ready(function () {
                     offset: 0
                 },
                 success: function (data, textStatus, jqXHR) {
-                    console.log('Susscess')
-                    console.log(data)
+                    ////console.log('Susscess')
+                    ////console.log(data)
 
                     var res = jQuery.parseJSON(data)[0];
-                    console.log(res)
+                    ////console.log(res)
                     const recording_file = "/" + (res.calldate.substring(0,4)) + "/" + (res.calldate.substring(5,7)) + "/" + (res.calldate.substring(8,10)) +  "/" + (res.recordingfile);
                     fetch(`index.php?module=Leads&entryPoint=GetWarfile&data=${recording_file}`)
                         .then(response => response.blob())
                         .then(blob => {
                             //$("#source").attr('src', URL.createObjectURL(blob));
                             let name_file = new Date().getTime();
-                            console.log(name_file)
+                            ////console.log(name_file)
                             let file = new File([blob], `${name_file}.wav`, {
                                 type: "audio/x-wav", lastModified: new Date().getTime()
                             });
@@ -227,7 +227,7 @@ $(document).ready(function () {
 
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    console.log('Error')
+                    ////console.log('Error')
                 }
             });
         }
@@ -239,13 +239,13 @@ $(document).ready(function () {
                 url: "index.php?module=Leads&entryPoint=get_sip",
                 data: { ro_id: ro_name_val },
                 success: function (data) {
-                    console.log(data);
+                    ////console.log(data);
                     sip = data;
                 },
                 async: false
             });
 
-            console.log(sip);
+            ////console.log(sip);
 
             var date = new Date();
             // Get year, month, and day part from the date
@@ -273,7 +273,7 @@ $(document).ready(function () {
                 offset: 0,
             }; //Array 
         
-            console.log(formData)
+            //console.log(formData)
         
         
             $.ajax({
@@ -290,20 +290,20 @@ $(document).ready(function () {
                     offset: 0
                 },
                 success: function (data, textStatus, jqXHR) {
-                    console.log('Susscess')
-                    console.log(data)
+                    //console.log('Susscess')
+                    //console.log(data)
                     
                     var res = jQuery.parseJSON(data)[0];
-                    console.log(res.calldate.substring(0,4))
-                    console.log(res.calldate.substring(5,7))
-                    console.log(res.calldate.substring(8,10))
+                    //console.log(res.calldate.substring(0,4))
+                    //console.log(res.calldate.substring(5,7))
+                    //console.log(res.calldate.substring(8,10))
                     const recording_file = "/" + (res.calldate.substring(0,4)) + "/" + (res.calldate.substring(5,7)) + "/" + (res.calldate.substring(8,10)) +  "/" + (res.recordingfile);
                     fetch(`index.php?module=Leads&entryPoint=GetWarfile&data=${recording_file}`)
                         .then(response => response.blob())
                         .then(blob => {
                             //$("#source").attr('src', URL.createObjectURL(blob));
                             let name_file = new Date().getTime();
-                            console.log(name_file)
+                            //console.log(name_file)
                             let file = new File([blob], `${name_file}.wav`, {
                                 type: "audio/x-wav", lastModified: new Date().getTime()
                             });
@@ -333,7 +333,7 @@ $(document).ready(function () {
                     
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    console.log('Error')
+                    //console.log('Error')
                 }
             });
         }
@@ -360,11 +360,11 @@ $(document).ready(function () {
                     type: "POST",
                     data: formData,
                     success: function (data, textStatus, jqXHR) {
-                        console.log('Susscess')
-                        console.log(data)
+                        //console.log('Susscess')
+                        //console.log(data)
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        console.log('Error')
+                        //console.log('Error')
                     }
                 });
             })
@@ -385,11 +385,11 @@ $(document).ready(function () {
                     type: "POST",
                     data: formData,
                     success: function (data, textStatus, jqXHR) {
-                        console.log('Susscess')
-                        console.log(data)
+                        //console.log('Susscess')
+                        //console.log(data)
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        console.log('Error')
+                        //console.log('Error')
                     }
                 });
             })
@@ -407,7 +407,7 @@ $(document).ready(function () {
         url: "index.php?module=Leads&entryPoint=owner_branch",
         data: { id: owner_branch },
         success: function (data) {
-            console.log(data);
+            //console.log(data);
             $("#owner_branch").html(data);
         },
         dataType: 'html'
@@ -425,7 +425,7 @@ $(document).ready(function () {
 
         $('[name="bank"]').map(function (idx) {
             $(this).change(function() {
-                console.log('xxx')
+                //console.log('xxx')
                 let re = $(this).val()
                 $('[name="bank"]').map(function (idxx) {
                     $(this).val(re)
@@ -436,7 +436,7 @@ $(document).ready(function () {
 
         $('[name="card_bark_type"]').map(function (idx) {
             $(this).change(function() {
-                console.log('xxx')
+                //console.log('xxx')
                 let re = $(this).val()
                 $('[name="card_bark_type"]').map(function (idxx) {     
                         $(this).val(re)
@@ -447,7 +447,7 @@ $(document).ready(function () {
 
         $('[name="service"]').map(function (idx) {
             $(this).change(function() {
-                console.log('xxx')
+                //console.log('xxx')
                 let re = $(this).val()
                 $('[name="service"]').map(function (idxx) {
                     $(this).val(re)
@@ -463,7 +463,7 @@ $(document).ready(function () {
                 $('[name="sale_stage"]').map(function (idx) {
                     $(this).val(sale_stage_change_id)
                 })
-                console.log('xxx')
+                //console.log('xxx')
                 let re = $(this).val()
                 $('[name="sale_stage"]').map(function (idxx) {
                     $(this).val(re)
@@ -474,7 +474,7 @@ $(document).ready(function () {
 
         $('[name="lead_status"]').map(function (idx) {
             $(this).change(function() {
-                console.log('xxx')
+                //console.log('xxx')
                 let re = $(this).val()
                 $('[name="lead_status"]').map(function (idxx) {
                     $(this).val(re)
@@ -492,7 +492,7 @@ $(document).ready(function () {
                     url: "index.php?module=Leads&entryPoint=ho_name",
                     data: { ho_name: ho_name_val },
                     success: function (data) {
-                        console.log(data);
+                        //console.log(data);
                         $("#ho_name").html(data);
                         $("#ho_name").attr("disabled", false);
                     },
@@ -506,7 +506,7 @@ $(document).ready(function () {
                         url: "index.php?module=Leads&entryPoint=handle_check_time",
                         data: { id: lead_id },
                         success: function (data) {
-                            console.log(data)
+                            //console.log(data)
                             if (data != "") {
                                 alert(`Bạn vượt quá thời gian tác động ${data}`)
                                 window.open("http://mkt.tranthu.vn/index.php?module=Leads&action=index&return_module=Leads&return_action=index");
@@ -523,9 +523,9 @@ $(document).ready(function () {
             
 
             $('.edit-view-row-item').each(function() {
-                console.log('hello')
+                //console.log('hello')
                 if ($(this).find('div[field="sale_stage_follow_level"]').length != 0 || $(this).find('div[field="lead_status_follow_level"]').length != 0) {
-                    console.log('finded')
+                    //console.log('finded')
                     $(this).remove();
                 }
             });
@@ -574,7 +574,7 @@ $(document).ready(function () {
             url: "index.php?module=Leads&entryPoint=ro_name",
             data: { ro_name: ro_name_val },
             success: function (data) {
-                console.log(data);
+                //console.log(data);
                 $("#ro_name").html(data);
             },
             dataType: 'html'
@@ -609,8 +609,8 @@ $(document).ready(function () {
 
         if ($('#lead_id').val().length > 0) {
             $("input").map(function (idx) {
-                console.log(idx)
-                if (idx <= 65 && idx >= 57) {
+                //console.log(idx)
+                if (idx <= 65 && idx >= 60) {
                     return $(this).attr("disabled", true);
                 }
                 return idx++;
@@ -619,16 +619,16 @@ $(document).ready(function () {
             $("#contact_date_trigger").attr("disabled", true);
     
             $("select").map(function (idx) {
-                console.log(idx)
-                if (idx < 11) {
+                //console.log(idx)
+                if (idx < 12) {
                     return $(this).attr("disabled", true);
                 }
                 return idx++;
             }).get();
     
             $(".label").map(function (idx) {
-                console.log(idx)
-                if (idx < 16) {
+                //console.log(idx)
+                if (idx < 20) {
                     return $(this).removeClass('label');
                 }
                 return idx++;
@@ -670,7 +670,7 @@ $(document).ready(function () {
             url: "index.php?module=Leads&entryPoint=sale_stage",
             data: { id: sale_stage_id, lead_status_id: lead_status_id },
             success: function (data) {
-                console.log(data);
+                //console.log(data);
                 $("#sale_stage").html(data);
 
             },
@@ -681,7 +681,7 @@ $(document).ready(function () {
             url: "index.php?module=Leads&entryPoint=lead_status",
             data: { id: sale_stage_id, lead_status_id: lead_status_id, created_by: created_by },
             success: function (data) {
-                console.log(data);
+                //console.log(data);
                 $('[name = "lead_status"]').map(function (idx) {
                     return $(this).html(data);
                 })
@@ -690,19 +690,19 @@ $(document).ready(function () {
         });
 
         $('[name="sale_stage"]').map(function (idx) {
-            console.log(idx)
+            //console.log(idx)
             if (idx > 0) {
                 return $(this).change(function () {
                     var sale_stage_change_id = $(this).val();
                     $('[name="sale_stage"]').map(function (idx) {
                         $(this).val(sale_stage_change_id)
                     })
-                    console.log(sale_stage_change_id)
+                    //console.log(sale_stage_change_id)
                     $.ajax({
                         url: "index.php?module=Leads&entryPoint=lead_status",
                         data: { id: sale_stage_change_id, lead_status_id: lead_status_id, created_by: created_by },
                         success: function (data) {
-                            console.log(data);
+                            //console.log(data);
                             //$("#lead_status").html(data);
                             $('[name="lead_status"]').map(function (index) {
                                 if (index > 0) {
@@ -727,7 +727,7 @@ $(document).ready(function () {
 
         $('[name="note"]').map(function (idx) {
             $(this).change(function() {
-                console.log('xxx')
+                //console.log('xxx')
                 let re = $(this).val()
                 $('[name="note"]').map(function (idxx) {
                     $(this).val(re)
@@ -749,7 +749,7 @@ $(document).ready(function () {
 
         $('[name="bank"]').map(function (idx) {
             $(this).change(function() {
-                console.log('xxx')
+                //console.log('xxx')
                 let re = $(this).val()
                 $('[name="bank"]').map(function (idxx) {
                     $(this).val(re)
@@ -760,7 +760,7 @@ $(document).ready(function () {
 
         $('[name="card_bark_type"]').map(function (idx) {
             $(this).change(function() {
-                console.log('xxx')
+                //console.log('xxx')
                 let re = $(this).val()
                 $('[name="card_bark_type"]').map(function (idxx) {     
                         $(this).val(re)
@@ -771,7 +771,7 @@ $(document).ready(function () {
 
         $('[name="service"]').map(function (idx) {
             $(this).change(function() {
-                console.log('xxx')
+                //console.log('xxx')
                 let re = $(this).val()
                 $('[name="service"]').map(function (idxx) {
                     $(this).val(re)
@@ -787,7 +787,7 @@ $(document).ready(function () {
                 $('[name="sale_stage"]').map(function (idx) {
                     $(this).val(sale_stage_change_id)
                 })
-                console.log('xxx')
+                //console.log('xxx')
                 let re = $(this).val()
                 $('[name="sale_stage"]').map(function (idxx) {
                     $(this).val(re)
@@ -798,7 +798,7 @@ $(document).ready(function () {
 
         $('[name="lead_status"]').map(function (idx) {
             $(this).change(function() {
-                console.log('xxx')
+                //console.log('xxx')
                 let re = $(this).val()
                 $('[name="lead_status"]').map(function (idxx) {
                     $(this).val(re)
@@ -814,7 +814,7 @@ $(document).ready(function () {
                         data: { id: lead_id },
                         success: function (data) {
                             
-                            console.log(data)
+                            //console.log(data)
                             if (data != "") {
                                 alert(`Bạn vượt quá thời gian tác động ${data}`)
                                 window.open("http://mkt.tranthu.vn/index.php?module=Leads&action=index&return_module=Leads&return_action=index");
@@ -838,9 +838,9 @@ $(document).ready(function () {
             //$('[data-label="LBL_RO_NAME"]').append("<span class='required'>*</span>")
 
             $('.edit-view-row-item').each(function() {
-                console.log('hello')
+                //console.log('hello')
                 if ($(this).find('div[field="sale_stage_follow_level"]').length != 0 || $(this).find('div[field="lead_status_follow_level"]').length != 0) {
-                    console.log('finded')
+                    //console.log('finded')
                     $(this).remove();
                 }
             });
@@ -849,7 +849,7 @@ $(document).ready(function () {
                 if (idx == 0) {
                     var service = $(this).val();
                     if (service == '5') {
-                        console.log('hello')
+                        //console.log('hello')
                         $("#receiving_branch").html("<option value='4' selected>TELE</option><option value='5'>DL TB</option><option value='0'>Choose</option>");
                     }
                     else {
@@ -865,7 +865,7 @@ $(document).ready(function () {
                     if (idx == 0) {
                         var service = $(this).val();
                         if (service == '5') {
-                            console.log('hello')
+                            //console.log('hello')
                             $("#receiving_branch").html("<option value='4' selected>TELE</option><option value='5'>DL TB</option><option value='0'>Choose</option>");
                         }
                         else {
@@ -902,7 +902,7 @@ $(document).ready(function () {
                 url: "index.php?module=Leads&entryPoint=ro_name",
                 data: { },
                 success: function (data) {
-                    console.log(data);
+                    //console.log(data);
                     $("#ro_name").html(data);
                 },
                 dataType: 'html'
@@ -915,7 +915,7 @@ $(document).ready(function () {
                 if (idx == 0) {
                     var service = $(this).val();
                     if (service == '5') {
-                        console.log('hello')
+                        //console.log('hello')
                         $("#receiving_branch").html("<option value='4' selected>TELE</option><option value='5'>DL TB</option><option value='0'>Choose</option>");
                     }
                     else {
@@ -936,7 +936,7 @@ $(document).ready(function () {
                     if (idx == 0) {
                         var service = $(this).val();
                         if (service == '5') {
-                            console.log('hello')
+                            //console.log('hello')
                             $("#receiving_branch").html("<option value='4' selected>TELE</option><option value='5'>DL TB</option><option value='0'>Choose</option>");
                         }
                         else {
@@ -949,12 +949,12 @@ $(document).ready(function () {
             if (sale_stage_id == "0") {
                 var ro_name_val = $("#ro_name_val").val();
                 $("#ro_name").attr("disabled", true);
-                console.log('x')
+                //console.log('x')
                 $.ajax({
                     url: "index.php?module=Leads&entryPoint=ro_name",
                     data: { ro_name: ro_name_val },
                     success: function (data) {
-                        console.log("ro");
+                        //console.log("ro");
                         $("#ro_name").html(data);
                         $("#ro_name").attr("disabled", false);
                     },
@@ -967,7 +967,7 @@ $(document).ready(function () {
                     url: "index.php?module=Leads&entryPoint=ho_name",
                     data: { ho_name: ho_name_val },
                     success: function (data) {
-                        console.log(data);
+                        //console.log(data);
                         $("#ho_name").html(data);
                         $("#ho_name").attr("disabled", false);
                     },
@@ -993,7 +993,7 @@ $(document).ready(function () {
                     'left': '10px'
                 });
                 /* $("input").map(function (idx) {
-                    console.log(idx)
+                    //console.log(idx)
                     if (idx > 60 && idx < 76) {
                         return $(this).attr("disabled", true);
                     }
@@ -1011,7 +1011,7 @@ $(document).ready(function () {
                 })
 
                 $("select").map(function (idx) {
-                    console.log(idx)
+                    //console.log(idx)
                     if (idx > 7) {
                         return $(this).attr("disabled", true);
                     }
@@ -1019,7 +1019,7 @@ $(document).ready(function () {
                 }).get();
 
                 $(".label").map(function (idx) {
-                    console.log(idx)
+                    //console.log(idx)
                     if (idx >= 16) {
                         return $(this).removeClass('label');
                     }
@@ -1027,7 +1027,7 @@ $(document).ready(function () {
                 }).get(); */
 
                 /* $(".btn-danger").map(function (idx) {
-                    console.log(idx)
+                    //console.log(idx)
                     return $(this).attr("disabled", true);
                 }).get(); */
 
@@ -1053,7 +1053,7 @@ $(document).ready(function () {
                     url: "index.php?module=Leads&entryPoint=ro_name",
                     data: { ro_name: ro_name_val },
                     success: function (data) {
-                        console.log(data);
+                        //console.log(data);
                         $("#ro_name").html(data);
                     },
                     dataType: 'html'
@@ -1065,7 +1065,7 @@ $(document).ready(function () {
                     url: "index.php?module=Leads&entryPoint=ho_name",
                     data: { ho_name: ho_name_val },
                     success: function (data) {
-                        console.log(data);
+                        //console.log(data);
                         $("#ho_name").html(data);
                         $("#ho_name").attr("disabled", false);
                     },
@@ -1091,7 +1091,7 @@ $(document).ready(function () {
                     'left': '10px'
                 });
                 /* $("input").map(function (idx) {
-                    console.log(idx)
+                    //console.log(idx)
                     if (idx <= 60 && idx > 55) {
                         return $(this).attr("disabled", true);
                     }
@@ -1101,7 +1101,7 @@ $(document).ready(function () {
                 $("#phone_number_primary").attr('disabled', false);
 
                 /* $("select").map(function (idx) {
-                    console.log(idx)
+                    //console.log(idx)
                     if (idx <= 7) {
                         return $(this).attr("disabled", true);
                     }
@@ -1109,7 +1109,7 @@ $(document).ready(function () {
                 }).get();
 
                 $(".label").map(function (idx) {
-                    console.log(idx)
+                    //console.log(idx)
                     if (idx < 16 && idx != 14) {
                         return $(this).removeClass('label');
                     }
@@ -1151,7 +1151,7 @@ $(document).ready(function () {
                     url: "index.php?module=Leads&entryPoint=sale_stage",
                     data: { id: sale_stage_id, lead_status_id: lead_status_id },
                     success: function (data) {
-                        console.log(data);
+                        //console.log(data);
                         $('[name = "sale_stage"]').map(function (idx) {
                             return $(this).html(data);
                         })
@@ -1163,7 +1163,7 @@ $(document).ready(function () {
                     url: "index.php?module=Leads&entryPoint=lead_status",
                     data: { id: sale_stage_id, lead_status_id: lead_status_id, created_by: created_by },
                     success: function (data) {
-                        console.log(data);
+                        //console.log(data);
                         $('[name = "lead_status"]').map(function (idx) {
                             return $(this).html(data);
                         })
@@ -1172,19 +1172,19 @@ $(document).ready(function () {
                 });
 
                 $('[name="sale_stage"]').map(function (idx) {
-                    console.log(idx)
+                    //console.log(idx)
                     if (idx > 0) {
                         return $(this).change(function () {
                             var sale_stage_change_id = $("option:selected", this).val();
                             $('[name="sale_stage"]').map(function (idx) {
                                 $(this).val(sale_stage_change_id)
                             })
-                            console.log(sale_stage_change_id)
+                            //console.log(sale_stage_change_id)
                             $.ajax({
                                 url: "index.php?module=Leads&entryPoint=lead_status",
                                 data: { id: sale_stage_change_id, lead_status_id: lead_status_id, created_by: created_by },
                                 success: function (data) {
-                                    console.log(data);
+                                    //console.log(data);
                                     //$("#lead_status").html(data);
                                     $('[name="lead_status"]').map(function (index) {
                                         if (index > 0) {
@@ -1215,7 +1215,7 @@ $(document).ready(function () {
                     url: "index.php?module=Leads&entryPoint=ro_name",
                     data: { ro_name: ro_name_val },
                     success: function (data) {
-                        console.log(data);
+                        //console.log(data);
                         $("#ro_name").html(data);
                         $("#ro_name").attr("disabled", false);
                     },
@@ -1228,7 +1228,7 @@ $(document).ready(function () {
                     url: "index.php?module=Leads&entryPoint=ho_name",
                     data: { ho_name: ho_name_val },
                     success: function (data) {
-                        console.log(data);
+                        //console.log(data);
                         $("#ho_name").html(data);
                         $("#ho_name").attr("disabled", false);
                     },
@@ -1257,7 +1257,7 @@ $(document).ready(function () {
                 });
                 
                 /* $("input").map(function (idx) {
-                    console.log(idx)
+                    //console.log(idx)
                     if (idx > 60 && idx < 76) {
                         return $(this).attr("disabled", true);
                     }
@@ -1265,7 +1265,7 @@ $(document).ready(function () {
                 }).get();
 
                 $("select").map(function (idx) {
-                    console.log(idx)
+                    //console.log(idx)
                     if (idx > 7) {
                         return $(this).attr("disabled", true);
                     }
@@ -1273,7 +1273,7 @@ $(document).ready(function () {
                 }).get();
 
                 $(".label").map(function (idx) {
-                    console.log(idx)
+                    //console.log(idx)
                     if (idx >= 16) {
                         return $(this).removeClass('label');
                     }
@@ -1281,7 +1281,7 @@ $(document).ready(function () {
                 }).get(); */
 
                 /* $(".btn-danger").map(function (idx) {
-                    console.log(idx)
+                    //console.log(idx)
                     return $(this).attr("disabled", true);
                 }).get(); */
 
@@ -1304,7 +1304,7 @@ $(document).ready(function () {
                     url: "index.php?module=Leads&entryPoint=sale_stage",
                     data: { id: sale_stage_id, lead_status_id: lead_status_id },
                     success: function (data) {
-                        console.log(data);
+                        //console.log(data);
                         $('[name="sale_stage"]').map(function (idx) {
                             $(this).html(data);
                         })
@@ -1316,7 +1316,7 @@ $(document).ready(function () {
                     url: "index.php?module=Leads&entryPoint=lead_status",
                     data: { id: sale_stage_id, lead_status_id: lead_status_id, created_by: created_by },
                     success: function (data) {
-                        console.log(data);
+                        //console.log(data);
                         $('[name="lead_status"]').map(function (idx) {
                             $(this).html(data);
                         })
@@ -1327,9 +1327,9 @@ $(document).ready(function () {
                 $('[name="sale_stage"]').map(function (idx) {
                         
                     $(this).change(function () {
-                        console.log('sale stage change!')
+                        //console.log('sale stage change!')
                     var sale_stage_change_id = $("option:selected", this).val();
-                    console.log(sale_stage_change_id)
+                    //console.log(sale_stage_change_id)
                     $('[name="sale_stage"]').map(function (idx) {
                         $(this).val(sale_stage_change_id)
                     })
@@ -1337,7 +1337,7 @@ $(document).ready(function () {
                         url: "index.php?module=Leads&entryPoint=lead_status",
                         data: { id: sale_stage_change_id, lead_status_id: lead_status_id, created_by: created_by },
                         success: function (data) {
-                            console.log(data);
+                            //console.log(data);
                             $('[name="lead_status"]').map(function (idx) {
                                 $(this).html(data);
                             })
@@ -1384,7 +1384,7 @@ $(document).ready(function () {
             url: "index.php?module=Leads&entryPoint=sale_stage",
             data: { id: sale_stage_id, lead_status_id: lead_status_id },
             success: function (data) {
-                console.log(data);
+                //console.log(data);
                 $('[name="sale_stage"]').map(function (idx) {
                     $(this).html(data);
                 })
@@ -1397,7 +1397,7 @@ $(document).ready(function () {
             url: "index.php?module=Leads&entryPoint=lead_status",
             data: { id: sale_stage_id, lead_status_id: lead_status_id, created_by: created_by },
             success: function (data) {
-                console.log(data);
+                //console.log(data);
                 $('[name="lead_status"]').map(function (idx) {
                     $(this).html(data);
                 })
@@ -1413,7 +1413,7 @@ $(document).ready(function () {
                 url: "index.php?module=Leads&entryPoint=ho_name",
                 data: {},
                 success: function (data) {
-                    console.log(data);
+                    //console.log(data);
                     $("#ho_name").val(data);
                 }
             });
@@ -1426,7 +1426,7 @@ $(document).ready(function () {
                 url: "index.php?module=Leads&entryPoint=lead_status",
                 data: { id: sale_stage_change_id, lead_status_id: lead_status_id, created_by: created_by },
                 success: function (data) {
-                    console.log(data);
+                    //console.log(data);
                     $("#lead_status").html(data);
                 },
                 dataType: 'html'
@@ -1444,7 +1444,7 @@ function handle_check_payment_day() {
     $('[name="payment_day"]').map(function (idx) {
         if ($(this).is(':disabled')) {
             //textbox is disabled
-            console.log('hello', idx)
+            //console.log('hello', idx)
         }
         else {
             var payment_day = $(this).val();
@@ -1461,7 +1461,7 @@ function handle_check_payment_day_empty() {
     $('[name="sale_stage"]').map(function (idx) {
         if ($(this).is(':disabled')) {
             //textbox is disabled
-            console.log('hello', idx)
+            //console.log('hello', idx)
         }
         else {
             var sale_stage = $(this).val();
@@ -1479,7 +1479,7 @@ function handle_check_leads_status_empty() {
     $('[name="lead_status"]').map(function (idx) {
         if ($(this).is(':disabled')) {
             //textbox is disabled
-            console.log('hello', idx)
+            //console.log('hello', idx)
         }
         else {
             var lead_status = $(this).val();
@@ -1529,10 +1529,10 @@ function handle_check_record_in_day() {
             offset: 0
         },
         success: function (data, textStatus, jqXHR) {
-            console.log('Susscess')
-            console.log(data);
+            //console.log('Susscess')
+            //console.log(data);
             var res = jQuery.parseJSON(data)[0];
-            console.log(res)
+            //console.log(res)
             var recording_file = res.recordingfile;
             
             if (recording_file != undefined && recording_file != null && recording_file != "") {
@@ -1540,7 +1540,7 @@ function handle_check_record_in_day() {
             }
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            console.log('Error')
+            //console.log('Error')
         }
     });
 
@@ -1552,7 +1552,7 @@ function handle_check_service_empty() {
     $('[name="service"]').map(function (idx) {
         if ($(this).is(':disabled')) {
             //textbox is disabled
-            console.log('hello', idx)
+            //console.log('hello', idx)
         }
         else {
             var service = $(this).val();
@@ -1569,7 +1569,7 @@ function handle_check_sale_stage_empty() {
     $('[name="payment_day"]').map(function (idx) {
         if ($(this).is(':disabled')) {
             //textbox is disabled
-            console.log('hello', idx)
+            //console.log('hello', idx)
         }
         else {
             var payment_day = $(this).val();
@@ -1737,7 +1737,7 @@ function check_cmdd() {
                 url: "index.php?module=Leads&entryPoint=get_cmdd",
                 data: { cmdd: citizen_identification },
                 success: function (data) {
-                    console.log(data);
+                    //console.log(data);
                     if (data == false) {
                         alert("Số CMNN bị trùng! Vui lòng nhập lại!")
                         res = false
@@ -1751,7 +1751,7 @@ function check_cmdd() {
                 url: "index.php?module=Leads&entryPoint=get_cmdd",
                 data: { id: lead_id, cmdd: citizen_identification },
                 success: function (data) {
-                    console.log(data);
+                    //console.log(data);
                     if (data == false) {
                         alert("Số CMNN bị trùng! Vui lòng nhập lại!")
                         res = false
@@ -1770,7 +1770,7 @@ function checkCardNumber() {
     let arr = []
     let checked = false;
     $('.form-control.card-number-input').map(function (idx) {
-        console.log($(this).val())
+        //console.log($(this).val())
         if ($(this).val() != null && $(this).val() != "") {
             checked = true;
         }  
@@ -1779,15 +1779,15 @@ function checkCardNumber() {
         }
     })
 
-    console.log(checked)
+    //console.log(checked)
 
     if (checked == true) {
         arr.map(function (idx) {
             res.push($(this).val())      
         })
 
-        console.log(new Set(res))
-        console.log(res)
+        //console.log(new Set(res))
+        //console.log(res)
         return new Set(arr).size == res.length
     }
     else {
@@ -1821,7 +1821,7 @@ function check_phone_number() {
         phone.push(phone2)
     }
 
-    console.log(phone)
+    //console.log(phone)
 
     
 
@@ -1831,7 +1831,7 @@ function check_phone_number() {
                     url: "index.php?module=Leads&entryPoint=get_phone_number",
                     data: { phone_number: phone[0] },
                     success: function (data) {
-                        console.log(data);
+                        //console.log(data);
                         if (data == false) {
                             alert("Số điện thoại bị trùng! Vui lòng nhập lại!")
                             res = false
@@ -1841,7 +1841,7 @@ function check_phone_number() {
                                 url: "index.php?module=Leads&entryPoint=get_phone_number",
                                 data: { phone_number: phone[1] },
                                 success: function (data) {
-                                    console.log(data);
+                                    //console.log(data);
                                     if (data == false) {
                                         alert("Số điện thoại bị trùng! Vui lòng nhập lại!")
                                         res = false
@@ -1851,7 +1851,7 @@ function check_phone_number() {
                                             url: "index.php?module=Leads&entryPoint=get_phone_number",
                                             data: { phone_number: phone[2] },
                                             success: function (data) {
-                                                console.log(data);
+                                                //console.log(data);
                                                 if (data == false) {
                                                     alert("Số điện thoại bị trùng! Vui lòng nhập lại!")
                                                     res = false
@@ -1876,7 +1876,7 @@ function check_phone_number() {
             url: "index.php?module=Leads&entryPoint=get_phone_number",
             data: { id: lead_id, phone_number: phone[0] },
             success: function (data) {
-                console.log(data);
+                //console.log(data);
                 if (data == false) {
                     alert("Số điện thoại bị trùng! Vui lòng nhập lại!")
                     res = false
@@ -1886,7 +1886,7 @@ function check_phone_number() {
                         url: "index.php?module=Leads&entryPoint=get_phone_number",
                         data: { id: lead_id, phone_number: phone[1] },
                         success: function (data) {
-                            console.log(data);
+                            //console.log(data);
                             if (data == false) {
                                 alert("Số điện thoại bị trùng! Vui lòng nhập lại!")
                                 res = false
@@ -1896,7 +1896,7 @@ function check_phone_number() {
                                     url: "index.php?module=Leads&entryPoint=get_phone_number",
                                     data: { id: lead_id, phone_number: phone[2] },
                                     success: function (data) {
-                                        console.log(data);
+                                        //console.log(data);
                                         if (data == false) {
                                             alert("Số điện thoại bị trùng! Vui lòng nhập lại!")
                                             res = false
@@ -1918,7 +1918,7 @@ function check_phone_number() {
 }
 
 function check_form(form_name) {
-    //console.log(lst)
+    ////console.log(lst)
 
     function getCookie(name) {
         const value = `; ${document.cookie}`;
@@ -2006,8 +2006,8 @@ function check_form(form_name) {
         lead_status = $("option:selected", this).val();
         
     })
-    console.log(sale_stage)
-    console.log(lead_status)
+    //console.log(sale_stage)
+    //console.log(lead_status)
     if (role == "RO") {
         if (handle_check_record_in_day() == false) {
             return false;
@@ -2045,7 +2045,7 @@ function check_form(form_name) {
         url: "index.php?module=Leads&entryPoint=add_card_number_lead",
         data: { arr: res, lead_id: lead_id },
         success: function (data) {
-            console.log(data);
+            ////console.log(data);
         }
     });
 

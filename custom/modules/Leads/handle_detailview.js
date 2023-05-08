@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     var lead_status_id = $("#lead_status_id").val();
     var fullname = $("#lead_fullname").val();
-    console.log('hello')
+    //console.log('hello')
     var ro_name_val = $("#ro_name_val").val();
    
 
@@ -10,7 +10,7 @@ $(document).ready(function () {
         url: "index.php?module=Leads&entryPoint=get_ro_detail",
         data: { ro_id: ro_name_val },
         success: function (data) {
-            console.log(data);
+            //console.log(data);
             $("[field='ro_name']").html(data)
         },
         dataType: 'html'
@@ -21,7 +21,7 @@ $(document).ready(function () {
         url: "index.php?module=Leads&entryPoint=lead_status_detail",
         data: { id: lead_status_id },
         success: function (data) {
-            console.log(data);
+            //console.log(data);
             $("[field='lead_status']").html(data);
         },
         dataType: 'html'

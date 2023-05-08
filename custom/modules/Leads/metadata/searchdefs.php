@@ -104,6 +104,13 @@ array (
         'label' => 'LBL_DATE_MODIFIED',
         'width' => '10%',
       ),
+      'date_entered' => 
+      array (
+        'name' => 'date_entered',
+        'default' => false,
+        'label' => 'LBL_DATE_CREATED',
+        'width' => '10%',
+      ),
     ),
   ),
   'templateMeta' => 

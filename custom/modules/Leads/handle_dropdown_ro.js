@@ -8,7 +8,7 @@ export function handle_dropdown_ro() {
     let yourDate = new Date();
     let start_date = yourDate.toISOString().split('T')[0] + " 00:00:00";
     let end_date = yourDate.toISOString().split('T')[0] + " 23:59:59";
-    console.log(start_date)
+    //console.log(start_date)
     var phone_number_primary = $("#phone_number_primary").val();
     var details = {
         'start_date': start_date,
@@ -27,7 +27,7 @@ export function handle_dropdown_ro() {
         $(this).val($(this).val().replace(/ /g, "").replace(/^(\d{3})(\d{3})(\d{4})(\d*)$/, "$1 $2 $3 $4"))
     })
 
-    console.log(details)
+    //console.log(details)
 
     var formBody = [];
     for (var property in details) {
@@ -37,7 +37,7 @@ export function handle_dropdown_ro() {
     }
     formBody = formBody.join("&");
 
-    console.log(formBody)
+    //console.log(formBody)
 
     $.ajax({
         url: "http://51.3.9.21/apibkk/apimaster/api.php?cmd=cdrreport",
@@ -48,7 +48,7 @@ export function handle_dropdown_ro() {
         },
         data: formBody,
         success: function(data){
-            console.log(data);        
+            //console.log(data);        
         }
     });
 
@@ -67,15 +67,15 @@ export function handle_dropdown_ro() {
             throw Error(response.statusText);
         }
         else {
-            console.log(response)
+            //console.log(response)
             return response.json()
         }
     })
     .then (data => {
-        console.log(data)
+        //console.log(data)
     })
     .catch(error => {
-        console.log("error")
+        //console.log("error")
     });  */
 
     $("[data-label='LBL_CITIZEN_IDENTIFICATION_ISSUANCE_DATE']").html("");
@@ -91,7 +91,7 @@ export function handle_dropdown_ro() {
         url: "index.php?module=Leads&entryPoint=sale_stage&role=bu",
         data: {id: sale_stage_id, lead_status_id: lead_status_id},
         success: function(data){
-            console.log(data);
+            //console.log(data);
             $("#sale_stage").html(data);
             
         },
@@ -102,7 +102,7 @@ export function handle_dropdown_ro() {
         url: "index.php?module=Leads&entryPoint=lead_status&role=bu",
         data: {id: sale_stage_id, lead_status_id: lead_status_id},
         success: function(data){
-            console.log(data);
+            //console.log(data);
             $("#lead_status").html(data);
         },
         dataType: 'html'
@@ -114,7 +114,7 @@ export function handle_dropdown_ro() {
             url: "index.php?module=Leads&entryPoint=lead_status&role=bu",
             data: {id: sale_stage_change_id, lead_status_id: lead_status_id},
             success: function(data){
-                console.log(data);
+                //console.log(data);
                 $("#lead_status").html(data);
             },
             dataType: 'html'
@@ -163,15 +163,15 @@ function check_record() {
         }
     })
     .then (data => {
-        console.log(data)
+        //console.log(data)
     })
     .catch(error => {
-        console.log("error")
+        //console.log("error")
     }); 
 }
 
 function check_form(form_name){
-    //console.log(lst)
+    ////console.log(lst)
     if (check_record() == false){
         return false;
     }

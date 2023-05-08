@@ -172,6 +172,7 @@ $viewdefs['Leads'] =
           9 =>
           array(
             0 => "note",
+            1 => "how_get_phone_number",
           )
         ),
         'LBL_EDIT_ROLE_RO' =>

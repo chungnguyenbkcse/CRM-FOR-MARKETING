@@ -56,4 +56,6 @@ $mod_strings = array(
     'LBL_CTV' => 'CTV',
     'LBL_LEAD_STATUS_FOLLOW_LEVEL' => 'Lead status theo level',
     'LBL_SALE_STAGE_FOLLOW_LEVEL' => 'Sale stage theo level',
+    'LBL_HOW_GET_PHONE_NUMBER' => 'Cách lấy SĐT',
+    'LBL_DATE_CREATED' => 'Ngày tạo',
 );

@@ -669,6 +669,7 @@ $app_list_strings = array(
         '12' => 'TELE',
         '13' => 'old MKT ĐN',
         '14' => 'inactive ĐN ',
+        '15' => 'LD',
     ),
 
     'receiving_branch_dom' => array(
@@ -703,6 +704,15 @@ $app_list_strings = array(
         'Visa' => 'Visa',
         'NAPAS' => 'NAPAS',
     ),
+
+    'how_get_phone_number_dom' => array (
+        '' => '',
+        'Zalo' => 'Zalo',
+        'Hotline' => 'Hotline',
+        'Form' => 'Form',
+        'Phone scanning tool' => 'Tool quét SĐT',
+    ),
+
     'bank_dom' => array (
         '' => '',
         '1' => 'HSBC',

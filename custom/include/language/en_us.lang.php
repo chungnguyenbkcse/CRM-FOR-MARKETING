@@ -329,7 +329,6 @@ $app_list_strings = array(
         '19' => 'Wrong Rule',
         '20' => 'Cheat',
         '21' => 'RO error',
-        '22' => 'Agent-CTV/Installment',
         '23' => 'BU not completed',
         '24' => 'Agent-CTV/Installment/Open Card/Loan',
         '25' => 'Done/withdrawn with another party',

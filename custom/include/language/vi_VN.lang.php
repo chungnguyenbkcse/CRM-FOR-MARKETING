@@ -227,7 +227,6 @@ $app_list_strings = array(
             '19' => 'Sai Rule',
             '20' => 'Lừa đảo',
             '21' => 'Lỗi RO',
-            '22' => 'Đại lý-CTV/Trả góp',
             '23' => 'BU không hoàn thành Lead',
             '24' => 'Đại lý-CTV/Trả góp/Mở thẻ/Vay',
             '25' => 'Đã đáo/rút với bên khác',

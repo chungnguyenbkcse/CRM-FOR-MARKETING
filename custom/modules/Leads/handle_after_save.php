@@ -586,8 +586,8 @@ class Handle
                 $lst[25] = "";
             }
 
-            if ($bean->sale_stage_follow_level != null && $bean->sale_stage_follow_level != "") {
-                $sale_stage_follow_level_id = $bean->sale_stage_follow_level;
+            if ($rows['sale_stage_follow_level'] != null && $rows['sale_stage_follow_level'] != "") {
+                $sale_stage_follow_level_id = $rows['sale_stage_follow_level'];
                 $sale_stage_follow_levels = array(
                     '0' => 'Choose',
                     '1' => 'New',
@@ -611,8 +611,8 @@ class Handle
                 $lst[26] = "";
             }
 
-            if ($bean->lead_status_follow_level != null && $bean->lead_status_follow_level != "") {
-                $lead_status_follow_level_id = $bean->lead_status_follow_level;
+            if ($rows['lead_status_follow_level'] != null && $rows['lead_status_follow_level'] != "") {
+                $lead_status_follow_level_id = $rows['lead_status_follow_level'];
                 $lead_status_follow_levels = array(
                     '' => '',
                     '1' => 'NONE',

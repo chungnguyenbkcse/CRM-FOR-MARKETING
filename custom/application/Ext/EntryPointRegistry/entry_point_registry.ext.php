@@ -113,7 +113,7 @@ $entry_point_registry['CdrReportRO'] = array(
 );
 
 $entry_point_registry['update_data'] = array(
-    'file' => 'custom/modules/Leads/update_data_1.php',
+    'file' => 'custom/modules/Leads/update_data.php',
     'auth' => false,
 );
 ?>

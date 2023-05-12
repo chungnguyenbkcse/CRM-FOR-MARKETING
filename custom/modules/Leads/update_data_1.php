@@ -25,7 +25,7 @@ if ($file) {
         $ro_name = $data[11];
         $fullname = $data[12];
 
-        $query_1 = "SELECT COUNT(*) AS total  FROM leads WHERE phone_number_primary = '{$phone_number_primary}' AND bank = '{$bank}' AND ro_name = '{$ro_name}' ";
+        $query_1 = "SELECT COUNT(*) AS total  FROM leads WHERE phone_number_primary = '{$phone_number_primary}' AND bank = '{$bank}' AND ro_name = '{$ro_name}' AND deleted = 0 ";
         $result_1 = $GLOBALS['db']->query($query_1);
         $row_1 = $GLOBALS['db']->fetchByAssoc($result_1);
         $total_1 = $row_1['total'];

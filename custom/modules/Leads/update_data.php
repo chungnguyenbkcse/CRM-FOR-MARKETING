@@ -31,14 +31,15 @@ $file = fopen($filename, 'r');
 if ($file) {
     // Đọc dữ liệu từ tệp theo từng dòng
     while (($data = fgetcsv($file)) !== false) {
+
         // Lấy giá trị của cột đầu tiên
-        $firstColumnValue = '0' . $data[0];
+        $firstColumnValue = $data[0];
         
         // Xử lý giá trị của cột đầu tiên
         // Ví dụ: In ra giá trị của cột đầu tiên
         $lst = array();
 
-        $query = "SELECT * FROM leads WHERE phone_number_primary = '{$firstColumnValue}'";
+        $query = "SELECT * FROM leads WHERE phone_number_primary = '{$firstColumnValue}' AND deleted = 0";
         $result =  $GLOBALS['db']->query($query);
         while ($rows = $GLOBALS['db']->fetchByAssoc($result)) {
             $lead_status_follow_levels = array(

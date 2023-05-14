@@ -520,6 +520,14 @@ $(document).ready(function () {
         if ($('#lead_id').val().length === 0) {
             $(".btn-phone").remove();
             $(".fa-phone").remove();
+
+            $('[data-label="LBL_FACEBOOK_OR_ZALO_NAME"]').append("<span class='required'>*</span>")
+            $('[data-label="LBL_DATA_SOURCES"]').append("<span class='required'>*</span>")
+            $('[data-label="LBL_HOW_GET_PHONE_NUMBER"]').append("<span class='required'>*</span>")
+            //$('[data-label="LBL_RECEIVING_BRANCH"]').append("<span class='required'>*</span>")
+            //$('[data-label="LBL_OWNED_BRANCH"]').append("<span class='required'>*</span>")
+            $('[data-label="LBL_SALE_STAGE"]').append("<span class='required'>*</span>")
+            $('[data-label="LBL_CONTACT_DATE"]').append("<span class='required'>*</span>")
             
 
             $('.edit-view-row-item').each(function() {
@@ -831,6 +839,7 @@ $(document).ready(function () {
 
             $('[data-label="LBL_FACEBOOK_OR_ZALO_NAME"]').append("<span class='required'>*</span>")
             $('[data-label="LBL_DATA_SOURCES"]').append("<span class='required'>*</span>")
+            $('[data-label="LBL_HOW_GET_PHONE_NUMBER"]').append("<span class='required'>*</span>")
             //$('[data-label="LBL_RECEIVING_BRANCH"]').append("<span class='required'>*</span>")
             //$('[data-label="LBL_OWNED_BRANCH"]').append("<span class='required'>*</span>")
             $('[data-label="LBL_SALE_STAGE"]').append("<span class='required'>*</span>")
@@ -882,7 +891,7 @@ $(document).ready(function () {
 
             $(".input_phone_number_primary").removeClass("col-xs-6")
             $(".edit-view-row-item").map(function (idx) {
-                if (idx == 18) {
+                if (idx == 19) {
                     return this.remove();
                 }
                 idx++;
@@ -1795,6 +1804,15 @@ function checkCardNumber() {
     }
 }
 
+function check_get_phone() {
+    var get_phone = $("#how_get_phone_number").val();
+    if (get_phone.length == 0) {
+        alert("Vui lòng nhập cách lấy sđt!");
+        return false;
+    }
+    return true;
+}
+
 function check_phone_number() {
     var res = true;
     var phone1 = $("#phone_number_primary").val();
@@ -1950,12 +1968,19 @@ function check_form(form_name) {
             alert("Vui lòng nhập giá trị RO!")
             return false;
         }
+        if (check_get_phone() == false) {
+            return false;
+        }
         
     }
     else {
 
         if (handle_check_owned_branch() == false) {
             alert("Vui lòng nhập giá trị chi nhánh nhận!")
+            return false;
+        }
+
+        if (check_get_phone() == false) {
             return false;
         }
 

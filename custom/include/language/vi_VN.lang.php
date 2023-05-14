@@ -705,11 +705,16 @@ $app_list_strings = array(
     ),
 
     'how_get_phone_number_dom' => array (
-        '' => '',
-        'Zalo' => 'Zalo',
+        '' => 'Choose',
         'Hotline' => 'Hotline',
+        'Zalo' => 'Nhắn tin zalo',
+        'Message Facebook' => 'Nhắn tin facebook',
         'Form' => 'Form',
-        'Phone scanning tool' => 'Tool quét SĐT',
+        'Phone scanning tool' => 'Tool truy cập website',
+        'Website access tool' => 'Website access tool',
+        'Tool UID Facebook' => 'Tool UID Facebook',
+        'View facebook profile' => 'Xem profile facebook ',
+        'View zalo diary' => 'Xem nhật ký zalo'
     ),
 
     'bank_dom' => array (

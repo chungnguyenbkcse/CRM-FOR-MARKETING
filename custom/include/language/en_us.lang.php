@@ -234,11 +234,16 @@ $app_list_strings = array(
     ),
 
     'how_get_phone_number_dom' => array (
-        '' => '',
-        'Zalo' => 'Zalo',
+        '' => 'Choose',
         'Hotline' => 'Hotline',
+        'Zalo' => 'Message zalo',
+        'Message Facebook' => 'Message Facebook',
         'Form' => 'Form',
         'Phone scanning tool' => 'Phone scanning tool',
+        'Website access tool' => 'Website access tool',
+        'Tool UID Facebook' => 'Tool UID Facebook',
+        'View facebook profile' => 'View facebook profile',
+        'View zalo diary' => 'View zalo\'s diary'
     ),
 
     'bank_dom' => array (

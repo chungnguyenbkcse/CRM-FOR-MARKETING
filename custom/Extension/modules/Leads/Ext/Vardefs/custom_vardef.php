@@ -1068,6 +1068,7 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
             'type' => 'enum',
             'audited' => true,
             'inline_edit' =>false,
+            'isnull' => false,
             'options' => 'how_get_phone_number_dom',
             'len' => '255',
             'comment' => 'How did the sale stage come about',

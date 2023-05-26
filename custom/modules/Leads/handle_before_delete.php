@@ -82,7 +82,7 @@ class Handle
         $key = $bean->phone_number_primary;
         foreach ($values as $row => $data) {
             if ($data[3] == substr($key, 1)) {
-                $rangeToDelete = 'DATA CRM!A' . ($row + 1) . ':Z' . ($row + 1);
+                $rangeToDelete = 'DATA CRM!A' . ($row + 1) . ':AC' . ($row + 1);
                 $clear = new \Google_Service_Sheets_ClearValuesRequest();
                 $service->spreadsheets_values->clear($spreadsheetId, $rangeToDelete, $clear);
                 break;

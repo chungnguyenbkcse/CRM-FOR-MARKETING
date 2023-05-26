@@ -191,39 +191,42 @@ $(document).ready(function () {
 
                     var res = jQuery.parseJSON(data)[0];
                     ////console.log(res)
-                    const recording_file = "/" + (res.calldate.substring(0,4)) + "/" + (res.calldate.substring(5,7)) + "/" + (res.calldate.substring(8,10)) +  "/" + (res.recordingfile);
-                    fetch(`index.php?module=Leads&entryPoint=GetWarfile&data=${recording_file}`)
-                        .then(response => response.blob())
-                        .then(blob => {
-                            //$("#source").attr('src', URL.createObjectURL(blob));
-                            let name_file = new Date().getTime();
-                            ////console.log(name_file)
-                            let file = new File([blob], `${name_file}.wav`, {
-                                type: "audio/x-wav", lastModified: new Date().getTime()
-                            });
-
-                            var form_data = new FormData();
-                            form_data.append("files[]", file);
-                            form_data.append('lead_id', lead_id);
-                            $.ajax({
-                                url: "index.php?module=Leads&entryPoint=handle_upload_file",
-                                contentType: false,
-                                processData: false,
-                                data: form_data,
-                                type: 'post',
-                                success: function (data) {
-                                    //alert(data);
-                                    var url = "https://mkt.tranthu.vn/upload1/" + `${name_file}.wav`;
-                                    //$("#source").attr('src', url);
-                                
-                                    $(".btn-record").html(
-                                        `<audio id="audio" controls autoplay muted><source id="source" src="${url}" type="audio/wav" /></audio>`
-                                    )
-                                },
-
-                            });
-                            // do stuff with `file`
-                        })
+                    if (res != null && res != undefined) {
+                        const recording_file = "/" + (res.calldate.substring(0,4)) + "/" + (res.calldate.substring(5,7)) + "/" + (res.calldate.substring(8,10)) +  "/" + (res.recordingfile);
+                        fetch(`index.php?module=Leads&entryPoint=GetWarfile&data=${recording_file}`)
+                            .then(response => response.blob())
+                            .then(blob => {
+                                //$("#source").attr('src', URL.createObjectURL(blob));
+                                let name_file = new Date().getTime();
+                                ////console.log(name_file)
+                                let file = new File([blob], `${name_file}.wav`, {
+                                    type: "audio/x-wav", lastModified: new Date().getTime()
+                                });
+    
+                                var form_data = new FormData();
+                                form_data.append("files[]", file);
+                                form_data.append('lead_id', lead_id);
+                                $.ajax({
+                                    url: "index.php?module=Leads&entryPoint=handle_upload_file",
+                                    contentType: false,
+                                    processData: false,
+                                    data: form_data,
+                                    type: 'post',
+                                    success: function (data) {
+                                        //alert(data);
+                                        var url = "https://mkt.tranthu.vn/upload1/" + `${name_file}.wav`;
+                                        //$("#source").attr('src', url);
+                                    
+                                        $(".btn-record").html(
+                                            `<audio id="audio" controls autoplay muted><source id="source" src="${url}" type="audio/wav" /></audio>`
+                                        )
+                                    },
+    
+                                });
+                                // do stuff with `file`
+                            })
+                    }
+                    
 
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
@@ -297,6 +300,7 @@ $(document).ready(function () {
                     //console.log(res.calldate.substring(0,4))
                     //console.log(res.calldate.substring(5,7))
                     //console.log(res.calldate.substring(8,10))
+                    if (res != null && res != undefined) {
                     const recording_file = "/" + (res.calldate.substring(0,4)) + "/" + (res.calldate.substring(5,7)) + "/" + (res.calldate.substring(8,10)) +  "/" + (res.recordingfile);
                     fetch(`index.php?module=Leads&entryPoint=GetWarfile&data=${recording_file}`)
                         .then(response => response.blob())
@@ -331,7 +335,8 @@ $(document).ready(function () {
                             // do stuff with `file`
                         })
                     
-                },
+                    }
+                    },
                 error: function (jqXHR, textStatus, errorThrown) {
                     //console.log('Error')
                 }
@@ -1966,9 +1971,6 @@ function check_form(form_name) {
 
         if (handle_check_ro_name() == false) {
             alert("Vui lòng nhập giá trị RO!")
-            return false;
-        }
-        if (check_get_phone() == false) {
             return false;
         }
         

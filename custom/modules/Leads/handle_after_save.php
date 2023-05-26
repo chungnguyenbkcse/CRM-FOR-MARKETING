@@ -94,31 +94,33 @@ class Handle
         
         } */
 
-        if ($bean->lead_status != null && $bean->lead_status != "" ) {
-            $level_lead_status = 0;
-            $level_lead_status_follow_level = 0;
-            $query_get_lead_status_follow_level = "SELECT * FROM relationship_level_lead_status WHERE lead_status_id = '{$bean->lead_status}'";
-            $result_get_lead_status_follow_level =  $GLOBALS['db']->query($query_get_lead_status_follow_level);   
-            while($row1s = $GLOBALS['db']->fetchByAssoc($result_get_lead_status_follow_level)){
-                $level_lead_status = intval($row1s['level']);
-            }
-
-            $query_get_lead_status_follow_level_1 = "SELECT * FROM relationship_level_lead_status WHERE lead_status_id = '{$bean->lead_status_follow_level}'";
-            $result_get_lead_status_follow_level_1 =  $GLOBALS['db']->query($query_get_lead_status_follow_level_1);   
-            while($row2s = $GLOBALS['db']->fetchByAssoc($result_get_lead_status_follow_level_1)){
-                $level_lead_status_follow_level = intval($row2s['level']);
-            }
-
-            if ($level_lead_status > $level_lead_status_follow_level) {
-                /* $bean->lead_status_follow_level = $bean->lead_status;
-                $bean->sale_stage_follow_level = $bean->sale_stage; */
-                $query_xxx = "UPDATE leads SET lead_status_follow_level = '{$bean->lead_status}', sale_stage_follow_level = '{$bean->sale_stage}'  WHERE id = '{$bean->id}' AND deleted = '0'";
-                $GLOBALS['db']->query($query_xxx);
-            }
-        }
-        else {
+        if ($bean->sale_stage_follow_level == null && $bean->sale_stage_follow_level == ""  && $bean->lead_status_follow_level == "" && $bean->lead_status_follow_level == null){
             $query_xxxxx = "UPDATE leads SET lead_status_follow_level = '{$bean->lead_status}', sale_stage_follow_level = '{$bean->sale_stage}'  WHERE id = '{$bean->id}' AND deleted = '0'";
             $GLOBALS['db']->query($query_xxxxx);
+        }
+        else {
+            if ($bean->lead_status != null && $bean->lead_status != "" ) {
+                $level_lead_status = 0;
+                $level_lead_status_follow_level = 0;
+                $query_get_lead_status_follow_level = "SELECT * FROM relationship_level_lead_status WHERE lead_status_id = '{$bean->lead_status}'";
+                $result_get_lead_status_follow_level =  $GLOBALS['db']->query($query_get_lead_status_follow_level);   
+                while($row1s = $GLOBALS['db']->fetchByAssoc($result_get_lead_status_follow_level)){
+                    $level_lead_status = intval($row1s['level']);
+                }
+    
+                $query_get_lead_status_follow_level_1 = "SELECT * FROM relationship_level_lead_status WHERE lead_status_id = '{$bean->lead_status_follow_level}'";
+                $result_get_lead_status_follow_level_1 =  $GLOBALS['db']->query($query_get_lead_status_follow_level_1);   
+                while($row2s = $GLOBALS['db']->fetchByAssoc($result_get_lead_status_follow_level_1)){
+                    $level_lead_status_follow_level = intval($row2s['level']);
+                }
+    
+                if ($level_lead_status > $level_lead_status_follow_level) {
+                    /* $bean->lead_status_follow_level = $bean->lead_status;
+                    $bean->sale_stage_follow_level = $bean->sale_stage; */
+                    $query_xxx = "UPDATE leads SET lead_status_follow_level = '{$bean->lead_status}', sale_stage_follow_level = '{$bean->sale_stage}'  WHERE id = '{$bean->id}' AND deleted = '0'";
+                    $GLOBALS['db']->query($query_xxx);
+                }
+            }
         }
 
 
@@ -269,7 +271,7 @@ class Handle
         $lst = array();
 
 
-        $query_lead = "SELECT * FROM leads WHERE id = '{$bean->id}'";
+        $query_lead = "SELECT * FROM leads WHERE id = '{$bean->id}' AND deleted = 0";
         $result_lead = $GLOBALS['db']->query($query_lead);
         while ($rows = $GLOBALS['db']->fetchByAssoc($result_lead)) {
 
@@ -656,6 +658,12 @@ class Handle
             } else {
                 $lst[27] = "";
             }
+
+            if ($bean->date_entered != null && $bean->date_entered != "") {
+                $lst[28] = $bean->date_entered;
+            } else {
+                $lst[28] = "";
+            }
         }
 
         $values = [
@@ -688,7 +696,7 @@ class Handle
             $response = $service->spreadsheets_values->get($spreadsheetId, $range);
             $values = $response->getValues();
             //$rangeToInsert = 'DATA CRM!A' . (count($values) + 1);
-            $rangeToInsert = 'DATA CRM!A' . (count($values) + 1) . ':AB' . (count($values) + 1);
+            $rangeToInsert = 'DATA CRM!A' . (count($values) + 1) . ':AC' . (count($values) + 1);
             $result = $service->spreadsheets_values->append($spreadsheetId, $rangeToInsert, $body, $params);
         } else {
             $range = 'DATA CRM';
@@ -699,7 +707,7 @@ class Handle
             foreach ($values as $row => $data) {
                 if ($data[3] == substr($key, 1)) {
                     //$rangeToUpdate = 'DATA CRM!A' . ($row + 1) . ':Z' . ($row + 1);
-                    $rangeToUpdate = 'DATA CRM!A' . ($row + 1) . ':AB' . ($row + 1);
+                    $rangeToUpdate = 'DATA CRM!A' . ($row + 1) . ':AC' . ($row + 1);
                     $result = $service->spreadsheets_values->update($spreadsheetId, $rangeToUpdate, $body, $params);
                     printf("%d cells updated.\n", $result->getUpdatedCells());
                     break;

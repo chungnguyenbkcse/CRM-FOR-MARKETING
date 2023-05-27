@@ -68,24 +68,27 @@ class Handle
         $path = '/home/www/html/mkt.tranthu.vn/dataleadmkt-906bd32bac02.json';
         $client->setAuthConfig($path);
 
-        
 
-        // configure the Sheets Service
-        $service = new \Google_Service_Sheets($client);
+        $query_lead = "SELECT * FROM leads WHERE id = '{$bean->id}' AND deleted = 0";
+        $result_lead = $GLOBALS['db']->query($query_lead);
+        while ($rows = $GLOBALS['db']->fetchByAssoc($result_lead)) {
+            // configure the Sheets Service
+            $service = new \Google_Service_Sheets($client);
 
-        // the spreadsheet id can be found in the url https://docs.google.com/spreadsheets/d/10qhcaru2svtbiLYmpZlMtsILS0HFbN7RZh7eMTtGs7M/edit
-        $spreadsheetId = '10qhcaru2svtbiLYmpZlMtsILS0HFbN7RZh7eMTtGs7M';
+            // the spreadsheet id can be found in the url https://docs.google.com/spreadsheets/d/10qhcaru2svtbiLYmpZlMtsILS0HFbN7RZh7eMTtGs7M/edit
+            $spreadsheetId = '10qhcaru2svtbiLYmpZlMtsILS0HFbN7RZh7eMTtGs7M';
 
-        $range = 'DATA CRM';
-        $response = $service->spreadsheets_values->get($spreadsheetId, $range);
-        $values = $response->getValues();
-        $key = $bean->phone_number_primary;
-        foreach ($values as $row => $data) {
-            if ($data[3] == substr($key, 1)) {
-                $rangeToDelete = 'DATA CRM!A' . ($row + 1) . ':AC' . ($row + 1);
-                $clear = new \Google_Service_Sheets_ClearValuesRequest();
-                $service->spreadsheets_values->clear($spreadsheetId, $rangeToDelete, $clear);
-                break;
+            $range = 'DATA NHU';
+            $response = $service->spreadsheets_values->get($spreadsheetId, $range);
+            $values = $response->getValues();
+            $key = $bean->phone_number_primary;
+            foreach ($values as $row => $data) {
+                if ($data[3] == substr($key, 1) && $data[28] == $rows['date_entered']) {
+                    $rangeToDelete = 'DATA NHU!A' . ($row + 1) . ':AC' . ($row + 1);
+                    $clear = new \Google_Service_Sheets_ClearValuesRequest();
+                    $service->spreadsheets_values->clear($spreadsheetId, $rangeToDelete, $clear);
+                    break;
+                }
             }
         }
     }

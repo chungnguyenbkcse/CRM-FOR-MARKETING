@@ -22,19 +22,23 @@ $spreadsheetId = '10qhcaru2svtbiLYmpZlMtsILS0HFbN7RZh7eMTtGs7M';
 // Ví dụ: In ra giá trị của cột đầu tiên
 
 
-$query = "SELECT * FROM leads WHERE created_by = 'aacec1bd-6737-81e3-7365-631aa18cd430' AND deleted = 0 ORDER BY date_entered DESC LIMIT 147, 18446744073709551615;";
+$query = "SELECT * FROM leads WHERE contact_date IS NOT NULL AND created_by  = 'aacec1bd-6737-81e3-7365-631aa18cd430' AND deleted = 0 ORDER BY date_entered DESC LIMIT 915, 18446744073709551615;";
 $result =  $GLOBALS['db']->query($query);
 while ($rows = $GLOBALS['db']->fetchByAssoc($result)) {
 
     $lst = array();
 
-    if ($rows['contact_date'] !== null && $rows['contact_date'] != "") {
+    if (gettype($rows['contact_date']) != "NULL" && $rows['facebook_or_zalo_name'] != "") {
         $lst[0] = $rows['contact_date'];
     } else {
-        $lst[0] = "";
+        $lst[0] = 'Không có dữ liệu';
     }
 
-    $lst[1] = $rows['facebook_or_zalo_name'];
+    if (gettype($rows['facebook_or_zalo_name']) != "NULL" && $rows['facebook_or_zalo_name'] != "") {
+        $lst[1] = $rows['facebook_or_zalo_name'];
+    } else {
+        $lst[1] = 'Không có dữ liệu';
+    }
 
     $data_source_id = $rows['data_sources'];
     $data_sources = array(
@@ -60,13 +64,13 @@ while ($rows = $GLOBALS['db']->fetchByAssoc($result)) {
 
     $lst[3] = $rows['phone_number_primary'];
 
-    if ($rows['card_bark_type'] !== null && $rows['card_bark_type'] != "") {
+    if (gettype($rows['card_bark_type']) != "NULL" && $rows['card_bark_type'] != "") {
         $lst[4] = $rows['card_bark_type'];
     } else {
-        $lst[4] = "";
+        $lst[4] = 'Không có dữ liệu';
     }
 
-    if ($rows['service'] !== null && $rows['service'] != "") {
+    if (gettype($rows['service']) !== "NULL" && $rows['service'] != "") {
         $service_id = $rows['service'];
         $services = array(
             '' => '',
@@ -83,10 +87,10 @@ while ($rows = $GLOBALS['db']->fetchByAssoc($result)) {
             }
         }
     } else {
-        $lst[5] = "";
+        $lst[5] = 'Không có dữ liệu';
     }
 
-    if ($rows['bank'] !== null && $rows['bank'] != "") {
+    if (gettype($rows['bank']) != "NULL" && $rows['bank'] != "") {
         $bank_id = $rows['bank'];
         $banks = array(
             '' => '',
@@ -142,28 +146,28 @@ while ($rows = $GLOBALS['db']->fetchByAssoc($result)) {
             }
         }
     } else {
-        $lst[6] = "";
+        $lst[6] = 'Không có dữ liệu';
     }
 
-    if ($rows['payment_day'] !== null && $rows['payment_day'] != "") {
+    if (gettype($rows['payment_day']) != "NULL" && $rows['payment_day'] != "") {
         $lst[7] = $rows['payment_day'];
     } else {
-        $lst[7] = "";
+        $lst[7] = 'Không có dữ liệu';
     }
 
-    if ($rows['transaction_amount'] !== null && $rows['transaction_amount'] != "") {
+    if (gettype($rows['transaction_amount']) != "NULL" && $rows['transaction_amount'] != "") {
         $lst[8] = $rows['transaction_amount'];
     } else {
-        $lst[8] = "";
+        $lst[8] = 'Không có dữ liệu';
     }
 
-    if ($rows['fee'] !== null && $rows['fee'] != "") {
+    if (gettype($rows['fee']) != "NULL" && $rows['fee'] != "") {
         $lst[9] = $rows['fee'];
     } else {
-        $lst[9] = "";
+        $lst[9] = 'Không có dữ liệu';
     }
 
-    if ($rows['sale_stage'] !== null && $rows['sale_stage'] != "") {
+    if (gettype($rows['sale_stage']) != "NULL" && $rows['sale_stage'] != "") {
         $sale_stage_id = $rows['sale_stage'];
         $sale_stages = array(
             '0' => 'Choose',
@@ -185,10 +189,10 @@ while ($rows = $GLOBALS['db']->fetchByAssoc($result)) {
             }
         }
     } else {
-        $lst[10] = "";
+        $lst[10] = 'Không có dữ liệu';
     }
 
-    if ($rows['lead_status'] !== null && $rows['lead_status'] != "") {
+    if (gettype($rows['lead_status']) !== "NULL" && $rows['lead_status'] != "") {
         $lead_status_id = $rows['lead_status'];
         $lead_statuss = array(
             '' => '',
@@ -215,7 +219,7 @@ while ($rows = $GLOBALS['db']->fetchByAssoc($result)) {
             '21' => 'Lỗi RO',
             '22' => 'Đại lý-CTV/Trả góp',
             '23' => 'BU không hoàn thành Lead',
-            '24' => 'Đại lý-CTV/Trả góp/M!== nullở thẻ/Vay',
+            '24' => 'Đại lý-CTV/Trả góp/Mở thẻ/Vay',
             '25' => 'Đã đáo/rút với bên khác',
             '26' => 'Tìm hiểu thử cho biết',
             '27' => 'Đang chờ để nhận thẻ',
@@ -231,10 +235,10 @@ while ($rows = $GLOBALS['db']->fetchByAssoc($result)) {
             }
         }
     } else {
-        $lst[11] = "";
+        $lst[11] = 'Không có dữ liệu';
     }
 
-    if ($rows['owned_branch'] !== null && $rows['owned_branch'] != "") {
+    if (gettype($rows['owned_branch']) !== "NULL" && $rows['owned_branch'] != "") {
         $owned_branch_id = $rows['owned_branch'];
         $owned_branchs = array(
             '' => '',
@@ -254,91 +258,91 @@ while ($rows = $GLOBALS['db']->fetchByAssoc($result)) {
             }
         }
     } else {
-        $lst[12] = "";
+        $lst[12] = 'Không có dữ liệu';
     }
 
-    if ($rows['ro_name'] !== null && $rows['ro_name'] != "") {
-        $lst[13] = "";
+    if (gettype($rows['ro_name']) != 'NULL' && $rows['ro_name'] != "") {
+        $lst[13] = " ";
         $query_1 = "SELECT * FROM users WHERE deleted = 0 AND id = '{$rows['ro_name']}'";
         $result_1 = $GLOBALS['db']->query($query_1);
         while ($rowsx = $GLOBALS['db']->fetchByAssoc($result_1)) {
             $lst[13] .= $rowsx['user_name'];
         }
     } else {
-        $lst[13] = "";
+        $lst[13] = 'Không có dữ liệu';
     }
 
-    if ($rows['note'] !== null && $rows['note'] != "") {
+    if (gettype($rows['note']) != "NULL" && $rows['note'] != "") {
         $lst[14] = $rows['note'];
     } else {
-        $lst[14] = "";
+        $lst[14] = 'Không có dữ liệu';
     }
 
 
-    if ($rows['fullname'] !== null && $rows['fullname'] != "") {
+    if (gettype($rows['fullname']) != "NULL" && $rows['fullname'] != "") {
         $lst[15] = $rows['fullname'];
     } else {
-        $lst[15] = "";
+        $lst[15] = 'Không có dữ liệu';
     }
 
-    if ($rows['citizen_identification'] !== null && $rows['citizen_identification'] != "") {
+    if (gettype($rows['citizen_identification']) != "NULL" && $rows['citizen_identification'] != "") {
         $lst[16] = $rows['citizen_identification'];
     } else {
-        $lst[16] = "";
+        $lst[16] = 'Không có dữ liệu';
     }
 
-    if ($rows['citizen_identification_issuance_date'] !== null && $rows['citizen_identification_issuance_date'] != "") {
+    if (gettype($rows['citizen_identification_issuance_date']) != "NULL" && $rows['citizen_identification_issuance_date'] != "") {
         $lst[17] = $rows['citizen_identification_issuance_date'];
     } else {
-        $lst[17] = "";
+        $lst[17] = 'Không có dữ liệu';
     }
 
-    if ($rows['citizen_identification_issuance_place'] !== null && $rows['citizen_identification_issuance_place'] != "") {
+    if (gettype($rows['citizen_identification_issuance_place']) != "NULL" && $rows['citizen_identification_issuance_place'] != "") {
         $lst[18] = $rows['citizen_identification_issuance_place'];
     } else {
-        $lst[18] = "";
+        $lst[18] = 'Không có dữ liệu';
     }
 
-    if ($rows['real_transaction_amount'] !== null && $rows['real_transaction_amount'] != "") {
+    if (gettype($rows['real_transaction_amount']) != "NULL" && $rows['real_transaction_amount'] != "") {
         $lst[19] = $rows['real_transaction_amount'];
     } else {
-        $lst[19] = "";
+        $lst[19] = 'Không có dữ liệu';
     }
 
-    if ($rows['real_fee'] !== null && $rows['real_fee'] != "") {
+    if (gettype($rows['real_fee']) !== "NULL" && $rows['real_fee'] != "") {
         $lst[20] = $rows['real_fee'];
     } else {
-        $lst[20] = "";
+        $lst[20] = 'Không có dữ liệu';
     }
 
-    if ($rows['birthday'] !== null && $rows['birthday'] != "") {
+    if (gettype($rows['birthday']) !== "NULL" && $rows['birthday'] != "") {
         $lst[21] = $rows['birthday'];
     } else {
-        $lst[21] = "";
+        $lst[21] = 'Không có dữ liệu';
     }
 
-    if ($rows['successful_trading_day'] !== null && $rows['successful_trading_day'] != "") {
+    if (gettype($rows['successful_trading_day']) !== "NULL" && $rows['successful_trading_day'] != "") {
         $lst[22] = $rows['successful_trading_day'];
     } else {
-        $lst[22] = "";
+        $lst[22] = 'Không có dữ liệu';
     }
 
-    if ($rows['phone_number_extra'] !== null && $rows['phone_number_extra'] != "") {
+    if (gettype($rows['phone_number_extra']) !== "NULL" && $rows['phone_number_extra'] != "") {
         $lst[23] = $rows['phone_number_extra'];
     } else {
-        $lst[23] = "";
+        $lst[23] = 'Không có dữ liệu';
     }
 
-    if ($rows['career'] !== null && $rows['career'] != "") {
+    if (gettype($rows['career']) !== "NULL" && $rows['career'] != "") {
         $lst[24] = $rows['career'];
     } else {
-        $lst[24] = "";
+        $lst[24] = 'Không có dữ liệu';
     }
 
-    if ($rows['district_customer_live'] !== null && $rows['district_customer_live'] != "") {
+    if (gettype($rows['district_customer_live']) !== "NULL" && $rows['district_customer_live'] != "") {
         $lst[25] = $rows['district_customer_live'];
     } else {
-        $lst[25] = "";
+        $lst[25] = 'Không có dữ liệu';
     }
 
     $lead_status_follow_levels = array(
@@ -394,7 +398,7 @@ while ($rows = $GLOBALS['db']->fetchByAssoc($result)) {
         '11' => 'Sai quy định'
     );
 
-    if ($rows['sale_stage_follow_level'] !== null && $rows['sale_stage_follow_level'] != "") {
+    if (gettype($rows['sale_stage_follow_level']) !== "NULL" && $rows['sale_stage_follow_level'] != "") {
         foreach ($sale_stage_follow_levels as $key => $datax) {
             if ($key == $rows['sale_stage_follow_level']) {
                 $lst[26] = $datax;
@@ -405,7 +409,7 @@ while ($rows = $GLOBALS['db']->fetchByAssoc($result)) {
     }
 
 
-    if ($rows['lead_status_follow_level'] !== null && $rows['lead_status_follow_level'] != "") {
+    if (gettype($rows['lead_status_follow_level']) !== "NULL" && $rows['lead_status_follow_level'] != "") {
         foreach ($lead_status_follow_levels as $keyy => $datay) {
             if ($keyy == $rows['lead_status_follow_level']) {
                 $lst[27] = $datay;
@@ -415,10 +419,10 @@ while ($rows = $GLOBALS['db']->fetchByAssoc($result)) {
         $lst[27] = $rows['lead_status'];
     }
 
-    if ($rows['date_entered'] !== null && $rows['date_entered'] != "") {
+    if (gettype($rows['date_entered']) !== "NULL" && $rows['date_entered'] != "") {
         $lst[28] = $rows['date_entered'];
     } else {
-        $lst[28] = "";
+        $lst[28] = 'Không có dữ liệu';
     }
 
     $values = [
@@ -439,6 +443,10 @@ while ($rows = $GLOBALS['db']->fetchByAssoc($result)) {
     $range = 'DATA NHU';
     $response = $service->spreadsheets_values->get($spreadsheetId, $range);
     //$rangeToInsert = 'DATA CRM!A' . (count($values) + 1);
-    $rangeToInsert = 'DATA NHU!A' . (count($response->getValues()) + 1) . ':AC' . (count($response->getValues()) + 1);
+    $count = (count($response->getValues()) + 1);
+    $rangeToInsert = 'DATA NHU!A' . $count . ':AC' . $count;
     $service->spreadsheets_values->append($spreadsheetId, $rangeToInsert, $body, $params);
+   
 }
+
+echo "success";

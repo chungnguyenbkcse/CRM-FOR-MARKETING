@@ -20,7 +20,7 @@ $spreadsheetId = '10qhcaru2svtbiLYmpZlMtsILS0HFbN7RZh7eMTtGs7M';
 
 
 
-$filename = '/home/www/html/mkt.tranthu.vn/data_17052023.csv';
+$filename = '/home/www/html/mkt.tranthu.vn/data_1705_full.csv';
 
 // Mở tệp CSV để đọc
 $file = fopen($filename, 'r');
@@ -37,7 +37,7 @@ if ($file) {
         $lst = array();
 
 
-        $query_lead = "SELECT * FROM leads WHERE phone_number_primary = '{$phone_number_primary}' LIMIT 1";
+        $query_lead = "SELECT * FROM leads WHERE deleted = 0 AND data_sources != ''   phone_number_primary = '{$phone_number_primary}' AND date_entered = '{$data_csv[1]}' AND created_by = '1'";
         $result_lead = $GLOBALS['db']->query($query_lead);
         while ($rows = $GLOBALS['db']->fetchByAssoc($result_lead)) {
 
@@ -281,12 +281,15 @@ if ($file) {
             }
 
 
-            $lst[13] = "Không có dữ liệu";
-            $ro_name = $rows['ro_name'];
-            $query_1 = "SELECT * FROM users WHERE deleted = 0 AND id = '{$ro_name}'";
-            $result_1 = $GLOBALS['db']->query($query_1);
-            while ($rowsx = $GLOBALS['db']->fetchByAssoc($result_1)) {
-                $lst[13] .= $rowsx['user_name'];
+            if (gettype($rows['ro_name']) != 'NULL' && $rows['ro_name'] != "") {
+                $lst[13] = " ";
+                $query_1 = "SELECT * FROM users WHERE deleted = 0 AND id = '{$rows['ro_name']}'";
+                $result_1 = $GLOBALS['db']->query($query_1);
+                while ($rowsx = $GLOBALS['db']->fetchByAssoc($result_1)) {
+                    $lst[13] .= $rowsx['user_name'];
+                }
+            } else {
+                $lst[13] = 'Không có dữ liệu';
             }
 
 
@@ -455,26 +458,37 @@ if ($file) {
             } else {
                 $lst[27] = "Không có dữ liệu";
             }
+
+            if (gettype($rows['date_entered']) !== "NULL" && $rows['date_entered'] != "") {
+                $lst[28] = $rows['date_entered'];
+            } else {
+                $lst[28] = 'Không có dữ liệu';
+            }
         }
 
+        
+    
         $values = [
             $lst
         ];
-
+    
+    
+    
         $body = new Google_Service_Sheets_ValueRange([
             'values' => $values
         ]);
-
+    
         $params = [
             'valueInputOption' => 'RAW'
         ];
-
-        $range = 'DATA CRM';
+    
+        //$GLOBALS['log']->fatal($lst[0]);
+        $range = 'DATA NHU';
         $response = $service->spreadsheets_values->get($spreadsheetId, $range);
-        $values = $response->getValues();
         //$rangeToInsert = 'DATA CRM!A' . (count($values) + 1);
-        $rangeToInsert = 'DATA CRM!A' . (count($values) + 1) . ':AB' . (count($values) + 1);
-        $result = $service->spreadsheets_values->append($spreadsheetId, $rangeToInsert, $body, $params);
+        $count = (count($response->getValues()) + 1);
+        $rangeToInsert = 'DATA NHU!A' . $count . ':AC' . $count;
+        $service->spreadsheets_values->append($spreadsheetId, $rangeToInsert, $body, $params);
     }
     // Đóng tệp CSV sau khi đọc xong
     fclose($file);

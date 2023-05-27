@@ -278,7 +278,7 @@ class Handle
             if ($bean->contact_date != null && $bean->contact_date != "") {
                 $lst[0] = $bean->contact_date;
             } else {
-                $lst[0] = "";
+                $lst[0] ="Không có dữ liệu";
             }
 
             $lst[1] = $rows['facebook_or_zalo_name'];
@@ -310,7 +310,7 @@ class Handle
             if ($bean->card_bark_type != null && $bean->card_bark_type != "") {
                 $lst[4] = $bean->card_bark_type;
             } else {
-                $lst[4] = "";
+                $lst[4] ="Không có dữ liệu";
             }
 
             if ($bean->service != null && $bean->service != "") {
@@ -330,7 +330,7 @@ class Handle
                     }
                 }
             } else {
-                $lst[5] = "";
+                $lst[5] ="Không có dữ liệu";
             }
 
             if ($bean->bank != null && $bean->bank != "") {
@@ -389,25 +389,25 @@ class Handle
                     }
                 }
             } else {
-                $lst[6] = "";
+                $lst[6] ="Không có dữ liệu";
             }
 
             if ($bean->payment_day != null && $bean->payment_day != "") {
                 $lst[7] = $bean->payment_day;
             } else {
-                $lst[7] = "";
+                $lst[7] ="Không có dữ liệu";
             }
 
             if ($bean->transaction_amount != null && $bean->transaction_amount != "") {
                 $lst[8] = $bean->transaction_amount;
             } else {
-                $lst[8] = "";
+                $lst[8] ="Không có dữ liệu";
             }
 
             if ($bean->fee != null && $bean->fee != "") {
                 $lst[9] = $bean->fee;
             } else {
-                $lst[9] = "";
+                $lst[9] ="Không có dữ liệu";
             }
 
             if ($bean->sale_stage != null && $bean->sale_stage != "") {
@@ -432,7 +432,7 @@ class Handle
                     }
                 }
             } else {
-                $lst[10] = "";
+                $lst[10] ="Không có dữ liệu";
             }
 
             if ($bean->lead_status != null && $bean->lead_status != "") {
@@ -478,7 +478,7 @@ class Handle
                     }
                 }
             } else {
-                $lst[11] = "";
+                $lst[11] ="Không có dữ liệu";
             }
 
             if ($bean->owned_branch != null && $bean->owned_branch != "") {
@@ -501,7 +501,7 @@ class Handle
                     }
                 }
             } else {
-                $lst[12] = "";
+                $lst[12] ="Không có dữ liệu";
             }
 
             if ($bean->ro_name != null && $bean->ro_name != "") {
@@ -512,80 +512,80 @@ class Handle
                     $lst[13] .= $rowsx['user_name'];
                 }
             } else {
-                $lst[13] = "";
+                $lst[13] ="Không có dữ liệu";
             }
 
             if ($bean->note != null && $bean->note != "") {
                 $lst[14] = $rows['note'];
             } else {
-                $lst[14] = "";
+                $lst[14] ="Không có dữ liệu";
             }
 
 
             if ($bean->fullname != null && $bean->fullname != "") {
                 $lst[15] = $rows['fullname'];
             } else {
-                $lst[15] = "";
+                $lst[15] ="Không có dữ liệu";
             }
 
             if ($bean->citizen_identification != null && $bean->citizen_identification != "") {
                 $lst[16] = $bean->citizen_identification;
             } else {
-                $lst[16] = "";
+                $lst[16] ="Không có dữ liệu";
             }
 
             if ($bean->citizen_identification_issuance_date != null && $bean->citizen_identification_issuance_date != "") {
                 $lst[17] = $bean->citizen_identification_issuance_date;
             } else {
-                $lst[17] = "";
+                $lst[17] ="Không có dữ liệu";
             }
 
             if ($bean->citizen_identification_issuance_place != null && $bean->citizen_identification_issuance_place != "") {
                 $lst[18] = $rows['citizen_identification_issuance_place'];
             } else {
-                $lst[18] = "";
+                $lst[18] ="Không có dữ liệu";
             }
 
             if ($bean->real_transaction_amount != null && $bean->real_transaction_amount != "") {
                 $lst[19] = $bean->real_transaction_amount;
             } else {
-                $lst[19] = "";
+                $lst[19] ="Không có dữ liệu";
             }
 
             if ($bean->real_fee != null && $bean->real_fee != "") {
                 $lst[20] = $bean->real_fee;
             } else {
-                $lst[20] = "";
+                $lst[20] ="Không có dữ liệu";
             }
 
             if ($bean->birthday != null && $bean->birthday != "") {
                 $lst[21] = $bean->birthday;
             } else {
-                $lst[21] = "";
+                $lst[21] ="Không có dữ liệu";
             }
 
             if ($bean->successful_trading_day != null && $bean->successful_trading_day != "") {
                 $lst[22] = $bean->successful_trading_day;
             } else {
-                $lst[22] = "";
+                $lst[22] ="Không có dữ liệu";
             }
 
             if ($bean->phone_number_extra != null && $bean->phone_number_extra != "") {
                 $lst[23] = $bean->phone_number_extra;
             } else {
-                $lst[23] = "";
+                $lst[23] ="Không có dữ liệu";
             }
 
             if ($bean->career != null && $bean->career != "") {
                 $lst[24] = $rows['career'];
             } else {
-                $lst[24] = "";
+                $lst[24] ="Không có dữ liệu";
             }
 
             if ($bean->district_customer_live != null && $bean->district_customer_live != "") {
                 $lst[25] = $rows['district_customer_live'];
             } else {
-                $lst[25] = "";
+                $lst[25] ="Không có dữ liệu";
             }
 
             if ($rows['sale_stage_follow_level'] != null && $rows['sale_stage_follow_level'] != "") {
@@ -610,7 +610,7 @@ class Handle
                     }
                 }
             } else {
-                $lst[26] = "";
+                $lst[26] ="Không có dữ liệu";
             }
 
             if ($rows['lead_status_follow_level'] != null && $rows['lead_status_follow_level'] != "") {
@@ -656,13 +656,13 @@ class Handle
                     }
                 }
             } else {
-                $lst[27] = "";
+                $lst[27] ="Không có dữ liệu";
             }
 
-            if ($bean->date_entered != null && $bean->date_entered != "") {
-                $lst[28] = $bean->date_entered;
+            if ($rows['date_entered'] != null && $rows['date_entered'] != "") {
+                $lst[28] = $rows['date_entered'];
             } else {
-                $lst[28] = "";
+                $lst[28] ="Không có dữ liệu";
             }
         }
 
@@ -692,22 +692,22 @@ class Handle
                 $GLOBALS['db']->query($query_insert_ro_choose);
             }
 
-            $range = 'DATA CRM';
+            $range = 'DATA NHU';
             $response = $service->spreadsheets_values->get($spreadsheetId, $range);
             $values = $response->getValues();
-            //$rangeToInsert = 'DATA CRM!A' . (count($values) + 1);
-            $rangeToInsert = 'DATA CRM!A' . (count($values) + 1) . ':AC' . (count($values) + 1);
+            //$rangeToInsert = 'DATA NHU!A' . (count($values) + 1);
+            $rangeToInsert = 'DATA NHU!A' . (count($values) + 1) . ':AC' . (count($values) + 1);
             $result = $service->spreadsheets_values->append($spreadsheetId, $rangeToInsert, $body, $params);
         } else {
-            $range = 'DATA CRM';
+            $range = 'DATA NHU';
             $response = $service->spreadsheets_values->get($spreadsheetId, $range);
             $values = $response->getValues();
             $key = $bean->phone_number_primary;
-
+            $GLOBALS['log']->fatal($lst[28]);
             foreach ($values as $row => $data) {
-                if ($data[3] == substr($key, 1)) {
-                    //$rangeToUpdate = 'DATA CRM!A' . ($row + 1) . ':Z' . ($row + 1);
-                    $rangeToUpdate = 'DATA CRM!A' . ($row + 1) . ':AC' . ($row + 1);
+                if ($data[3] == substr($key, 1) && $data[28] == $lst[28]) {
+                    //$rangeToUpdate = 'DATA NHU!A' . ($row + 1) . ':Z' . ($row + 1);
+                    $rangeToUpdate = 'DATA NHU!A' . ($row + 1) . ':AC' . ($row + 1);
                     $result = $service->spreadsheets_values->update($spreadsheetId, $rangeToUpdate, $body, $params);
                     printf("%d cells updated.\n", $result->getUpdatedCells());
                     break;

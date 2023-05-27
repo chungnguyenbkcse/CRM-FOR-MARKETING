@@ -135,216 +135,6 @@ $(document).ready(function () {
     var role = getCookie("role");
     var lead_id = $("#lead_id").val();
 
-    if (lead_id.length == 0) {
-        $(".btn-record").remove()
-        $("[data-label='LBL_IS_RECORD']").remove()
-    }
-
-    else {
-
-        $("[data-label='LBL_IS_RECORD']").html("")
-        if (role == "RO") {
-            var sip = getCookie("sip");
-            var date = new Date();
-            // Get year, month, and day part from the date
-            var year = date.toLocaleString("default", { year: "numeric" });
-            var month = date.toLocaleString("default", { month: "2-digit" });
-            var day = date.toLocaleString("default", { day: "2-digit" });
-            // Generate yyyy-mm-dd date string
-            var start_date = year + "-" + month + "-" + day + " 00:00:00";
-            var end_date = year + "-" + month + "-" + day + " 23:59:59";
-
-            var phone = $('#phone_number_primary').val();
-            if (phone.length > 10 && phone.slice(0, 2) == '84') {
-                phone = '0' + phone.slice(2);
-            }
-            if (phone.length < 10) {
-                phone = '0' + phone;
-            }
-
-            var formData = {
-                sip: parseInt(sip),
-                field_name: "dst",
-                field_pattern: parseInt(phone),
-                status: "ANSWERED",
-                limit: 1,
-                offset: 0,
-            }; //Array 
-
-            ////console.log(formData)
-
-
-            $.ajax({
-                url: "index.php?module=Leads&entryPoint=CdrReport",
-                type: "GET",
-                data: {
-                    sip: parseInt(sip),
-                    field_name: "dst",
-                    field_pattern: parseInt(phone),
-                    status: "ANSWERED",
-                    limit: 1,
-                    offset: 0
-                },
-                success: function (data, textStatus, jqXHR) {
-                    ////console.log('Susscess')
-                    ////console.log(data)
-
-                    var res = jQuery.parseJSON(data)[0];
-                    ////console.log(res)
-                    if (res != null && res != undefined) {
-                        const recording_file = "/" + (res.calldate.substring(0,4)) + "/" + (res.calldate.substring(5,7)) + "/" + (res.calldate.substring(8,10)) +  "/" + (res.recordingfile);
-                        fetch(`index.php?module=Leads&entryPoint=GetWarfile&data=${recording_file}`)
-                            .then(response => response.blob())
-                            .then(blob => {
-                                //$("#source").attr('src', URL.createObjectURL(blob));
-                                let name_file = new Date().getTime();
-                                ////console.log(name_file)
-                                let file = new File([blob], `${name_file}.wav`, {
-                                    type: "audio/x-wav", lastModified: new Date().getTime()
-                                });
-    
-                                var form_data = new FormData();
-                                form_data.append("files[]", file);
-                                form_data.append('lead_id', lead_id);
-                                $.ajax({
-                                    url: "index.php?module=Leads&entryPoint=handle_upload_file",
-                                    contentType: false,
-                                    processData: false,
-                                    data: form_data,
-                                    type: 'post',
-                                    success: function (data) {
-                                        //alert(data);
-                                        var url = "https://mkt.tranthu.vn/upload1/" + `${name_file}.wav`;
-                                        //$("#source").attr('src', url);
-                                    
-                                        $(".btn-record").html(
-                                            `<audio id="audio" controls autoplay muted><source id="source" src="${url}" type="audio/wav" /></audio>`
-                                        )
-                                    },
-    
-                                });
-                                // do stuff with `file`
-                            })
-                    }
-                    
-
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    ////console.log('Error')
-                }
-            });
-        }
-        else if (role == "MKT" || role == "SUPER_MKT") {
-            var ro_name_val = $("#ro_name_val").val();
-            var sip = getCookie("sip");
-
-            $.ajax({
-                url: "index.php?module=Leads&entryPoint=get_sip",
-                data: { ro_id: ro_name_val },
-                success: function (data) {
-                    ////console.log(data);
-                    sip = data;
-                },
-                async: false
-            });
-
-            ////console.log(sip);
-
-            var date = new Date();
-            // Get year, month, and day part from the date
-            var year = date.toLocaleString("default", { year: "numeric" });
-            var month = date.toLocaleString("default", { month: "2-digit" });
-            var day = date.toLocaleString("default", { day: "2-digit" });
-            // Generate yyyy-mm-dd date string
-            var start_date = year + "-" + month + "-" + day + " 00:00:00";
-            var end_date = year + "-" + month + "-" + day + " 23:59:59";
-            
-            var phone = $('#phone_number_primary').val();
-            if (phone.length > 10 && phone.slice(0, 2) == '84') {
-                phone = '0' + phone.slice(2);
-            }
-            if (phone.length < 10) {
-                phone = '0' + phone;
-            }
-            
-            var formData = {
-                sip: parseInt(sip),
-                field_name: "dst",
-                field_pattern: parseInt(phone),
-                status: "ANSWERED",
-                limit: 1,
-                offset: 0,
-            }; //Array 
-        
-            //console.log(formData)
-        
-        
-            $.ajax({
-                url: "index.php?module=Leads&entryPoint=CdrReport",
-                type: "GET",
-                data: {
-                    sip: parseInt(sip),
-                    start_date: start_date,
-                    end_date: end_date,
-                    field_name: "dst",
-                    field_pattern: parseInt(phone),
-                    status: "ANSWERED",
-                    limit: 1,
-                    offset: 0
-                },
-                success: function (data, textStatus, jqXHR) {
-                    //console.log('Susscess')
-                    //console.log(data)
-                    
-                    var res = jQuery.parseJSON(data)[0];
-                    //console.log(res.calldate.substring(0,4))
-                    //console.log(res.calldate.substring(5,7))
-                    //console.log(res.calldate.substring(8,10))
-                    if (res != null && res != undefined) {
-                    const recording_file = "/" + (res.calldate.substring(0,4)) + "/" + (res.calldate.substring(5,7)) + "/" + (res.calldate.substring(8,10)) +  "/" + (res.recordingfile);
-                    fetch(`index.php?module=Leads&entryPoint=GetWarfile&data=${recording_file}`)
-                        .then(response => response.blob())
-                        .then(blob => {
-                            //$("#source").attr('src', URL.createObjectURL(blob));
-                            let name_file = new Date().getTime();
-                            //console.log(name_file)
-                            let file = new File([blob], `${name_file}.wav`, {
-                                type: "audio/x-wav", lastModified: new Date().getTime()
-                            });
-                        
-                            var form_data = new FormData();
-                            form_data.append("files[]", file);
-                            form_data.append('lead_id', lead_id);
-                            $.ajax({
-                                url: "index.php?module=Leads&entryPoint=handle_upload_file",
-                                contentType: false,
-                                processData: false,
-                                data: form_data,
-                                type: 'post',
-                                success: function (data) {
-                                    //alert(data);
-                                    var url = "https://mkt.tranthu.vn/upload1/" + `${name_file}.wav`;
-                                    //$("#source").attr('src', url);
-                                
-                                    $(".btn-record").html(
-                                        `<audio id="audio" controls autoplay muted><source id="source" src="${url}" type="audio/wav" /></audio>`
-                                    )
-                                },
-                            
-                            });
-                            // do stuff with `file`
-                        })
-                    
-                    }
-                    },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    //console.log('Error')
-                }
-            });
-        }
-
-    }
-
     $(".glyphicon-earphone").map(function(idx) {
         if (idx == 0) {
             $(this).click(function () {
@@ -428,98 +218,64 @@ $(document).ready(function () {
 
         
 
-        $('[name="bank"]').map(function (idx) {
-            $(this).change(function() {
+        $('[name="bank"]').change(function() {
                 //console.log('xxx')
                 let re = $(this).val()
-                $('[name="bank"]').map(function (idxx) {
-                    $(this).val(re)
-                })
-            })
+                $('[name="bank"]').val(re)
         });
 
 
-        $('[name="card_bark_type"]').map(function (idx) {
-            $(this).change(function() {
+        $('[name="card_bark_type"]').change(function() {
                 //console.log('xxx')
                 let re = $(this).val()
-                $('[name="card_bark_type"]').map(function (idxx) {     
-                        $(this).val(re)
-                })
-            })
+                $('[name="card_bark_type"]').val(re)
         });
 
 
-        $('[name="service"]').map(function (idx) {
-            $(this).change(function() {
+        $('[name="service"]').change(function() {
                 //console.log('xxx')
                 let re = $(this).val()
-                $('[name="service"]').map(function (idxx) {
-                    $(this).val(re)
-                })
-            })
+                $('[name="service"]').val(re)
         });
 
 
 
-        $('[name="sale_stage"]').map(function (idx) {
-            $(this).change(function() {
+        $('[name="sale_stage"]').change(function() {
                 var sale_stage_change_id = $(this).val();
-                $('[name="sale_stage"]').map(function (idx) {
-                    $(this).val(sale_stage_change_id)
-                })
-                //console.log('xxx')
-                let re = $(this).val()
-                $('[name="sale_stage"]').map(function (idxx) {
-                    $(this).val(re)
-                })
-            })
+                $('[name="sale_stage"]').val(sale_stage_change_id)
         });
 
 
-        $('[name="lead_status"]').map(function (idx) {
-            $(this).change(function() {
+        $('[name="lead_status"]').change(function() {
                 //console.log('xxx')
                 let re = $(this).val()
-                $('[name="lead_status"]').map(function (idxx) {
-                    $(this).val(re)
-                })
-            })
+                $('[name="lead_status"]').val(re)
         });
 
         $("#citizen_identification").blur(function () {
             check_cmdd()
         })
 
-        var ho_name_val = $("#ho_name_val").val();
-                $("#ho_name").attr("disabled", true);
-                $.ajax({
-                    url: "index.php?module=Leads&entryPoint=ho_name",
-                    data: { ho_name: ho_name_val },
-                    success: function (data) {
-                        //console.log(data);
-                        $("#ho_name").html(data);
-                        $("#ho_name").attr("disabled", false);
-                    },
-                    dataType: 'html'
-                });
+        
 
         if (lead_id.length > 0) {
-            $(document).ready(function () {
-                setInterval(function () {
-                    $.ajax({
-                        url: "index.php?module=Leads&entryPoint=handle_check_time",
-                        data: { id: lead_id },
-                        success: function (data) {
-                            //console.log(data)
-                            if (data != "") {
-                                alert(`Bạn vượt quá thời gian tác động ${data}`)
-                                window.open("http://mkt.tranthu.vn/index.php?module=Leads&action=index&return_module=Leads&return_action=index");
+            if (sale_stage_id == '10') {
+                $(document).ready(function () {
+                    setInterval(function () {
+                        $.ajax({
+                            url: "index.php?module=Leads&entryPoint=handle_check_time",
+                            data: { id: lead_id },
+                            success: function (data) {
+                                console.log(data)
+                                if (data != "") {
+                                    alert(`Bạn vượt quá thời gian tác động ${data}`)
+                                    window.open("http://mkt.tranthu.vn/index.php?module=Leads&action=index&return_module=Leads&return_action=index");
+                                }
                             }
-                        }
-                    });
-                }, 1000);
-            })
+                        });
+                    }, 1000);
+                })
+            }     
         }
 
         if ($('#lead_id').val().length === 0) {
@@ -544,8 +300,7 @@ $(document).ready(function () {
             });
 
             let context = $("#receiving_branch").html();
-            $('[name="service"]').map(function (idx) {
-                $(this).change(function() {
+            $('[name="service"]').change(function() {
                     var service = $(this).val();
                     if (service == '5') {
                             $("#receiving_branch").html("<option value='4' selected>TELE</option><option value='5'>DL TB</option><option value='0'>Choose</option>");
@@ -553,7 +308,6 @@ $(document).ready(function () {
                     else {
                         $("#receiving_branch").html(context)
                     }
-                })
             })
 
             $("#phone_number_primary").blur(function () {
@@ -587,7 +341,7 @@ $(document).ready(function () {
             url: "index.php?module=Leads&entryPoint=ro_name",
             data: { ro_name: ro_name_val },
             success: function (data) {
-                //console.log(data);
+                console.log('ro_4');
                 $("#ro_name").html(data);
             },
             dataType: 'html'
@@ -695,21 +449,14 @@ $(document).ready(function () {
             data: { id: sale_stage_id, lead_status_id: lead_status_id, created_by: created_by },
             success: function (data) {
                 //console.log(data);
-                $('[name = "lead_status"]').map(function (idx) {
-                    return $(this).html(data);
-                })
+                $('[name = "lead_status"]').html(data);
             },
             dataType: 'html'
         });
 
-        $('[name="sale_stage"]').map(function (idx) {
-            //console.log(idx)
-            if (idx > 0) {
-                return $(this).change(function () {
+        $('[name="sale_stage"]').change(function () {
                     var sale_stage_change_id = $(this).val();
-                    $('[name="sale_stage"]').map(function (idx) {
-                        $(this).val(sale_stage_change_id)
-                    })
+                    $('[name="sale_stage"]').not(this).val(sale_stage_change_id)
                     //console.log(sale_stage_change_id)
                     $.ajax({
                         url: "index.php?module=Leads&entryPoint=lead_status",
@@ -717,18 +464,11 @@ $(document).ready(function () {
                         success: function (data) {
                             //console.log(data);
                             //$("#lead_status").html(data);
-                            $('[name="lead_status"]').map(function (index) {
-                                if (index > 0) {
-                                    $(this).html(data);
-                                }
-                            });
+                            $('[name="lead_status"]').html(data);
                         },
                         dataType: 'html'
-                    });
                 });
-            }
-            return idx++;
-        }).get();
+        });
     }
 
     else if (role == "MKT" || role == "SUPER_MKT") {
@@ -738,14 +478,10 @@ $(document).ready(function () {
         var ho_name = $('#ho_name_val').val();
         var owner_branch = $('#owner_branch_val').val();
 
-        $('[name="note"]').map(function (idx) {
-            $(this).change(function() {
+        $('[name="note"]').change(function() {
                 //console.log('xxx')
                 let re = $(this).val()
-                $('[name="note"]').map(function (idxx) {
-                    $(this).val(re)
-                })
-            })
+                $('[name="note"]').val(re)
         });
 
         $("#transaction_amount").change(function () {
@@ -760,82 +496,62 @@ $(document).ready(function () {
             $(this).val(Number(transaction_amount).toLocaleString());
         })
 
-        $('[name="bank"]').map(function (idx) {
-            $(this).change(function() {
+        $('[name="bank"]').change(function() {
                 //console.log('xxx')
                 let re = $(this).val()
-                $('[name="bank"]').map(function (idxx) {
-                    $(this).val(re)
-                })
-            })
+                $('[name="bank"]').val(re)
         });
 
 
-        $('[name="card_bark_type"]').map(function (idx) {
-            $(this).change(function() {
+        $('[name="card_bark_type"]').change(function() {
                 //console.log('xxx')
                 let re = $(this).val()
-                $('[name="card_bark_type"]').map(function (idxx) {     
-                        $(this).val(re)
-                })
-            })
+                $('[name="card_bark_type"]').val(re)
         });
 
 
-        $('[name="service"]').map(function (idx) {
-            $(this).change(function() {
+        $('[name="service"]').change(function() {
                 //console.log('xxx')
                 let re = $(this).val()
-                $('[name="service"]').map(function (idxx) {
-                    $(this).val(re)
-                })
-            })
+                $('[name="service"]').val(re)
         });
 
 
 
-        $('[name="sale_stage"]').map(function (idx) {
-            $(this).change(function() {
+        $('[name="sale_stage"]').change(function() {
                 var sale_stage_change_id = $(this).val();
-                $('[name="sale_stage"]').map(function (idx) {
-                    $(this).val(sale_stage_change_id)
-                })
-                //console.log('xxx')
+                $('[name="sale_stage"]').val(sale_stage_change_id)
                 let re = $(this).val()
-                $('[name="sale_stage"]').map(function (idxx) {
-                    $(this).val(re)
-                })
-            })
+                $('[name="sale_stage"]').val(re)
         });
 
 
-        $('[name="lead_status"]').map(function (idx) {
-            $(this).change(function() {
+        $('[name="lead_status"]').change(function() {
                 //console.log('xxx')
                 let re = $(this).val()
-                $('[name="lead_status"]').map(function (idxx) {
-                    $(this).val(re)
-                })
-            })
+                $('[name="lead_status"]').val(re)
         });
 
         if (lead_id.length > 0) {
-            $(document).ready(function () {
-                setInterval(function () {
-                    $.ajax({
-                        url: "index.php?module=Leads&entryPoint=handle_check_time",
-                        data: { id: lead_id },
-                        success: function (data) {
-                            
-                            //console.log(data)
-                            if (data != "") {
-                                alert(`Bạn vượt quá thời gian tác động ${data}`)
-                                window.open("http://mkt.tranthu.vn/index.php?module=Leads&action=index&return_module=Leads&return_action=index");
+            if (sale_stage_id == '10') {
+                $(document).ready(function () {
+                    setInterval(function () {
+                        $.ajax({
+                            url: "index.php?module=Leads&entryPoint=handle_check_time",
+                            data: { id: lead_id },
+                            success: function (data) {
+                                
+                                //console.log(data)
+                                if (data != "") {
+                                    alert(`Bạn vượt quá thời gian tác động ${data}`)
+                                    window.open("http://mkt.tranthu.vn/index.php?module=Leads&action=index&return_module=Leads&return_action=index");
+                                }
                             }
-                        }
-                    });
-                }, 1000);
-            })
+                        });
+                    }, 1000);
+                })
+            }
+            
         }
 
         if ($('#lead_id').val().length === 0) {
@@ -916,7 +632,7 @@ $(document).ready(function () {
                 url: "index.php?module=Leads&entryPoint=ro_name",
                 data: { },
                 success: function (data) {
-                    //console.log(data);
+                    console.log('ro');
                     $("#ro_name").html(data);
                 },
                 dataType: 'html'
@@ -945,19 +661,17 @@ $(document).ready(function () {
             
 
             let context = $("#receiving_branch").html();
-            $('[name="service"]').map(function (idx) {
-                $(this).change(function() {
-                    if (idx == 0) {
-                        var service = $(this).val();
-                        if (service == '5') {
-                            //console.log('hello')
-                            $("#receiving_branch").html("<option value='4' selected>TELE</option><option value='5'>DL TB</option><option value='0'>Choose</option>");
-                        }
-                        else {
-                            $("#receiving_branch").html("<option value='' selected>Choose</option><option value='1'>NTT</option><option value='2'>Q10</option><option value='3'>Tân Bình</option><option value='4'>TELE</option><option value='5'>DL TB</option><option value='0'>Choose</option>");
-                        }
+            $('[name="service"]').change(function() {
+                if (idx == 0) {
+                    var service = $(this).val();
+                    if (service == '5') {
+                        //console.log('hello')
+                        $("#receiving_branch").html("<option value='4' selected>TELE</option><option value='5'>DL TB</option><option value='0'>Choose</option>");
                     }
-                })
+                    else {
+                        $("#receiving_branch").html("<option value='' selected>Choose</option><option value='1'>NTT</option><option value='2'>Q10</option><option value='3'>Tân Bình</option><option value='4'>TELE</option><option value='5'>DL TB</option><option value='0'>Choose</option>");
+                    }
+                }
             })
 
             if (sale_stage_id == "0") {
@@ -968,25 +682,14 @@ $(document).ready(function () {
                     url: "index.php?module=Leads&entryPoint=ro_name",
                     data: { ro_name: ro_name_val },
                     success: function (data) {
-                        //console.log("ro");
+                        console.log("ro_1");
                         $("#ro_name").html(data);
                         $("#ro_name").attr("disabled", false);
                     },
                     dataType: 'html'
                 });
 
-                var ho_name_val = $("#ho_name_val").val();
-                $("#ho_name").attr("disabled", true);
-                $.ajax({
-                    url: "index.php?module=Leads&entryPoint=ho_name",
-                    data: { ho_name: ho_name_val },
-                    success: function (data) {
-                        //console.log(data);
-                        $("#ho_name").html(data);
-                        $("#ho_name").attr("disabled", false);
-                    },
-                    dataType: 'html'
-                });
+               
 
 
                 $("#phone_number_primary").blur(function () {
@@ -1067,24 +770,13 @@ $(document).ready(function () {
                     url: "index.php?module=Leads&entryPoint=ro_name",
                     data: { ro_name: ro_name_val },
                     success: function (data) {
-                        //console.log(data);
+                        console.log('ro_2');
                         $("#ro_name").html(data);
                     },
                     dataType: 'html'
                 });
 
-                var ho_name_val = $("#ho_name_val").val();
-                $("#ho_name").attr("disabled", true);
-                $.ajax({
-                    url: "index.php?module=Leads&entryPoint=ho_name",
-                    data: { ho_name: ho_name_val },
-                    success: function (data) {
-                        //console.log(data);
-                        $("#ho_name").html(data);
-                        $("#ho_name").attr("disabled", false);
-                    },
-                    dataType: 'html'
-                });
+                
 
                 $("#citizen_identification").blur(function () {
                     check_cmdd()
@@ -1166,9 +858,7 @@ $(document).ready(function () {
                     data: { id: sale_stage_id, lead_status_id: lead_status_id },
                     success: function (data) {
                         //console.log(data);
-                        $('[name = "sale_stage"]').map(function (idx) {
-                            return $(this).html(data);
-                        })
+                        $('[name = "sale_stage"]').html(data);
                     },
                     dataType: 'html'
                 });
@@ -1178,40 +868,26 @@ $(document).ready(function () {
                     data: { id: sale_stage_id, lead_status_id: lead_status_id, created_by: created_by },
                     success: function (data) {
                         //console.log(data);
-                        $('[name = "lead_status"]').map(function (idx) {
-                            return $(this).html(data);
-                        })
+                        $('[name = "lead_status"]').html(data);
                     },
                     dataType: 'html'
                 });
 
-                $('[name="sale_stage"]').map(function (idx) {
-                    //console.log(idx)
-                    if (idx > 0) {
-                        return $(this).change(function () {
-                            var sale_stage_change_id = $("option:selected", this).val();
-                            $('[name="sale_stage"]').map(function (idx) {
-                                $(this).val(sale_stage_change_id)
-                            })
-                            //console.log(sale_stage_change_id)
-                            $.ajax({
-                                url: "index.php?module=Leads&entryPoint=lead_status",
-                                data: { id: sale_stage_change_id, lead_status_id: lead_status_id, created_by: created_by },
-                                success: function (data) {
-                                    //console.log(data);
-                                    //$("#lead_status").html(data);
-                                    $('[name="lead_status"]').map(function (index) {
-                                        if (index > 0) {
-                                            $(this).html(data);
-                                        }
-                                    });
-                                },
-                                dataType: 'html'
-                            });
-                        });
-                    }
-                    return idx++;
-                }).get();
+                $('[name="sale_stage"]').change(function () {
+                    var sale_stage_change_id = $("option:selected", this).val();
+                    $('[name="sale_stage"]').not(this).val(sale_stage_change_id)
+                    $.ajax({
+                        url: "index.php?module=Leads&entryPoint=lead_status",
+                        data: { id: sale_stage_change_id, lead_status_id: lead_status_id, created_by: created_by },
+                        success: function (data) {
+                            //console.log(data);
+                            //$("#lead_status").html(data);
+                            $('[name="lead_status"]').html(data);
+                        },
+                        dataType: 'html'
+                    });
+                        
+                });
 
             }
             else {
@@ -1229,25 +905,14 @@ $(document).ready(function () {
                     url: "index.php?module=Leads&entryPoint=ro_name",
                     data: { ro_name: ro_name_val },
                     success: function (data) {
-                        //console.log(data);
+                        console.log('ro_3');
                         $("#ro_name").html(data);
                         $("#ro_name").attr("disabled", false);
                     },
                     dataType: 'html'
                 });
 
-                var ho_name_val = $("#ho_name_val").val();
-                $("#ho_name").attr("disabled", true);
-                $.ajax({
-                    url: "index.php?module=Leads&entryPoint=ho_name",
-                    data: { ho_name: ho_name_val },
-                    success: function (data) {
-                        //console.log(data);
-                        $("#ho_name").html(data);
-                        $("#ho_name").attr("disabled", false);
-                    },
-                    dataType: 'html'
-                });
+                
 
                 $("#phone_number_primary").blur(function () {
                     check_phone_number()
@@ -1319,9 +984,7 @@ $(document).ready(function () {
                     data: { id: sale_stage_id, lead_status_id: lead_status_id },
                     success: function (data) {
                         //console.log(data);
-                        $('[name="sale_stage"]').map(function (idx) {
-                            $(this).html(data);
-                        })
+                        $('[name="sale_stage"]').html(data);
                     },
                     dataType: 'html'
                 });
@@ -1331,35 +994,26 @@ $(document).ready(function () {
                     data: { id: sale_stage_id, lead_status_id: lead_status_id, created_by: created_by },
                     success: function (data) {
                         //console.log(data);
-                        $('[name="lead_status"]').map(function (idx) {
-                            $(this).html(data);
-                        })
+                        $('[name="lead_status"]').html(data);
                     },
                     dataType: 'html'
                 });
 
-                $('[name="sale_stage"]').map(function (idx) {
-                        
-                    $(this).change(function () {
+                $('[name="sale_stage"]').change(function () {
                         //console.log('sale stage change!')
                     var sale_stage_change_id = $("option:selected", this).val();
                     //console.log(sale_stage_change_id)
-                    $('[name="sale_stage"]').map(function (idx) {
-                        $(this).val(sale_stage_change_id)
-                    })
+                    $('[name="sale_stage"]').not(this).val(sale_stage_change_id)
                     $.ajax({
                         url: "index.php?module=Leads&entryPoint=lead_status",
                         data: { id: sale_stage_change_id, lead_status_id: lead_status_id, created_by: created_by },
                         success: function (data) {
                             //console.log(data);
-                            $('[name="lead_status"]').map(function (idx) {
-                                $(this).html(data);
-                            })
+                            $('[name="lead_status"]').html(data);
                         },
                         dataType: 'html'
                     });
                 });
-            })
             }
             
             $(".glyphicon-earphone").css({
@@ -1399,9 +1053,7 @@ $(document).ready(function () {
             data: { id: sale_stage_id, lead_status_id: lead_status_id },
             success: function (data) {
                 //console.log(data);
-                $('[name="sale_stage"]').map(function (idx) {
-                    $(this).html(data);
-                })
+                $('[name="sale_stage"]').html(data);
 
             },
             dataType: 'html'
@@ -1412,9 +1064,7 @@ $(document).ready(function () {
             data: { id: sale_stage_id, lead_status_id: lead_status_id, created_by: created_by },
             success: function (data) {
                 //console.log(data);
-                $('[name="lead_status"]').map(function (idx) {
-                    $(this).html(data);
-                })
+                $('[name="lead_status"]').html(data);
             },
             dataType: 'html'
         });
@@ -1422,17 +1072,7 @@ $(document).ready(function () {
         
 
 
-        if (ho_name.length === 0) {
-            $.ajax({
-                url: "index.php?module=Leads&entryPoint=ho_name",
-                data: {},
-                success: function (data) {
-                    //console.log(data);
-                    $("#ho_name").val(data);
-                }
-            });
-        }
-
+        
 
         $('#sale_stage').change(function () {
             var sale_stage_change_id = $("option:selected", this).val();
@@ -1450,7 +1090,216 @@ $(document).ready(function () {
         
     }
 
+    if (lead_id.length == 0) {
+        $(".btn-record").remove()
+        $("[data-label='LBL_IS_RECORD']").remove()
+    }
+
+    else {
+
+        $("[data-label='LBL_IS_RECORD']").html("")
+        if (role == "RO") {
+            var sip = getCookie("sip");
+            var date = new Date();
+            // Get year, month, and day part from the date
+            var year = date.toLocaleString("default", { year: "numeric" });
+            var month = date.toLocaleString("default", { month: "2-digit" });
+            var day = date.toLocaleString("default", { day: "2-digit" });
+            // Generate yyyy-mm-dd date string
+            var start_date = year + "-" + month + "-" + day + " 00:00:00";
+            var end_date = year + "-" + month + "-" + day + " 23:59:59";
+
+            var phone = $('#phone_number_primary').val();
+            if (phone.length > 10 && phone.slice(0, 2) == '84') {
+                phone = '0' + phone.slice(2);
+            }
+            if (phone.length < 10) {
+                phone = '0' + phone;
+            }
+
+            var formData = {
+                sip: parseInt(sip),
+                field_name: "dst",
+                field_pattern: parseInt(phone),
+                status: "ANSWERED",
+                limit: 1,
+                offset: 0,
+            }; //Array 
+
+            ////console.log(formData)
+            console.log('Enter RO')
+
+            $.ajax({
+                url: "index.php?module=Leads&entryPoint=CdrReport",
+                type: "GET",
+                data: {
+                    sip: parseInt(sip),
+                    field_name: "dst",
+                    field_pattern: parseInt(phone),
+                    status: "ANSWERED",
+                    limit: 1,
+                    offset: 0
+                },
+                success: function (data, textStatus, jqXHR) {
+                    ////console.log('Susscess')
+                    console.log('Susscess RO')
+
+                    var res = jQuery.parseJSON(data)[0];
+                    ////console.log(res)
+                    if (res != null && res != undefined) {
+                        const recording_file = "/" + (res.calldate.substring(0,4)) + "/" + (res.calldate.substring(5,7)) + "/" + (res.calldate.substring(8,10)) +  "/" + (res.recordingfile);
+                        fetch(`index.php?module=Leads&entryPoint=GetWarfile&data=${recording_file}`)
+                            .then(response => response.blob())
+                            .then(blob => {
+                                //$("#source").attr('src', URL.createObjectURL(blob));
+                                let name_file = new Date().getTime();
+                                ////console.log(name_file)
+                                let file = new File([blob], `${name_file}.wav`, {
+                                    type: "audio/x-wav", lastModified: new Date().getTime()
+                                });
     
+                                var form_data = new FormData();
+                                form_data.append("files[]", file);
+                                form_data.append('lead_id', lead_id);
+                                $.ajax({
+                                    url: "index.php?module=Leads&entryPoint=handle_upload_file",
+                                    contentType: false,
+                                    processData: false,
+                                    data: form_data,
+                                    type: 'post',
+                                    success: function (data) {
+                                        //alert(data);
+                                        var url = "https://mkt.tranthu.vn/upload1/" + `${name_file}.wav`;
+                                        //$("#source").attr('src', url);
+                                    
+                                        $(".btn-record").html(
+                                            `<audio id="audio" controls autoplay muted><source id="source" src="${url}" type="audio/wav" /></audio>`
+                                        )
+                                    },
+    
+                                });
+                                // do stuff with `file`
+                            })
+                    }
+                    
+
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    ////console.log('Error')
+                }
+            });
+        }
+        else if (role == "MKT" || role == "SUPER_MKT") {
+            var ro_name_val = $("#ro_name_val").val();
+            var sip = getCookie("sip");
+
+            $.ajax({
+                url: "index.php?module=Leads&entryPoint=get_sip",
+                data: { ro_id: ro_name_val },
+                success: function (data) {
+                    ////console.log(data);
+                    sip = data;
+                },
+                async: false
+            });
+
+            ////console.log(sip);
+
+            var date = new Date();
+            // Get year, month, and day part from the date
+            var year = date.toLocaleString("default", { year: "numeric" });
+            var month = date.toLocaleString("default", { month: "2-digit" });
+            var day = date.toLocaleString("default", { day: "2-digit" });
+            // Generate yyyy-mm-dd date string
+            var start_date = year + "-" + month + "-" + day + " 00:00:00";
+            var end_date = year + "-" + month + "-" + day + " 23:59:59";
+            
+            var phone = $('#phone_number_primary').val();
+            if (phone.length > 10 && phone.slice(0, 2) == '84') {
+                phone = '0' + phone.slice(2);
+            }
+            if (phone.length < 10) {
+                phone = '0' + phone;
+            }
+            
+            var formData = {
+                sip: parseInt(sip),
+                field_name: "dst",
+                field_pattern: parseInt(phone),
+                status: "ANSWERED",
+                limit: 1,
+                offset: 0,
+            }; //Array 
+        
+            //console.log(formData)
+        
+            console.log('Get report mkt')
+            $.ajax({
+                url: "index.php?module=Leads&entryPoint=CdrReport",
+                type: "GET",
+                data: {
+                    sip: parseInt(sip),
+                    start_date: start_date,
+                    end_date: end_date,
+                    field_name: "dst",
+                    field_pattern: parseInt(phone),
+                    status: "ANSWERED",
+                    limit: 1,
+                    offset: 0
+                },
+                success: function (data, textStatus, jqXHR) {
+                    //console.log('Susscess')
+                    console.log('Susscess MKT')
+                    
+                    var res = jQuery.parseJSON(data)[0];
+                    //console.log(res.calldate.substring(0,4))
+                    //console.log(res.calldate.substring(5,7))
+                    //console.log(res.calldate.substring(8,10))
+                    if (res != null && res != undefined) {
+                    const recording_file = "/" + (res.calldate.substring(0,4)) + "/" + (res.calldate.substring(5,7)) + "/" + (res.calldate.substring(8,10)) +  "/" + (res.recordingfile);
+                    fetch(`index.php?module=Leads&entryPoint=GetWarfile&data=${recording_file}`)
+                        .then(response => response.blob())
+                        .then(blob => {
+                            //$("#source").attr('src', URL.createObjectURL(blob));
+                            let name_file = new Date().getTime();
+                            //console.log(name_file)
+                            let file = new File([blob], `${name_file}.wav`, {
+                                type: "audio/x-wav", lastModified: new Date().getTime()
+                            });
+                        
+                            var form_data = new FormData();
+                            form_data.append("files[]", file);
+                            form_data.append('lead_id', lead_id);
+                            $.ajax({
+                                url: "index.php?module=Leads&entryPoint=handle_upload_file",
+                                contentType: false,
+                                processData: false,
+                                data: form_data,
+                                type: 'post',
+                                success: function (data) {
+                                    //alert(data);
+                                    var url = "https://mkt.tranthu.vn/upload1/" + `${name_file}.wav`;
+                                    //$("#source").attr('src', url);
+                                
+                                    $(".btn-record").html(
+                                        `<audio id="audio" controls autoplay muted><source id="source" src="${url}" type="audio/wav" /></audio>`
+                                    )
+                                },
+                            
+                            });
+                            // do stuff with `file`
+                        })
+                    
+                    }
+                    },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    //console.log('Error')
+                }
+            });
+        }
+
+    }
+
 });
 
 function handle_check_payment_day() {

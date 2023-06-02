@@ -1118,24 +1118,24 @@ $(document).ready(function () {
             }
 
             var formData = {
-                sip: parseInt(sip),
+                sip: sip,
                 field_name: "dst",
-                field_pattern: parseInt(phone),
+                field_pattern: phone,
                 status: "ANSWERED",
                 limit: 1,
                 offset: 0,
             }; //Array 
 
-            ////console.log(formData)
+            console.log(formData)
             console.log('Enter RO')
 
             $.ajax({
                 url: "index.php?module=Leads&entryPoint=CdrReport",
-                type: "GET",
+                type: "POST",
                 data: {
-                    sip: parseInt(sip),
+                    sip: sip,
                     field_name: "dst",
-                    field_pattern: parseInt(phone),
+                    field_pattern: phone,
                     status: "ANSWERED",
                     limit: 1,
                     offset: 0
@@ -1145,7 +1145,7 @@ $(document).ready(function () {
                     console.log('Susscess RO')
 
                     var res = jQuery.parseJSON(data)[0];
-                    ////console.log(res)
+                    console.log(res)
                     if (res != null && res != undefined) {
                         const recording_file = "/" + (res.calldate.substring(0,4)) + "/" + (res.calldate.substring(5,7)) + "/" + (res.calldate.substring(8,10)) +  "/" + (res.recordingfile);
                         fetch(`index.php?module=Leads&entryPoint=GetWarfile&data=${recording_file}`)
@@ -1223,26 +1223,26 @@ $(document).ready(function () {
             }
             
             var formData = {
-                sip: parseInt(sip),
+                sip: sip,
                 field_name: "dst",
-                field_pattern: parseInt(phone),
+                field_pattern: phone,
                 status: "ANSWERED",
                 limit: 1,
                 offset: 0,
             }; //Array 
         
-            //console.log(formData)
+            console.log(formData)
         
             console.log('Get report mkt')
             $.ajax({
                 url: "index.php?module=Leads&entryPoint=CdrReport",
-                type: "GET",
+                type: "POST",
                 data: {
-                    sip: parseInt(sip),
+                    sip: sip,
                     start_date: start_date,
                     end_date: end_date,
                     field_name: "dst",
-                    field_pattern: parseInt(phone),
+                    field_pattern: phone,
                     status: "ANSWERED",
                     limit: 1,
                     offset: 0
@@ -1254,7 +1254,7 @@ $(document).ready(function () {
                     var res = jQuery.parseJSON(data)[0];
                     //console.log(res.calldate.substring(0,4))
                     //console.log(res.calldate.substring(5,7))
-                    //console.log(res.calldate.substring(8,10))
+                    console.log(res)
                     if (res != null && res != undefined) {
                     const recording_file = "/" + (res.calldate.substring(0,4)) + "/" + (res.calldate.substring(5,7)) + "/" + (res.calldate.substring(8,10)) +  "/" + (res.recordingfile);
                     fetch(`index.php?module=Leads&entryPoint=GetWarfile&data=${recording_file}`)
@@ -1379,14 +1379,14 @@ function handle_check_record_in_day() {
 
     $.ajax({
         url: "index.php?module=Leads&entryPoint=CdrReportRO",
-        type: "GET",
+        type: "POST",
         async: false,
         data: {
-            sip: parseInt(sip),
+            sip: sip,
             field_name: "dst",
             start_date: start_date,
             end_date: end_date,
-            field_pattern: parseInt(phone),
+            field_pattern: phone,
             status: "ANSWERED",
             limit: 1,
             offset: 0

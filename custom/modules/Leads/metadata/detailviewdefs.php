@@ -183,7 +183,11 @@ $viewdefs['Leads'] =
           4 =>
           array(
             0 => 'transaction_amount',
-            1 => 'date_entered',
+            1 =>
+            array(
+              'name' => 'date_entered',
+              'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
+            ),
           ),
           5 =>
           array(

@@ -276,14 +276,14 @@ class Handle
         while ($rows = $GLOBALS['db']->fetchByAssoc($result_lead)) {
 
             if ($bean->contact_date != null && $bean->contact_date != "") {
-                $lst[0] = $bean->contact_date;
+                $lst[0] = $rows['contact_date'];
             } else {
                 $lst[0] ="Không có dữ liệu";
             }
 
             $lst[1] = $rows['facebook_or_zalo_name'];
 
-            $data_source_id = $bean->data_sources;
+            $data_source_id = $rows['data_sources'];
             $data_sources = array(
                 '' => '',
                 '1' => 'FACEBOOK ADS',
@@ -299,22 +299,22 @@ class Handle
                 '11' => 'Partner',
             );
 
-            foreach ($data_sources as $key => $data) {
+            foreach ($data_sources as $key => $datads) {
                 if ($key == $data_source_id) {
-                    $lst[2] = $data;
+                    $lst[2] = $datads;
                 }
             }
 
-            $lst[3] = $bean->phone_number_primary;
+            $lst[3] = $rows['phone_number_primary'];
 
             if ($bean->card_bark_type != null && $bean->card_bark_type != "") {
-                $lst[4] = $bean->card_bark_type;
+                $lst[4] = $rows['card_bark_type'];
             } else {
                 $lst[4] ="Không có dữ liệu";
             }
 
             if ($bean->service != null && $bean->service != "") {
-                $service_id = $bean->service;
+                $service_id = $rows['service'];
                 $services = array(
                     '' => '',
                     '1' => 'Đáo',
@@ -324,9 +324,9 @@ class Handle
                     '5' => 'Đại lý',
                     '6' => 'Vay',
                 );
-                foreach ($services as $key => $data) {
+                foreach ($services as $key => $datasr) {
                     if ($key == $service_id) {
-                        $lst[5] = $data;
+                        $lst[5] = $datasr;
                     }
                 }
             } else {
@@ -334,7 +334,7 @@ class Handle
             }
 
             if ($bean->bank != null && $bean->bank != "") {
-                $bank_id = $bean->bank;
+                $bank_id = $rows['bank'];
                 $banks = array(
                     '' => '',
                     '1' => 'HSBC',
@@ -383,9 +383,9 @@ class Handle
                     '44' => 'SHB',
                     '45' => 'Public Bank Vietnam',
                 );
-                foreach ($banks as $key => $data) {
+                foreach ($banks as $key => $databk) {
                     if ($key == $bank_id) {
-                        $lst[6] = $data;
+                        $lst[6] = $databk;
                     }
                 }
             } else {
@@ -393,25 +393,25 @@ class Handle
             }
 
             if ($bean->payment_day != null && $bean->payment_day != "") {
-                $lst[7] = $bean->payment_day;
+                $lst[7] = $rows['payment_day'];
             } else {
                 $lst[7] ="Không có dữ liệu";
             }
 
             if ($bean->transaction_amount != null && $bean->transaction_amount != "") {
-                $lst[8] = $bean->transaction_amount;
+                $lst[8] = $rows['transaction_amount'];
             } else {
                 $lst[8] ="Không có dữ liệu";
             }
 
             if ($bean->fee != null && $bean->fee != "") {
-                $lst[9] = $bean->fee;
+                $lst[9] = $rows['fee'];
             } else {
                 $lst[9] ="Không có dữ liệu";
             }
 
             if ($bean->sale_stage != null && $bean->sale_stage != "") {
-                $sale_stage_id = $bean->sale_stage;
+                $sale_stage_id = $rows['sale_stage'];
                 $sale_stages = array(
                     '0' => 'Choose',
                     '1' => 'New',
@@ -426,9 +426,9 @@ class Handle
                     '10' => 'Chuyển BU',
                     '11' => 'Sai quy định'
                 );
-                foreach ($sale_stages as $key => $data) {
+                foreach ($sale_stages as $key => $datass) {
                     if ($key == $sale_stage_id) {
-                        $lst[10] = $data;
+                        $lst[10] = $datass;
                     }
                 }
             } else {
@@ -436,7 +436,7 @@ class Handle
             }
 
             if ($bean->lead_status != null && $bean->lead_status != "") {
-                $lead_status_id = $bean->lead_status;
+                $lead_status_id = $rows['lead_status'];
                 $lead_statuss = array(
                     '' => '',
                     '1' => 'NONE',
@@ -472,9 +472,9 @@ class Handle
                     '31' => 'Nhầm số',
                     '32' => 'Hủy thẻ',
                 );
-                foreach ($lead_statuss as $key => $data) {
+                foreach ($lead_statuss as $key => $datals) {
                     if ($key == $lead_status_id) {
-                        $lst[11] = $data;
+                        $lst[11] = $datals;
                     }
                 }
             } else {
@@ -482,7 +482,7 @@ class Handle
             }
 
             if ($bean->owned_branch != null && $bean->owned_branch != "") {
-                $owned_branch_id = $bean->owned_branch;
+                $owned_branch_id = $rows['owned_branch'];
                 $owned_branchs = array(
                     '' => '',
                     '1' => 'NTT',
@@ -495,9 +495,9 @@ class Handle
                     '8' => 'Nha trang',
                     '9' => 'LVS',
                 );
-                foreach ($owned_branchs as $key => $data) {
+                foreach ($owned_branchs as $key => $dataob) {
                     if ($key == $owned_branch_id) {
-                        $lst[12] = $data;
+                        $lst[12] = $dataob;
                     }
                 }
             } else {
@@ -506,10 +506,14 @@ class Handle
 
             if ($bean->ro_name != null && $bean->ro_name != "") {
                 $lst[13] = "";
-                $query_1 = "SELECT * FROM users WHERE deleted = 0 AND id = '{$bean->ro_name}'";
+                $query_1 = "SELECT * FROM users WHERE deleted = 0 AND id = '{$rows['ro_name']}'";
                 $result_1 = $GLOBALS['db']->query($query_1);
                 while ($rowsx = $GLOBALS['db']->fetchByAssoc($result_1)) {
                     $lst[13] .= $rowsx['user_name'];
+                }
+
+                if ($lst[13] == "") {
+                    $lst[13] ="Không có dữ liệu";
                 }
             } else {
                 $lst[13] ="Không có dữ liệu";
@@ -529,13 +533,13 @@ class Handle
             }
 
             if ($bean->citizen_identification != null && $bean->citizen_identification != "") {
-                $lst[16] = $bean->citizen_identification;
+                $lst[16] = $rows['citizen_identification'];
             } else {
                 $lst[16] ="Không có dữ liệu";
             }
 
             if ($bean->citizen_identification_issuance_date != null && $bean->citizen_identification_issuance_date != "") {
-                $lst[17] = $bean->citizen_identification_issuance_date;
+                $lst[17] = $rows['citizen_identification_issuance_date'];
             } else {
                 $lst[17] ="Không có dữ liệu";
             }
@@ -547,31 +551,31 @@ class Handle
             }
 
             if ($bean->real_transaction_amount != null && $bean->real_transaction_amount != "") {
-                $lst[19] = $bean->real_transaction_amount;
+                $lst[19] = $rows['real_transaction_amount'];
             } else {
                 $lst[19] ="Không có dữ liệu";
             }
 
             if ($bean->real_fee != null && $bean->real_fee != "") {
-                $lst[20] = $bean->real_fee;
+                $lst[20] = $rows['real_fee'];
             } else {
                 $lst[20] ="Không có dữ liệu";
             }
 
             if ($bean->birthday != null && $bean->birthday != "") {
-                $lst[21] = $bean->birthday;
+                $lst[21] = $rows['birthday'];
             } else {
                 $lst[21] ="Không có dữ liệu";
             }
 
             if ($bean->successful_trading_day != null && $bean->successful_trading_day != "") {
-                $lst[22] = $bean->successful_trading_day;
+                $lst[22] = $rows['successful_trading_day'];
             } else {
                 $lst[22] ="Không có dữ liệu";
             }
 
             if ($bean->phone_number_extra != null && $bean->phone_number_extra != "") {
-                $lst[23] = $bean->phone_number_extra;
+                $lst[23] = $rows['phone_number_extra'];
             } else {
                 $lst[23] ="Không có dữ liệu";
             }
@@ -604,9 +608,9 @@ class Handle
                     '10' => 'Chuyển BU',
                     '11' => 'Sai quy định'
                 );
-                foreach ($sale_stage_follow_levels as $key => $data) {
+                foreach ($sale_stage_follow_levels as $key => $datassfl) {
                     if ($key == $sale_stage_follow_level_id) {
-                        $lst[26] = $data;
+                        $lst[26] = $datassfl;
                     }
                 }
             } else {
@@ -650,9 +654,9 @@ class Handle
                     '31' => 'Nhầm số',
                     '32' => 'Hủy thẻ',
                 );
-                foreach ($lead_status_follow_levels as $key => $data) {
+                foreach ($lead_status_follow_levels as $key => $datalsfl) {
                     if ($key == $lead_status_follow_level_id) {
-                        $lst[27] = $data;
+                        $lst[27] = $datalsfl;
                     }
                 }
             } else {
@@ -666,23 +670,27 @@ class Handle
             }
         }
 
-        $values = [
+        $valuesx = [
             $lst
         ];
 
 
         $body = new Google_Service_Sheets_ValueRange([
-            'values' => $values
+            'values' => $valuesx
         ]);
+
+        //$GLOBALS['log']->fatal($valuesx);
 
         $params = [
             'valueInputOption' => 'RAW'
         ];
 
-        // Kiểm tra xem trường 'date_entered' của lead có bằng với trường 'date_modified' hay không
-        if ($bean->date_entered == $bean->date_modified) {
-            // Nếu bằng nhau, tức là lead đó là lead mới
+        
 
+        // Kiểm tra xem trường 'date_entered' của lead có bằng với trường 'date_modified' hay không
+        if ($bean->date_entered == $bean->date_modified ) {
+            // Nếu bằng nhau, tức là lead đó là lead mới
+            //$GLOBALS['log']->fatal($lst);
             if ($bean->ro_name != "" && $bean->ro_name != null) {
                 // Delete ro choose last
                 $query_ro_choose = "DELETE FROM ro_choose";
@@ -703,13 +711,12 @@ class Handle
             $response = $service->spreadsheets_values->get($spreadsheetId, $range);
             $values = $response->getValues();
             $key = $bean->phone_number_primary;
-            $GLOBALS['log']->fatal($lst[28]);
-            foreach ($values as $row => $data) {
-                if ($data[3] == substr($key, 1) && $data[28] == $lst[28]) {
+            foreach ($values as $row => $datav) {
+                if ($datav[3] == substr($key, 1) && $datav[28] == $lst[28]) {
                     //$rangeToUpdate = 'DATA NHU!A' . ($row + 1) . ':Z' . ($row + 1);
                     $rangeToUpdate = 'DATA NHU!A' . ($row + 1) . ':AC' . ($row + 1);
                     $result = $service->spreadsheets_values->update($spreadsheetId, $rangeToUpdate, $body, $params);
-                    printf("%d cells updated.\n", $result->getUpdatedCells());
+                    $GLOBALS['log']->fatal("%d cells updated.\n" . $result->getUpdatedCells());
                     break;
                 }
             }

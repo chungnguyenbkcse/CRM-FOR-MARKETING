@@ -209,6 +209,11 @@ $viewdefs['Leads'] =
             0 => "ctv",
             1 => 'note',
           ),
+          10 => 
+          array(
+            0 => "how_get_phone_number",
+            1 => "campaign"
+          )
         ),
         'LBL_CONTACT_INFORMATION_RO' =>
         array(

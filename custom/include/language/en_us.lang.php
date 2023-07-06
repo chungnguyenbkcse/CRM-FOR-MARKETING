@@ -232,6 +232,14 @@ $app_list_strings = array(
         '5' => 'Agency',
         '6' => 'Loan',
     ),
+    'campaign_dom' => array(
+        '' => '',
+        '1' => 'INACTIVE',
+        '2' => 'MKT',
+        '3' => 'MKT N-1',
+        '4' => ' ĐỐI TÁC',
+    ),
+    
     'type_card_bank_dom' => array (
         '' => '',
         'Master' => 'Master',

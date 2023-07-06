@@ -58,4 +58,5 @@ $mod_strings = array(
     'LBL_LEAD_STATUS_FOLLOW_LEVEL' => 'Lead status follow level',
     'LBL_SALE_STAGE_FOLLOW_LEVEL' => 'Sale stage follow level',
     'LBL_HOW_GET_PHONE_NUMBER' => 'How to get phone',
+    'LBL_CAMPAIGN' => 'Campaign',
 );

@@ -58,4 +58,5 @@ $mod_strings = array(
     'LBL_SALE_STAGE_FOLLOW_LEVEL' => 'Sale stage theo level',
     'LBL_HOW_GET_PHONE_NUMBER' => 'Cách lấy SĐT',
     'LBL_DATE_CREATED' => 'Ngày tạo',
+    'LBL_CAMPAIGN' => 'Chiến dịch',
 );

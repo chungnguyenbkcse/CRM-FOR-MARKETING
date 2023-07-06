@@ -1107,6 +1107,16 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'audited' => true,
                 'comment' => 'The birthday of the contact'
             ), 
+        'campaign' => array(
+                'name' => 'campaign',
+                'vname' => 'LBL_CAMPAIGN',
+                'type' => 'enum',
+                'audited' => true,
+                'inline_edit' =>false,
+                'options' => 'campaign_dom',
+                'len' => '255',
+                'comment' => 'How did the sale stage come about',
+            ),
 
     )
 , 'indices' => array(

@@ -16,8 +16,4 @@ Content-Type: application/json
 ### CREATE ART AGE ACTION ###
 # @name create_art_age
 
-Phttp://51.3.9.21/apibkk/apimaster/api.php?cmd=getwavfile&name=/2022/10/21/out-0989439678-5555-20221021-135446-1666335286.104375.wavOST 
-Content-Type: application/x-www-form-urlencoded
-Authorization: Bearer 4Sl3iFxgpfx7LV4xAf5FUh4eoBUbmKVg6gHeQr3U2loj0ne3mQ
-
-{}
+GET https://mkt.tranthu.vn/index.php?module=Leads&entryPoint=update_data_vp

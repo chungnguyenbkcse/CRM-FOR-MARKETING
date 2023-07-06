@@ -341,7 +341,7 @@ $(document).ready(function () {
             url: "index.php?module=Leads&entryPoint=ro_name",
             data: { ro_name: ro_name_val },
             success: function (data) {
-                console.log('ro_4');
+                console.log(data);
                 $("#ro_name").html(data);
             },
             dataType: 'html'
@@ -632,7 +632,7 @@ $(document).ready(function () {
                 url: "index.php?module=Leads&entryPoint=ro_name",
                 data: { },
                 success: function (data) {
-                    console.log('ro');
+                    console.log(data);
                     $("#ro_name").html(data);
                 },
                 dataType: 'html'
@@ -682,7 +682,7 @@ $(document).ready(function () {
                     url: "index.php?module=Leads&entryPoint=ro_name",
                     data: { ro_name: ro_name_val },
                     success: function (data) {
-                        console.log("ro_1");
+                        console.log(data);
                         $("#ro_name").html(data);
                         $("#ro_name").attr("disabled", false);
                     },
@@ -770,7 +770,7 @@ $(document).ready(function () {
                     url: "index.php?module=Leads&entryPoint=ro_name",
                     data: { ro_name: ro_name_val },
                     success: function (data) {
-                        console.log('ro_2');
+                        console.log(data);
                         $("#ro_name").html(data);
                     },
                     dataType: 'html'
@@ -905,7 +905,7 @@ $(document).ready(function () {
                     url: "index.php?module=Leads&entryPoint=ro_name",
                     data: { ro_name: ro_name_val },
                     success: function (data) {
-                        console.log('ro_3');
+                        console.log(data);
                         $("#ro_name").html(data);
                         $("#ro_name").attr("disabled", false);
                     },

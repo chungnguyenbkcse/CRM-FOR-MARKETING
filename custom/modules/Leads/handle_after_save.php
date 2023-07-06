@@ -217,7 +217,7 @@ class Handle
                         while ($rows_ro_1 = $GLOBALS['db']->fetchByAssoc($result_ro_1)) {
                             $data_source_id = $bean->data_sources;
                             $data_sources = array(
-                                '' => '',
+                                '' => 'Không có dữ liệu',
                                 '1' => 'FACEBOOK ADS',
                                 '2' => 'GOOGLE ADS',
                                 '3' => 'Facebook group',
@@ -230,6 +230,15 @@ class Handle
                                 '10' => 'old MKT source',
                                 '11' => 'Partner',
                                 '12' => 'TELE',
+                                '13' => 'old MKT ĐN',
+                                '14' => 'inactive ĐN',
+                                '15' => 'LD',
+                                '16' => 'ĐỐI TÁC T',
+                                '17' => 'ĐỐI TÁC K',
+                                '18' => 'ĐỐI TÁC D', 
+                                '19' => 'ĐỐI TÁC VP',
+                                '20' => 'VP ĐỒNG NAI',
+                                '21' => 'VP KHÁNH HÒA',
                             );
                 
                             foreach ($data_sources as $key => $data) {
@@ -285,7 +294,7 @@ class Handle
 
             $data_source_id = $rows['data_sources'];
             $data_sources = array(
-                '' => '',
+                '' => 'Không có dữ liệu',
                 '1' => 'FACEBOOK ADS',
                 '2' => 'GOOGLE ADS',
                 '3' => 'Facebook group',
@@ -297,6 +306,16 @@ class Handle
                 '9' => 'inactive',
                 '10' => 'old MKT source',
                 '11' => 'Partner',
+                '12' => 'TELE',
+                '13' => 'old MKT ĐN',
+                '14' => 'inactive ĐN',
+                '15' => 'LD',
+                '16' => 'ĐỐI TÁC T',
+                '17' => 'ĐỐI TÁC K',
+                '18' => 'ĐỐI TÁC D', 
+                '19' => 'ĐỐI TÁC VP',
+                '20' => 'VP ĐỒNG NAI',
+                '21' => 'VP KHÁNH HÒA',
             );
 
             foreach ($data_sources as $key => $datads) {
@@ -316,7 +335,7 @@ class Handle
             if ($bean->service != null && $bean->service != "") {
                 $service_id = $rows['service'];
                 $services = array(
-                    '' => '',
+                    '' => 'Không có dữ liệu',
                     '1' => 'Đáo',
                     '2' => 'Rút',
                     '3' => 'Mở thẻ',
@@ -336,7 +355,7 @@ class Handle
             if ($bean->bank != null && $bean->bank != "") {
                 $bank_id = $rows['bank'];
                 $banks = array(
-                    '' => '',
+                    '' => 'Không có dữ liệu',
                     '1' => 'HSBC',
                     '2' => 'KienLongBank',
                     '3' => 'Techcombank',
@@ -382,6 +401,7 @@ class Handle
                     '43' => 'Timo',
                     '44' => 'SHB',
                     '45' => 'Public Bank Vietnam',
+                    '46' => 'Cake'
                 );
                 foreach ($banks as $key => $databk) {
                     if ($key == $bank_id) {
@@ -438,7 +458,7 @@ class Handle
             if ($bean->lead_status != null && $bean->lead_status != "") {
                 $lead_status_id = $rows['lead_status'];
                 $lead_statuss = array(
-                    '' => '',
+                    '' => 'Không có dữ liệu',
                     '1' => 'NONE',
                     '2' => 'Không nghe ',
                     '3' => 'Thuê bao',
@@ -484,7 +504,7 @@ class Handle
             if ($bean->owned_branch != null && $bean->owned_branch != "") {
                 $owned_branch_id = $rows['owned_branch'];
                 $owned_branchs = array(
-                    '' => '',
+                    '' => 'Không có dữ liệu',
                     '1' => 'NTT',
                     '2' => 'District 10',
                     '3' => 'Tân Bình',
@@ -494,6 +514,9 @@ class Handle
                     '7' => 'Song Thao',
                     '8' => 'Nha trang',
                     '9' => 'LVS',
+                    '12' => 'MKT',
+                    'HCM_3' => 'HCM 3',
+                    'HCM_4' => 'HCM 4',
                 );
                 foreach ($owned_branchs as $key => $dataob) {
                     if ($key == $owned_branch_id) {
@@ -505,15 +528,11 @@ class Handle
             }
 
             if ($bean->ro_name != null && $bean->ro_name != "") {
-                $lst[13] = "";
+                $lst[13] = "Không có dữ liệu";
                 $query_1 = "SELECT * FROM users WHERE deleted = 0 AND id = '{$rows['ro_name']}'";
                 $result_1 = $GLOBALS['db']->query($query_1);
                 while ($rowsx = $GLOBALS['db']->fetchByAssoc($result_1)) {
-                    $lst[13] .= $rowsx['user_name'];
-                }
-
-                if ($lst[13] == "") {
-                    $lst[13] ="Không có dữ liệu";
+                    $lst[13] = $rowsx['user_name'];
                 }
             } else {
                 $lst[13] ="Không có dữ liệu";
@@ -620,7 +639,7 @@ class Handle
             if ($rows['lead_status_follow_level'] != null && $rows['lead_status_follow_level'] != "") {
                 $lead_status_follow_level_id = $rows['lead_status_follow_level'];
                 $lead_status_follow_levels = array(
-                    '' => '',
+                    '' => 'Không có dữ liệu',
                     '1' => 'NONE',
                     '2' => 'Không nghe ',
                     '3' => 'Thuê bao',
@@ -671,7 +690,37 @@ class Handle
         }
 
         $valuesx = [
-            $lst
+            [
+                strval($lst[0]),
+                strval($lst[1]),
+                strval($lst[2]),
+                strval($lst[3]),
+                strval($lst[4]),
+                strval($lst[5]),
+                strval($lst[6]),
+                strval($lst[7]),
+                strval($lst[8]),
+                strval($lst[9]),
+                strval($lst[10]),
+                strval($lst[11]),
+                strval($lst[12]),
+                strval($lst[13]),
+                strval($lst[14]),
+                strval($lst[15]),
+                strval($lst[16]),
+                strval($lst[17]),
+                strval($lst[18]),
+                strval($lst[19]),
+                strval($lst[20]),
+                strval($lst[21]),
+                strval($lst[22]),
+                strval($lst[23]),
+                strval($lst[24]),
+                strval($lst[25]),
+                strval($lst[26]),
+                strval($lst[27]),
+                strval($lst[28])
+            ]
         ];
 
 
@@ -700,26 +749,32 @@ class Handle
                 $GLOBALS['db']->query($query_insert_ro_choose);
             }
 
-            $range = 'DATA NHU';
+            $range = 'DATA CHUNG';
             $response = $service->spreadsheets_values->get($spreadsheetId, $range);
             $values = $response->getValues();
-            //$rangeToInsert = 'DATA NHU!A' . (count($values) + 1);
-            $rangeToInsert = 'DATA NHU!A' . (count($values) + 1) . ':AC' . (count($values) + 1);
+            //$rangeToInsert = 'DATA CHUNG!A' . (count($values) + 1);
+            $rangeToInsert = 'DATA CHUNG!A' . (count($values) + 1) . ':AC' . (count($values) + 1);
             $result = $service->spreadsheets_values->append($spreadsheetId, $rangeToInsert, $body, $params);
+            $GLOBALS['log']->fatal("Created");
         } else {
-            $range = 'DATA NHU';
+            $range = 'DATA CHUNG';
             $response = $service->spreadsheets_values->get($spreadsheetId, $range);
             $values = $response->getValues();
             $key = $bean->phone_number_primary;
+            if (strlen($key) == 9) {
+                $key = "0" . $key; // Thêm số 0 vào đầu nếu độ dài là 9
+            } elseif (strlen($key) == 11) {
+                $key = substr($key, 2); // Xóa 2 kí tự đầu nếu độ dài là 11
+                $key = "0" . $key; // Thêm số 0 vào đầu
+            }
             foreach ($values as $row => $datav) {
-                if ($datav[3] == substr($key, 1) && $datav[28] == $lst[28]) {
-                    //$rangeToUpdate = 'DATA NHU!A' . ($row + 1) . ':Z' . ($row + 1);
-                    $rangeToUpdate = 'DATA NHU!A' . ($row + 1) . ':AC' . ($row + 1);
+                if (($datav[3] == substr($key, 1) ||  $datav[3] == $key) && $datav[28] == $lst[28]) {
+                    //$rangeToUpdate = 'DATA CHUNG!A' . ($row + 1) . ':Z' . ($row + 1);
+                    $rangeToUpdate = 'DATA CHUNG!A' . ($row + 1) . ':AC' . ($row + 1);
                     $result = $service->spreadsheets_values->update($spreadsheetId, $rangeToUpdate, $body, $params);
-                    $GLOBALS['log']->fatal("%d cells updated.\n" . $result->getUpdatedCells());
-                    break;
                 }
             }
+            $GLOBALS['log']->fatal("Updated");
         }
     }
 }

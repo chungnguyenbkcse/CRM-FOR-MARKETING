@@ -22,9 +22,26 @@ $spreadsheetId = '10qhcaru2svtbiLYmpZlMtsILS0HFbN7RZh7eMTtGs7M';
 // Ví dụ: In ra giá trị của cột đầu tiên
 
 
-$query = "SELECT * FROM leads WHERE contact_date IS NOT NULL AND created_by  = 'aacec1bd-6737-81e3-7365-631aa18cd430' AND deleted = 0 ORDER BY date_entered DESC LIMIT 915, 18446744073709551615;";
+$query = "SELECT * FROM leads WHERE date_entered >= '2023-06-21 23:33:32' AND deleted = 0 ORDER BY date_entered ASC";
 $result =  $GLOBALS['db']->query($query);
+
+$range_tong = 'DATA CHUNG';
+
+
+$i = 0;
+
 while ($rows = $GLOBALS['db']->fetchByAssoc($result)) {
+
+    $i = $i + 1;
+
+    $elementToCheck = $rows['phone_number_primary'];
+
+    if (strlen($elementToCheck) == 9) {
+        $elementToCheck = "0" . $elementToCheck; // Thêm số 0 vào đầu nếu độ dài là 9
+    } elseif (strlen($elementToCheck) == 11) {
+        $elementToCheck = substr($elementToCheck, 2); // Xóa 2 kí tự đầu nếu độ dài là 11
+        $elementToCheck = "0" . $elementToCheck; // Thêm số 0 vào đầu
+    }
 
     $lst = array();
 
@@ -42,7 +59,7 @@ while ($rows = $GLOBALS['db']->fetchByAssoc($result)) {
 
     $data_source_id = $rows['data_sources'];
     $data_sources = array(
-        '' => '',
+        '' => 'Không có dữ liệu',
         '1' => 'FACEBOOK ADS',
         '2' => 'GOOGLE ADS',
         '3' => 'Facebook group',
@@ -54,6 +71,16 @@ while ($rows = $GLOBALS['db']->fetchByAssoc($result)) {
         '9' => 'inactive',
         '10' => 'old MKT source',
         '11' => 'Partner',
+        '12' => 'TELE',
+        '13' => 'old MKT ĐN',
+        '14' => 'inactive ĐN',
+        '15' => 'LD',
+        '16' => 'ĐỐI TÁC T',
+        '17' => 'ĐỐI TÁC K',
+        '18' => 'ĐỐI TÁC D', 
+        '19' => 'ĐỐI TÁC VP',
+        '20' => 'VP ĐỒNG NAI',
+        '21' => 'VP KHÁNH HÒA',
     );
 
     foreach ($data_sources as $key => $data) {
@@ -62,7 +89,7 @@ while ($rows = $GLOBALS['db']->fetchByAssoc($result)) {
         }
     }
 
-    $lst[3] = $rows['phone_number_primary'];
+    $lst[3] = $elementToCheck;
 
     if (gettype($rows['card_bark_type']) != "NULL" && $rows['card_bark_type'] != "") {
         $lst[4] = $rows['card_bark_type'];
@@ -73,7 +100,7 @@ while ($rows = $GLOBALS['db']->fetchByAssoc($result)) {
     if (gettype($rows['service']) !== "NULL" && $rows['service'] != "") {
         $service_id = $rows['service'];
         $services = array(
-            '' => '',
+            '' => 'Không có dữ liệu',
             '1' => 'Đáo',
             '2' => 'Rút',
             '3' => 'Mở thẻ',
@@ -93,7 +120,7 @@ while ($rows = $GLOBALS['db']->fetchByAssoc($result)) {
     if (gettype($rows['bank']) != "NULL" && $rows['bank'] != "") {
         $bank_id = $rows['bank'];
         $banks = array(
-            '' => '',
+            '' => 'Không có dữ liệu',
             '1' => 'HSBC',
             '2' => 'KienLongBank',
             '3' => 'Techcombank',
@@ -139,6 +166,7 @@ while ($rows = $GLOBALS['db']->fetchByAssoc($result)) {
             '43' => 'Timo',
             '44' => 'SHB',
             '45' => 'Public Bank Vietnam',
+            '46' => 'Cake'
         );
         foreach ($banks as $key => $data) {
             if ($key == $bank_id) {
@@ -195,7 +223,7 @@ while ($rows = $GLOBALS['db']->fetchByAssoc($result)) {
     if (gettype($rows['lead_status']) !== "NULL" && $rows['lead_status'] != "") {
         $lead_status_id = $rows['lead_status'];
         $lead_statuss = array(
-            '' => '',
+            '' => 'Không có dữ liệu',
             '1' => 'NONE',
             '2' => 'Không nghe ',
             '3' => 'Thuê bao',
@@ -241,7 +269,7 @@ while ($rows = $GLOBALS['db']->fetchByAssoc($result)) {
     if (gettype($rows['owned_branch']) !== "NULL" && $rows['owned_branch'] != "") {
         $owned_branch_id = $rows['owned_branch'];
         $owned_branchs = array(
-            '' => '',
+            '' => 'Không có dữ liệu',
             '1' => 'NTT',
             '2' => 'District 10',
             '3' => 'Tân Bình',
@@ -262,11 +290,11 @@ while ($rows = $GLOBALS['db']->fetchByAssoc($result)) {
     }
 
     if (gettype($rows['ro_name']) != 'NULL' && $rows['ro_name'] != "") {
-        $lst[13] = " ";
+        $lst[13] = "Không có dữ liệu";
         $query_1 = "SELECT * FROM users WHERE deleted = 0 AND id = '{$rows['ro_name']}'";
         $result_1 = $GLOBALS['db']->query($query_1);
         while ($rowsx = $GLOBALS['db']->fetchByAssoc($result_1)) {
-            $lst[13] .= $rowsx['user_name'];
+            $lst[13] = $rowsx['user_name'];
         }
     } else {
         $lst[13] = 'Không có dữ liệu';
@@ -346,7 +374,7 @@ while ($rows = $GLOBALS['db']->fetchByAssoc($result)) {
     }
 
     $lead_status_follow_levels = array(
-        '' => '',
+        '' => 'Không có dữ liệu',
         '0' => 'NONE',
         '1' => 'NONE',
         '2' => 'Không nghe ',
@@ -405,7 +433,7 @@ while ($rows = $GLOBALS['db']->fetchByAssoc($result)) {
             }
         }
     } else {
-        $lst[26] = $rows['sale_stage'];
+        $lst[26] = $lst[10];
     }
 
 
@@ -416,7 +444,7 @@ while ($rows = $GLOBALS['db']->fetchByAssoc($result)) {
             }
         }
     } else {
-        $lst[27] = $rows['lead_status'];
+        $lst[27] = $lst[11];
     }
 
     if (gettype($rows['date_entered']) !== "NULL" && $rows['date_entered'] != "") {
@@ -426,27 +454,68 @@ while ($rows = $GLOBALS['db']->fetchByAssoc($result)) {
     }
 
     $values = [
-        $lst
+        [
+            strval($lst[0]),
+            strval($lst[1]),
+            strval($lst[2]),
+            strval($lst[3]),
+            strval($lst[4]),
+            strval($lst[5]),
+            strval($lst[6]),
+            strval($lst[7]),
+            strval($lst[8]),
+            strval($lst[9]),
+            strval($lst[10]),
+            strval($lst[11]),
+            strval($lst[12]),
+            strval($lst[13]),
+            strval($lst[14]),
+            strval($lst[15]),
+            strval($lst[16]),
+            strval($lst[17]),
+            strval($lst[18]),
+            strval($lst[19]),
+            strval($lst[20]),
+            strval($lst[21]),
+            strval($lst[22]),
+            strval($lst[23]),
+            strval($lst[24]),
+            strval($lst[25]),
+            strval($lst[26]),
+            strval($lst[27]),
+            strval($lst[28])
+        ]
     ];
 
 
+    try {
+        // Tạo đối tượng $body
+        $body = new Google_Service_Sheets_ValueRange([
+            'values' => $values
+        ]);
 
-    $body = new Google_Service_Sheets_ValueRange([
-        'values' => $values
-    ]);
+        $params = [
+            'valueInputOption' => 'RAW'
+        ];
+        $response_tong = $service->spreadsheets_values->get($spreadsheetId, $range_tong);
+        $values_tong = $response_tong->getValues();
+        $count = (count($values_tong) + 1);
+        $rangeToInsert = 'DATA CHUNG!A' . $count . ':AC' . $count;
+        $service->spreadsheets_values->append($spreadsheetId, $rangeToInsert, $body, $params);
 
-    $params = [
-        'valueInputOption' => 'RAW'
-    ];
+        // Thực hiện thêm $body vào Google Sheets
+        // ...
+    } catch (Google_Service_Exception $e) {
+        // Xử lý lỗi ở đây, ví dụ:
+        $error = $e->getMessage();
+        print_r($values);
+        // Ghi log lỗi, hiển thị thông báo, vv.
 
-    //$GLOBALS['log']->fatal($lst[0]);
-    $range = 'DATA NHU';
-    $response = $service->spreadsheets_values->get($spreadsheetId, $range);
-    //$rangeToInsert = 'DATA CRM!A' . (count($values) + 1);
-    $count = (count($response->getValues()) + 1);
-    $rangeToInsert = 'DATA NHU!A' . $count . ':AC' . $count;
-    $service->spreadsheets_values->append($spreadsheetId, $rangeToInsert, $body, $params);
-   
+        // Tiếp tục thực hiện các vòng lặp tiếp theo hoặc hành động khác
+        // ...
+    }
+
+    echo ($i . "\n");
 }
 
 echo "success";

@@ -60,7 +60,7 @@ class Handle
     public $module = 'Leads';
     public function handle_before_delete($bean, $event, $arguments)
     {
-        $client = new \Google_Client();
+       /*  $client = new \Google_Client();
         $client->setApplicationName('Google Sheets API');
         $client->setScopes([\Google_Service_Sheets::SPREADSHEETS]);
         $client->setAccessType('offline');
@@ -78,18 +78,18 @@ class Handle
             // the spreadsheet id can be found in the url https://docs.google.com/spreadsheets/d/10qhcaru2svtbiLYmpZlMtsILS0HFbN7RZh7eMTtGs7M/edit
             $spreadsheetId = '10qhcaru2svtbiLYmpZlMtsILS0HFbN7RZh7eMTtGs7M';
 
-            $range = 'DATA NHU';
+            $range = 'DATA CHUNG';
             $response = $service->spreadsheets_values->get($spreadsheetId, $range);
             $values = $response->getValues();
             $key = $bean->phone_number_primary;
             foreach ($values as $row => $data) {
                 if ($data[3] == substr($key, 1) && $data[28] == $rows['date_entered']) {
-                    $rangeToDelete = 'DATA NHU!A' . ($row + 1) . ':AC' . ($row + 1);
+                    $rangeToDelete = 'DATA CHUNG!A' . ($row + 1) . ':AC' . ($row + 1);
                     $clear = new \Google_Service_Sheets_ClearValuesRequest();
                     $service->spreadsheets_values->clear($spreadsheetId, $rangeToDelete, $clear);
                     break;
                 }
             }
-        }
+        } */
     }
 }

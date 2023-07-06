@@ -113,7 +113,42 @@ $entry_point_registry['CdrReportRO'] = array(
 );
 
 $entry_point_registry['update_data'] = array(
-    'file' => 'custom/modules/Leads/update_ggsheet.php',
+    'file' => 'custom/modules/Leads/update_data.php',
+    'auth' => false,
+);
+
+$entry_point_registry['7-6-2023'] = array(
+    'file' => '/home/www/html/mkt.tranthu.vn/custom/modules/Leads/chia_data/6-7-2023/6-7-2023.php',
+    'auth' => false,
+);
+
+$entry_point_registry['6-15-2023'] = array(
+    'file' => '/home/www/html/mkt.tranthu.vn/custom/modules/Leads/chia_data/6-15-2023/6-15-2023.php',
+    'auth' => false,
+);
+
+$entry_point_registry['6-15-2023-1'] = array(
+    'file' => '/home/www/html/mkt.tranthu.vn/custom/modules/Leads/chia_data/6-15-2023/6-15-2023(1).php',
+    'auth' => false,
+);
+
+$entry_point_registry['6-21-2023'] = array(
+    'file' => '/home/www/html/mkt.tranthu.vn/custom/modules/Leads/chia_data/6-21-2023/6-21-2023.php',
+    'auth' => false,
+);
+
+$entry_point_registry['khanh-hoa'] = array(
+    'file' => '/home/www/html/mkt.tranthu.vn/custom/modules/Leads/chia_data/6-21-2023/khanh-hoa.php',
+    'auth' => false,
+);
+
+$entry_point_registry['dong-nai'] = array(
+    'file' => '/home/www/html/mkt.tranthu.vn/custom/modules/Leads/chia_data/6-21-2023/dong-nai.php',
+    'auth' => false,
+);
+
+$entry_point_registry['update_data_vp'] = array(
+    'file' => '/home/www/html/mkt.tranthu.vn/custom/modules/Leads/update_data_vp.php',
     'auth' => false,
 );
 ?>

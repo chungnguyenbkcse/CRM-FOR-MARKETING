@@ -60,6 +60,13 @@ class Handle1
     public $module = 'Leads';
     public function handle_before_save($bean, $event, $arguments)
     {
+
+        if (strlen($bean->phone_number_primary) == 9) {
+            $bean->phone_number_primary = "0" . $bean->phone_number_primary; // Thêm số 0 vào đầu nếu độ dài là 9
+        } elseif (strlen($bean->phone_number_primary) == 11) {
+            $bean->phone_number_primary = substr($bean->phone_number_primary, 2); // Xóa 2 kí tự đầu nếu độ dài là 11
+            $bean->phone_number_primary = "0" . $bean->phone_number_primary; // Thêm số 0 vào đầu
+        }
         date_default_timezone_set('Asia/Ho_Chi_Minh');
         $now = new DateTime();
         if ($bean->date_entered == $bean->date_modified) {

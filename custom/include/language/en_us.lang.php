@@ -182,6 +182,13 @@ $app_list_strings = array(
         '13' => 'old MKT ĐN',
         '14' => 'inactive ĐN ',
         '15' => 'LD',
+        '16' => 'ĐỐI TÁC T',
+        '17' => 'ĐỐI TÁC K',
+        '18' => 'ĐỐI TÁC D', 
+        '19' => 'ĐỐI TÁC VP',
+        '20' => 'VP ĐỒNG NAI',
+        '21' => 'VP KHÁNH HÒA',
+
     ),
     'ro_name_dom' => array(
         '' => ''
@@ -206,9 +213,9 @@ $app_list_strings = array(
         '7' => 'Song Thao',
         '8' => 'Nha trang',
         '9' => 'LVS',
-        '10' => 'HCM1',
-        '11' => 'HCM2',
         '12' => 'MKT',
+        'HCM_3' => 'HCM 3',
+        'HCM_4' => 'HCM 4',
     ),
 
     'receiving_branch_dom_1' => array(

@@ -515,6 +515,7 @@ class Handle
                     '8' => 'Nha trang',
                     '9' => 'LVS',
                     '12' => 'MKT',
+                    'HCM_2' => 'HCM 2',
                     'HCM_3' => 'HCM 3',
                     'HCM_4' => 'HCM 4',
                 );

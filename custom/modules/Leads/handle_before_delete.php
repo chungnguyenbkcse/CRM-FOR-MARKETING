@@ -60,7 +60,7 @@ class Handle
     public $module = 'Leads';
     public function handle_before_delete($bean, $event, $arguments)
     {
-       /*  $client = new \Google_Client();
+       $client = new \Google_Client();
         $client->setApplicationName('Google Sheets API');
         $client->setScopes([\Google_Service_Sheets::SPREADSHEETS]);
         $client->setAccessType('offline');
@@ -90,6 +90,6 @@ class Handle
                     break;
                 }
             }
-        } */
+        } 
     }
 }

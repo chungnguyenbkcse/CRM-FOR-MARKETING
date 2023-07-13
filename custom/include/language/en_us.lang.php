@@ -188,6 +188,7 @@ $app_list_strings = array(
         '19' => 'ĐỐI TÁC VP',
         '20' => 'VP ĐỒNG NAI',
         '21' => 'VP KHÁNH HÒA',
+        '22' => 'ĐỐI TÁC TCB',
 
     ),
     'ro_name_dom' => array(
@@ -210,9 +211,8 @@ $app_list_strings = array(
         '' => '',
         '4' => 'TELE',
         '6' => 'Đồng nai',
-        '7' => 'Song Thao',
         '8' => 'Nha trang',
-        '9' => 'LVS',
+        '9' => 'HCM 1',
         '12' => 'MKT',
         'HCM_2' => 'HCM 2',
         'HCM_3' => 'HCM 3',

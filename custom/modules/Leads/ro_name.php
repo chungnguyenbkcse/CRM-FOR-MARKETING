@@ -148,23 +148,47 @@ function getRoForCreate()
     return $html;
 }
 
-if (isset($_GET['ro_name'])) {
+
+function getListRoByBranch($owned_branch) {
+    $html = "<option value='' selected>Choose</option>";
+    $query_1 = "SELECT *  FROM branch_ro WHERE branch_id = '{$owned_branch}'";
+    $result_1 = $GLOBALS['db']->query($query_1);
+    while ($rows_1 = $GLOBALS['db']->fetchByAssoc($result_1)) {
+        $html = sprintf("<option value='%s'>%s</option>", $rows_1['user_id'], $rows_1['user_name']) .  $html;
+    }
+    return $html;
+}
+
+
+
+
+function getListRoByRo($ro_name) {
     $html = "";
-    $states = getStates();
-    foreach($states as $k => $v) {
-        if ($_GET['ro_name'] == $k){
-            $html .= sprintf("<option value='%s' selected>%s</option>", $k, $v);
+    $query_1 = "SELECT *
+    FROM branch_ro
+    WHERE branch_id = (SELECT branch_id FROM branch_ro WHERE user_id = '{$ro_name}');";
+    $result_1 = $GLOBALS['db']->query($query_1);
+    while ($rows_1 = $GLOBALS['db']->fetchByAssoc($result_1)) {
+        if ($ro_name == $rows_1['user_id']) {
+            $html = sprintf("<option value='%s' selected>%s</option>", $rows_1['user_id'], $rows_1['user_name']) .  $html;
         }
         else {
-            $html .= sprintf("<option value='%s'>%s</option>", $k, $v);
+            $html = sprintf("<option value='%s'>%s</option>", $rows_1['user_id'], $rows_1['user_name']) .  $html;
         }
+        
     }
-    echo $html;
+    return $html;
+}
+
+if (isset($_GET['ro_name'])) {
+    $html = "";
+    $ro_name = $_GET['ro_name'];
+    echo getListRoByRo($ro_name);
 }
 else {
+    $owned_branch = $_GET['owned_branch'];
     $html = "";
-    $states = getRoForCreate();
-    $states .= sprintf("<option value='%s'>%s</option>", '0', 'Choose');
+    $states = getListRoByBranch($owned_branch);
     echo $states;
 }
 

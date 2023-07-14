@@ -337,12 +337,15 @@ $(document).ready(function () {
             $('#phone_number_primary').css('width', "90%")
         }
 
+        
+        $("#ro_name").attr("disabled", true);
         $.ajax({
             url: "index.php?module=Leads&entryPoint=ro_name",
             data: { ro_name: ro_name_val },
             success: function (data) {
                 console.log(data);
                 $("#ro_name").html(data);
+                $("#ro_name").attr("disabled", true);
             },
             dataType: 'html'
         });
@@ -628,15 +631,21 @@ $(document).ready(function () {
             $('.input_phone_number_primary').css('width', "100%")
             $('#phone_number_primary').css('width', "90%")
 
-            $.ajax({
-                url: "index.php?module=Leads&entryPoint=ro_name",
-                data: { },
-                success: function (data) {
-                    console.log(data);
-                    $("#ro_name").html(data);
-                },
-                dataType: 'html'
-            });
+            $("#owned_branch").change(function() {
+                $("#ro_name").attr("disabled", true);
+                let owned_branch = $(this).val();
+                $.ajax({
+                    url: "index.php?module=Leads&entryPoint=ro_name",
+                    data: { owned_branch: owned_branch },
+                    success: function (data) {
+                        console.log(data);
+                        $("#ro_name").html(data);
+                        $("#ro_name").attr("disabled", false);
+                    },
+                    dataType: 'html'
+                });
+            })
+            
         }
         else {
             $("#phone_number_primary").attr('type', 'password');
@@ -678,6 +687,7 @@ $(document).ready(function () {
                 var ro_name_val = $("#ro_name_val").val();
                 $("#ro_name").attr("disabled", true);
                 //console.log('x')
+                $('#sale_stage_follow_level').attr('disabled', true);
                 $.ajax({
                     url: "index.php?module=Leads&entryPoint=ro_name",
                     data: { ro_name: ro_name_val },
@@ -765,13 +775,15 @@ $(document).ready(function () {
             }
             else if (sale_stage_id == "10") {
                 var ro_name_val = $("#ro_name_val").val();
-                $("#ro_name").attr("disabled", false);
+                $("#ro_name").attr("disabled", true);
+                
                 $.ajax({
                     url: "index.php?module=Leads&entryPoint=ro_name",
                     data: { ro_name: ro_name_val },
                     success: function (data) {
                         console.log(data);
                         $("#ro_name").html(data);
+                        $("#ro_name").attr("disabled", false);
                     },
                     dataType: 'html'
                 });
@@ -1070,7 +1082,20 @@ $(document).ready(function () {
         });
 
         
-
+        $("#owned_branch").change(function() {
+            $("#ro_name").attr("disabled", true);
+            let owned_branch = $(this).val();
+            $.ajax({
+                url: "index.php?module=Leads&entryPoint=ro_name",
+                data: { owned_branch: owned_branch },
+                success: function (data) {
+                    console.log(data);
+                    $("#ro_name").html(data);
+                    $("#ro_name").attr("disabled", false);
+                },
+                dataType: 'html'
+            });
+        })
 
         
 
@@ -1146,7 +1171,7 @@ $(document).ready(function () {
 
                     var res = jQuery.parseJSON(data)[0];
                     console.log(res)
-                    if (res != null && res != undefined) {
+                    if (res != null && res != undefined && res.recordingfile != undefined && res.calldate != undefined) {
                         const recording_file = "/" + (res.calldate.substring(0,4)) + "/" + (res.calldate.substring(5,7)) + "/" + (res.calldate.substring(8,10)) +  "/" + (res.recordingfile);
                         fetch(`index.php?module=Leads&entryPoint=GetWarfile&data=${recording_file}`)
                             .then(response => response.blob())
@@ -1255,7 +1280,7 @@ $(document).ready(function () {
                     //console.log(res.calldate.substring(0,4))
                     //console.log(res.calldate.substring(5,7))
                     console.log(res)
-                    if (res != null && res != undefined) {
+                    if (res != null && res != undefined && res.recordingfile != undefined && res.calldate != undefined) {
                     const recording_file = "/" + (res.calldate.substring(0,4)) + "/" + (res.calldate.substring(5,7)) + "/" + (res.calldate.substring(8,10)) +  "/" + (res.recordingfile);
                     fetch(`index.php?module=Leads&entryPoint=GetWarfile&data=${recording_file}`)
                         .then(response => response.blob())
@@ -1395,11 +1420,15 @@ function handle_check_record_in_day() {
             //console.log('Susscess')
             //console.log(data);
             var res = jQuery.parseJSON(data)[0];
-            //console.log(res)
-            var recording_file = res.recordingfile;
-            
-            if (recording_file != undefined && recording_file != null && recording_file != "") {
-                isCheck = true;
+            console.log(res)
+
+            if (res != null && res != undefined && res.recordingfile != undefined) {
+
+                var recording_file = res.recordingfile;
+                
+                if (recording_file != undefined && recording_file != null && recording_file != "") {
+                    isCheck = true;
+                }
             }
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -1789,14 +1818,14 @@ function check_phone_number() {
     return res;
 }
 
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
 function check_form(form_name) {
     ////console.log(lst)
-
-    function getCookie(name) {
-        const value = `; ${document.cookie}`;
-        const parts = value.split(`; ${name}=`);
-        if (parts.length === 2) return parts.pop().split(';').shift();
-    }
 
     let sale_stage = '';
     $('[name="sale_stage"]').map(function (idx) {
@@ -1804,6 +1833,7 @@ function check_form(form_name) {
     })
 
     var role = getCookie("role");
+    console.log(role)
 
     if ($('#lead_id').val().length != 0 ) {
         if (sale_stage == '7') {
@@ -1884,12 +1914,16 @@ function check_form(form_name) {
     })
     //console.log(sale_stage)
     //console.log(lead_status)
-    if (role == "RO") {
-        if (handle_check_record_in_day() == false) {
-            return false;
-        }
-    }
+    
     if ((role === "RO" || role === "BU") && sale_stage == '7' && lead_status == '18' ) {
+
+        if (role == "RO") {
+            if (handle_check_record_in_day() == false) {
+                alert("Chưa có record!")
+                return false;
+            }
+        }
+        
         if (handle_check_form_role_ro() == false) {
             return false;
         }

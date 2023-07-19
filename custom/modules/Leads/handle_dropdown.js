@@ -1917,12 +1917,12 @@ function check_form(form_name) {
     
     if ((role === "RO" || role === "BU") && sale_stage == '7' && lead_status == '18' ) {
 
-        if (role == "RO") {
+        /* if (role == "RO") {
             if (handle_check_record_in_day() == false) {
                 alert("Chưa có record!")
                 return false;
             }
-        }
+        } */
         
         if (handle_check_form_role_ro() == false) {
             return false;

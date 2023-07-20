@@ -38,6 +38,12 @@ array (
         'default' => true,
         'width' => '10%',
       ),
+      'facebook_or_zalo_name' => 
+      array (
+        'name' => 'facebook_or_zalo_name',
+        'default' => true,
+        'width' => '10%',
+      ),
       'phone_number_primary' => 
       array (
         'name' => 'phone_number_primary',

@@ -40,14 +40,14 @@ for ($i = 0; $i < $dataCount; $i++) {
 
     $userIndex = $i % $userCount; // Xác định vị trí user tương ứng với data hiện tại
     $user = $users[$userIndex];
-
+    $phone_new =  $phone_number_primarys[$i];
     $phone_number_primary = "0" . $phone_number_primarys[$i];
     $facebook_or_zalo_name = $facebook_or_zalo_names[$i];
     $address_follow_citizen_identification = $address_follow_citizen_identifications[$i];
     $district_customer_live = "Hồ Chí Minh";
 
     
-    $query = "UPDATE leads SET created_by = '1' WHERE phone_number_primary = '{$phone_number_primary}' AND deleted = 0";
+    $query = "UPDATE leads SET phone_number_primary = '{$phone_new}'  WHERE phone_number_primary = '{$phone_number_primary}' AND deleted = 0";
     $GLOBALS['db']->query($query);
     echo "$phone_number_primary\n";
 }

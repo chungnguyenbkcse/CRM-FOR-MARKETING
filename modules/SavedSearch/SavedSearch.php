@@ -262,6 +262,7 @@ class SavedSearch extends SugarBean
         return $chooser;
     }
 
+
     public function getSelect($module, &$savedSearchData = null)
     {
         global $current_user, $currentModule, $current_lang, $app_strings;
@@ -282,21 +283,42 @@ class SavedSearch extends SugarBean
                     $result = $db->query($query, true, "Error filling in saved search list: ");
                 }
                 else if ($role == "RO") {
-                    if ($current_user->id != "54e005cb-332b-9c26-c173-6406e116558f" &&  $current_user->id != "349fe455-c77c-8f0b-b391-6440b692e560" &&  $current_user->id != "9232e852-23f5-3a3a-db34-63fdc497d906" && $current_user->id != "a5a5f967-0e9e-5d0c-6a51-63fdc413bf45") {
-                        $query = 'SELECT id, name, contents FROM saved_search
-                        WHERE
-                          deleted = \'0\' AND
-                          assigned_user_id != \'54e005cb-332b-9c26-c173-6406e116558f\' AND
-                          search_module =  \'' . $module . '\'
-                        ORDER BY name';
+                    $query_select_branch = "SELECT * FROM branch_ro WHERE branch_id IN ('HCM_3', 'HCM_4')";
+                    $result_select_branch = $db->query($query_select_branch);
+                    $userList = array();
+                    while($row_select_branchs = $GLOBALS['db']->fetchByAssoc($result_select_branch)){
+                        $userList[] = $row_select_branchs['user_id'];
+                    }
+
+                    // Khởi tạo một mảng mới để chứa các phần tử với dấu nháy đơn
+                    $userListWithQuotes = [];
+
+                    // Thêm hai dấu nháy đơn vào mỗi phần tử và đưa vào mảng mới
+                    foreach ($userList as $item) {
+                        $userListWithQuotes[] = "'$item'";
+                    }
+
+                    $GLOBALS['log']->fatal($current_user->id); 
+
+                    $GLOBALS['log']->fatal($userList); 
+
+                    // Chuyển đổi mảng đã có dấu nháy đơn thành một chuỗi, phân cách bởi dấu phẩy
+                    $id_list = implode(",", $userListWithQuotes);
+
+                    
+                    if (in_array($current_user->id, $userList)) {  
+                        $GLOBALS['log']->fatal("is true");               
+                        $query = "SELECT id, name, contents FROM saved_search WHERE   deleted = 0  AND   search_module =  '{$module}' ORDER BY name";
+                        $result = $db->query($query, true, "Error filling in saved search list: ");
+                    }
+                    else if ($current_user->id != "54e005cb-332b-9c26-c173-6406e116558f" &&  $current_user->id != "349fe455-c77c-8f0b-b391-6440b692e560" &&  $current_user->id != "9232e852-23f5-3a3a-db34-63fdc497d906" && $current_user->id != "a5a5f967-0e9e-5d0c-6a51-63fdc413bf45") {
+                        $GLOBALS['log']->fatal("is hello"); 
+                        $query = "SELECT id, name, contents FROM saved_search WHERE   deleted = 0 AND   assigned_user_id != '54e005cb-332b-9c26-c173-6406e116558f' AND   assigned_user_id NOT IN ( '351edcea-83d2-bf13-f595-64a80ff642b5', '640b5327-a567-bdd1-c73f-64a657064f4a' ) AND   search_module =  '{$module}' ORDER BY name";
                         $result = $db->query($query, true, "Error filling in saved search list: ");
                     }
                     else {
-                        $query = 'SELECT id, name, contents FROM saved_search
-                        WHERE
-                          deleted = \'0\' AND
-                          search_module =  \'' . $module . '\'
-                        ORDER BY name';
+                        $GLOBALS['log']->fatal("is fatal"); 
+                        $query = "SELECT id, name, contents FROM saved_search WHERE   deleted = 0 AND   assigned_user_id NOT IN ( '351edcea-83d2-bf13-f595-64a80ff642b5', '640b5327-a567-bdd1-c73f-64a657064f4a' ) AND search_module =  '{$module}' ORDER BY name";
                         $result = $db->query($query, true, "Error filling in saved search list: ");
                     }           
                 }
@@ -431,22 +453,28 @@ class SavedSearch extends SugarBean
     
                     if ($role == "RO"){
                         if ($user->id == '54e005cb-332b-9c26-c173-6406e116558f') {
-                            $query_check_for_role .= "  AND ( (ro_name  = '349fe455-c77c-8f0b-b391-6440b692e560' AND data_sources = '9') OR (ro_name  = '9232e852-23f5-3a3a-db34-63fdc497d906' AND data_sources = '9') OR (ro_name  = '349fe455-c77c-8f0b-b391-6440b692e560' AND data_sources = '10')     OR (ro_name  = '9232e852-23f5-3a3a-db34-63fdc497d906' AND data_sources = '10')     OR (ro_name  = 'a5a5f967-0e9e-5d0c-6a51-63fdc413bf45' AND data_sources = '10')     OR (ro_name  = 'a5a5f967-0e9e-5d0c-6a51-63fdc413bf45' AND data_sources = '9') OR (leads.created_by = '1' AND leads.ro_name = '349fe455-c77c-8f0b-b391-6440b692e560')    OR (leads.created_by = '1' AND leads.ro_name = 'a5a5f967-0e9e-5d0c-6a51-63fdc413bf45')     OR (leads.created_by = '1' AND leads.ro_name = '9232e852-23f5-3a3a-db34-63fdc497d906')     OR (leads.created_by = '1' AND leads.ro_name = '{$user->id}')  OR (leads.created_by = '349fe455-c77c-8f0b-b391-6440b692e560')    OR (leads.created_by = '9232e852-23f5-3a3a-db34-63fdc497d906')     OR (leads.created_by = 'a5a5f967-0e9e-5d0c-6a51-63fdc413bf45')     OR (leads.created_by = '{$user->id}') OR (leads.modified_user_id = '349fe455-c77c-8f0b-b391-6440b692e560' AND leads.ro_modified_sale_stage = true)     OR (leads.modified_user_id = '9232e852-23f5-3a3a-db34-63fdc497d906' AND leads.ro_modified_sale_stage = true)      OR (leads.modified_user_id = 'a5a5f967-0e9e-5d0c-6a51-63fdc413bf45' AND leads.ro_modified_sale_stage = true)     OR (leads.modified_user_id = '{$user->id}' AND leads.ro_modified_sale_stage = true)      OR (leads.ro_name = '9232e852-23f5-3a3a-db34-63fdc497d906' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != '') OR (leads.ro_name = '349fe455-c77c-8f0b-b391-6440b692e560' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != '')     OR (leads.ro_name = 'a5a5f967-0e9e-5d0c-6a51-63fdc413bf45' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != '')     OR (leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != ''))"; 
+                            $query_check_for_role .= "  OR leads.owned_branch = 'HCM_2' OR (leads.created_by = '1' AND leads.ro_name = '{$user->id}') OR (leads.created_by = '{$user->id}') OR (leads.ro_name = '{$user->id}' AND leads.ro_modified_sale_stage = true) OR ( leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != '')"; 
+                        }
+                        else if ($user->id == '640b5327-a567-bdd1-c73f-64a657064f4a') {
+                            $query_check_for_role .= " OR leads.owned_branch = 'HCM_3' OR leads.owned_branch = 'HCM_4'  OR (leads.created_by = '1' AND leads.ro_name = '{$user->id}') OR (leads.created_by = '{$user->id}') OR (leads.ro_name = '{$user->id}' AND leads.ro_modified_sale_stage = true) OR ( leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != '')";
+                        }
+                        else if ($user->id == '351edcea-83d2-bf13-f595-64a80ff642b5') {
+                            $query_check_for_role .= " OR leads.owned_branch = 'HCM_3' OR (leads.created_by = '1' AND leads.ro_name = '{$user->id}') OR (leads.created_by = '{$user->id}') OR (leads.ro_name = '{$user->id}' AND leads.ro_modified_sale_stage = true) OR ( leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != '')";
                         }
                         else if ($user->id == 'a5a5f967-0e9e-5d0c-6a51-63fdc413bf45') {
-                            $query_check_for_role .= " AND ((ro_name  = 'a5a5f967-0e9e-5d0c-6a51-63fdc413bf45' AND data_sources = '10') OR (ro_name  = 'a5a5f967-0e9e-5d0c-6a51-63fdc413bf45' AND data_sources = '9') OR (leads.created_by = '1' AND leads.ro_name = '{$user->id}') OR (leads.created_by = '{$user->id}') OR (leads.modified_user_id = '{$user->id}' AND leads.ro_modified_sale_stage = true)  OR (leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != ''))";
+                            $query_check_for_role .= " (leads.created_by = '1' AND leads.ro_name = '{$user->id}' AND lead_status = '1' AND sale_stage = '1') OR (ro_name  = 'a5a5f967-0e9e-5d0c-6a51-63fdc413bf45' AND data_sources = '10') OR (ro_name  = 'a5a5f967-0e9e-5d0c-6a51-63fdc413bf45' AND data_sources = '9') OR (leads.created_by = '1' AND leads.ro_name = '{$user->id}') OR (leads.created_by = '{$user->id}') OR (leads.ro_name = '{$user->id}' AND leads.ro_modified_sale_stage = true)  OR (leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != '')";
                         }
                         else if ($user->id == '9232e852-23f5-3a3a-db34-63fdc497d906') {
-                            $query_check_for_role .= " AND ((ro_name  = '9232e852-23f5-3a3a-db34-63fdc497d906' AND data_sources = '9') OR (ro_name  = '9232e852-23f5-3a3a-db34-63fdc497d906' AND data_sources = '10') OR (leads.created_by = '1' AND leads.ro_name = '{$user->id}') OR (leads.created_by = '{$user->id}') OR (leads.modified_user_id = '{$user->id}' AND leads.ro_modified_sale_stage = true)  OR (leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != ''))";
+                            $query_check_for_role .= " (leads.created_by = '1' AND leads.ro_name = '{$user->id}' AND lead_status = '1' AND sale_stage = '1') OR (ro_name  = '9232e852-23f5-3a3a-db34-63fdc497d906' AND data_sources = '9') OR (ro_name  = '9232e852-23f5-3a3a-db34-63fdc497d906' AND data_sources = '10') OR (leads.created_by = '1' AND leads.ro_name = '{$user->id}') OR (leads.created_by = '{$user->id}') OR (leads.ro_name = '{$user->id}' AND leads.ro_modified_sale_stage = true)  OR (leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != '')";
                         }
                         else if ($user->id == '497f0e21-37eb-a875-75b2-63fdb2c03264') {
-                            $query_check_for_role .= " AND ((leads.data_sources = '9' OR leads.data_sources = '10') AND leads.lead_status = '17') OR (leads.created_by = '1' AND leads.ro_name = '{$user->id}') OR (leads.created_by = '{$user->id}') OR (leads.modified_user_id = '{$user->id}' AND leads.ro_modified_sale_stage = true)  OR (leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != ''))";
+                            $query_check_for_role .= "(leads.created_by = '1' AND leads.ro_name = '{$user->id}' AND lead_status = '1' AND sale_stage = '1') OR ((leads.data_sources = '9' OR leads.data_sources = '10') AND leads.lead_status = '17') OR (leads.created_by = '1' AND leads.ro_name = '{$user->id}') OR (leads.created_by = '{$user->id}') OR (leads.ro_name = '{$user->id}' AND leads.ro_modified_sale_stage = true)  OR (leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != '')";
                         }
                         else if ($query_check_for_role == ""){
-                            $query_check_for_role .= " AND ((leads.created_by = '1' AND leads.ro_name = '{$user->id}') OR (leads.created_by = '{$user->id}') OR (leads.modified_user_id = '{$user->id}' AND leads.ro_modified_sale_stage = true)  OR (leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != ''))";
+                            $query_check_for_role .= "(leads.created_by = '1' AND leads.ro_name = '{$user->id}' AND lead_status = '1' AND sale_stage = '1') OR (leads.created_by = '1' AND leads.ro_name = '{$user->id}') OR (leads.created_by = '{$user->id}') OR (leads.ro_name = '{$user->id}' AND leads.ro_modified_sale_stage = true)  OR (leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != '')";
                         }
                         else {
-                            $query_check_for_role .= " AND ((leads.created_by = '1' AND leads.ro_name = '{$user->id}') OR (leads.created_by = '{$user->id}') OR (leads.modified_user_id = '{$user->id}' AND leads.ro_modified_sale_stage = true) OR leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != '')";
+                            $query_check_for_role .= " OR (leads.created_by = '1' AND leads.ro_name = '{$user->id}') OR (leads.created_by = '{$user->id}') OR (leads.ro_name = '{$user->id}' AND leads.ro_modified_sale_stage = true) OR (leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != '')";
                         }
                     }
     

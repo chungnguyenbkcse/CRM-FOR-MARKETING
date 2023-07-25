@@ -5,6 +5,8 @@ $(document).ready(function () {
 
     ////console.log(created_by)
 
+    $("#id").attr("disabled", true);
+
     
     $.ajax({
         url: "index.php?module=Leads&entryPoint=get_card_number_lead",

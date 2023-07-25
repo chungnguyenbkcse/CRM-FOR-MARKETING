@@ -29,6 +29,12 @@ array (
     'label' => 'LBL_DATA_SOURCES',
     'default' => true,
   ),
+  'ID' => 
+  array (
+    'width' => '10%',
+    'label' => 'LBL_ID',
+    'default' => true,
+  ),
   'DATE_ENTERED' => 
   array (
     'width' => '10%',

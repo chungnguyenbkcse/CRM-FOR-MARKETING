@@ -163,12 +163,13 @@ $viewdefs['Leads'] =
         'LBL_CONTACT_INFORMATION_MKT' =>
         array(
           0 => array(
-            0 => 'facebook_or_zalo_name',
-            1 => "data_sources",
+            0 => 'id',
+            1 => "facebook_or_zalo_name",
           ),
           1 =>
           array(
             0 => "card_bark_type",
+            1 => "data_sources"
           ),
           2 =>
           array(

@@ -32,6 +32,12 @@ array (
     ),
     'advanced_search' => 
     array (
+      'id' => 
+      array (
+        'name' => 'id',
+        'default' => true,
+        'width' => '10%',
+      ),
       'citizen_identification' => 
       array (
         'name' => 'citizen_identification',

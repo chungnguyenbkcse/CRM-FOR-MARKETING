@@ -283,42 +283,28 @@ class SavedSearch extends SugarBean
                     $result = $db->query($query, true, "Error filling in saved search list: ");
                 }
                 else if ($role == "RO") {
-                    $query_select_branch = "SELECT * FROM branch_ro WHERE branch_id IN ('HCM_3', 'HCM_4')";
+                    $branch_id = "";
+                    $query_select_branch = "SELECT * FROM branch_ro WHERE user_id = '{$current_user->id}'";
                     $result_select_branch = $db->query($query_select_branch);
-                    $userList = array();
                     while($row_select_branchs = $GLOBALS['db']->fetchByAssoc($result_select_branch)){
-                        $userList[] = $row_select_branchs['user_id'];
+                        $branch_id = $row_select_branchs['branch_id'];
                     }
 
-                    // Khởi tạo một mảng mới để chứa các phần tử với dấu nháy đơn
-                    $userListWithQuotes = [];
 
-                    // Thêm hai dấu nháy đơn vào mỗi phần tử và đưa vào mảng mới
-                    foreach ($userList as $item) {
-                        $userListWithQuotes[] = "'$item'";
-                    }
-
-                    $GLOBALS['log']->fatal($current_user->id); 
-
-                    $GLOBALS['log']->fatal($userList); 
-
-                    // Chuyển đổi mảng đã có dấu nháy đơn thành một chuỗi, phân cách bởi dấu phẩy
-                    $id_list = implode(",", $userListWithQuotes);
-
-                    
-                    if (in_array($current_user->id, $userList)) {  
-                        $GLOBALS['log']->fatal("is true");               
-                        $query = "SELECT id, name, contents FROM saved_search WHERE   deleted = 0  AND   search_module =  '{$module}' ORDER BY name";
+                    if ($branch_id ==  "HCM_2") {             
+                        $query = "SELECT id, name, contents FROM saved_search WHERE (assigned_user_id = '{$current_user->id}' OR assigned_user_id = '54e005cb-332b-9c26-c173-6406e116558f')  AND deleted = 0  AND   search_module =  '{$module}' ORDER BY name";
                         $result = $db->query($query, true, "Error filling in saved search list: ");
                     }
-                    else if ($current_user->id != "54e005cb-332b-9c26-c173-6406e116558f" &&  $current_user->id != "349fe455-c77c-8f0b-b391-6440b692e560" &&  $current_user->id != "9232e852-23f5-3a3a-db34-63fdc497d906" && $current_user->id != "a5a5f967-0e9e-5d0c-6a51-63fdc413bf45") {
-                        $GLOBALS['log']->fatal("is hello"); 
-                        $query = "SELECT id, name, contents FROM saved_search WHERE   deleted = 0 AND   assigned_user_id != '54e005cb-332b-9c26-c173-6406e116558f' AND   assigned_user_id NOT IN ( '351edcea-83d2-bf13-f595-64a80ff642b5', '640b5327-a567-bdd1-c73f-64a657064f4a' ) AND   search_module =  '{$module}' ORDER BY name";
+                    else if ($branch_id == "HCM_3" ) {
+                        $query = "SELECT id, name, contents FROM saved_search WHERE (assigned_user_id = '{$current_user->id}' OR assigned_user_id = '640b5327-a567-bdd1-c73f-64a657064f4a' OR assigned_user_id = '351edcea-83d2-bf13-f595-64a80ff642b5') AND deleted = 0  AND   search_module =  '{$module}' ORDER BY name";
+                        $result = $db->query($query, true, "Error filling in saved search list: ");
+                    }
+                    else if ($branch_id == "HCM_4" || $current_user->id == "351edcea-83d2-bf13-f595-64a80ff642b5") {
+                        $query = "SELECT id, name, contents FROM saved_search WHERE (assigned_user_id = '{$current_user->id}' OR assigned_user_id = '640b5327-a567-bdd1-c73f-64a657064f4a')  AND deleted = 0  AND   search_module =  '{$module}' ORDER BY name";
                         $result = $db->query($query, true, "Error filling in saved search list: ");
                     }
                     else {
-                        $GLOBALS['log']->fatal("is fatal"); 
-                        $query = "SELECT id, name, contents FROM saved_search WHERE   deleted = 0 AND   assigned_user_id NOT IN ( '351edcea-83d2-bf13-f595-64a80ff642b5', '640b5327-a567-bdd1-c73f-64a657064f4a' ) AND search_module =  '{$module}' ORDER BY name";
+                        $query = "SELECT id, name, contents FROM saved_search WHERE  assigned_user_id = '{$current_user->id}' AND deleted = 0  AND search_module =  '{$module}' ORDER BY name";
                         $result = $db->query($query, true, "Error filling in saved search list: ");
                     }           
                 }
@@ -328,10 +314,6 @@ class SavedSearch extends SugarBean
                     $query = 'SELECT id, name, contents FROM saved_search
                     WHERE
                       deleted = \'0\' AND
-                      (
-                        assigned_user_id = \'' . $current_user->id . '\' OR
-                        assigned_user_id IN (' . $listUsers .')
-                      ) AND
                       search_module =  \'' . $module . '\'
                     ORDER BY name';
                     $result = $db->query($query, true, "Error filling in saved search list: ");
@@ -460,9 +442,6 @@ class SavedSearch extends SugarBean
                         }
                         else if ($user->id == '351edcea-83d2-bf13-f595-64a80ff642b5') {
                             $query_check_for_role .= " OR leads.owned_branch = 'HCM_3' OR (leads.created_by = '1' AND leads.ro_name = '{$user->id}') OR (leads.created_by = '{$user->id}') OR (leads.ro_name = '{$user->id}' AND leads.ro_modified_sale_stage = true) OR ( leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != '')";
-                        }
-                        else if ($user->id == 'a5a5f967-0e9e-5d0c-6a51-63fdc413bf45') {
-                            $query_check_for_role .= " (leads.created_by = '1' AND leads.ro_name = '{$user->id}' AND lead_status = '1' AND sale_stage = '1') OR (ro_name  = 'a5a5f967-0e9e-5d0c-6a51-63fdc413bf45' AND data_sources = '10') OR (ro_name  = 'a5a5f967-0e9e-5d0c-6a51-63fdc413bf45' AND data_sources = '9') OR (leads.created_by = '1' AND leads.ro_name = '{$user->id}') OR (leads.created_by = '{$user->id}') OR (leads.ro_name = '{$user->id}' AND leads.ro_modified_sale_stage = true)  OR (leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != '')";
                         }
                         else if ($user->id == '9232e852-23f5-3a3a-db34-63fdc497d906') {
                             $query_check_for_role .= " (leads.created_by = '1' AND leads.ro_name = '{$user->id}' AND lead_status = '1' AND sale_stage = '1') OR (ro_name  = '9232e852-23f5-3a3a-db34-63fdc497d906' AND data_sources = '9') OR (ro_name  = '9232e852-23f5-3a3a-db34-63fdc497d906' AND data_sources = '10') OR (leads.created_by = '1' AND leads.ro_name = '{$user->id}') OR (leads.created_by = '{$user->id}') OR (leads.ro_name = '{$user->id}' AND leads.ro_modified_sale_stage = true)  OR (leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != '')";

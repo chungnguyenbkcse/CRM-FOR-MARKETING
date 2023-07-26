@@ -20,10 +20,10 @@
 
                 if ($role == "MKT"){
                     if ($this->where == ""){
-                        $this->where .= " leads.data_sources = '10' OR leads.data_sources = '13' OR ((leads.created_by = '{$user->id}' OR leads.modified_user_id = '{$user->id}') AND leads.data_sources != '9' AND leads.data_sources != '10')";
+                        $this->where .= " leads.created_by = '{$user->id}' OR leads.modified_user_id = '{$user->id}' OR (leads.data_sources != '9' AND leads.data_sources != '10')";
                     }
                     else {
-                        $this->where .= " OR leads.data_sources = '10' OR leads.data_sources = '13' OR ((leads.created_by = '{$user->id}' OR leads.modified_user_id = '{$user->id}') AND leads.data_sources != '9' AND leads.data_sources != '10')";
+                        $this->where .= " OR leads.created_by = '{$user->id}' OR leads.modified_user_id = '{$user->id}' OR (leads.data_sources != '9' AND leads.data_sources != '10')";
                     }
                 }
 
@@ -102,8 +102,23 @@
                 setcookie("check_edit", "", time() - 3600);
                 setcookie("check_edit", $check_show_edit, time() + (86400 * 30), "/");
                 
+                $new_query = preg_replace_callback('/(\d{4}-\d{2}-\d{2}) (17:00:00|16:59:59)/', function ($matches) {
+                    // Tạo đối tượng DateTime từ ngày tìm thấy và tăng ngày lên 1
+                    $date = DateTime::createFromFormat('Y-m-d', $matches[1]);
+                    $date->modify('+1 day');
                 
-                $this->lv->setup($this->seed, 'include/ListView/ListViewGeneric.tpl', $this->where, $this->params);
+                    // Đặt giờ phù hợp dựa trên giờ tìm thấy
+                    if ($matches[2] == '17:00:00') {
+                        $date->setTime(0, 0, 0);
+                    } else { // $matches[2] == '16:59:59'
+                        $date->setTime(23, 59, 59);
+                    }
+                
+                    return $date->format('Y-m-d H:i:s');
+                }, $this->where);
+                
+                $this->lv->setup($this->seed, 'include/ListView/ListViewGeneric.tpl', $new_query, $this->params);
+                $GLOBALS['log']->fatal($new_query);
                 $savedSearchName = empty($_REQUEST['saved_search_select_name']) ? '' : (' - ' . $_REQUEST['saved_search_select_name']);
                 echo $this->lv->display();
             }

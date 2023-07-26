@@ -430,7 +430,7 @@ class SavedSearch extends SugarBean
                     $role = $_COOKIE['role'];
     
                     if ($role == "MKT"){
-                        $query_check_for_role .= " AND ((leads.created_by = '{$user->id}' OR leads.modified_user_id = '{$user->id}') AND leads.data_sources != '9' AND leads.data_sources != '10')";
+                        $query_check_for_role .= " AND (leads.created_by = '{$user->id}' OR leads.modified_user_id = '{$user->id}' OR (leads.data_sources != '9' AND leads.data_sources != '10')";
                     }
     
                     if ($role == "RO"){
@@ -461,9 +461,24 @@ class SavedSearch extends SugarBean
                         $query_check_for_role .= " AND (leads.ho_name = '{$user->id}' AND leads.service = '1')";
                     }
 
+                    $new_query = preg_replace_callback('/(\d{4}-\d{2}-\d{2}) (17:00:00|16:59:59)/', function ($matches) {
+                        // Tạo đối tượng DateTime từ ngày tìm thấy và tăng ngày lên 1
+                        $date = DateTime::createFromFormat('Y-m-d', $matches[1]);
+                        $date->modify('+1 day');
+                    
+                        // Đặt giờ phù hợp dựa trên giờ tìm thấy
+                        if ($matches[2] == '17:00:00') {
+                            $date->setTime(0, 0, 0);
+                        } else { // $matches[2] == '16:59:59'
+                            $date->setTime(23, 59, 59);
+                        }
+                    
+                        return $date->format('Y-m-d H:i:s');
+                    }, $query_check_for_role);
 
 
-                    $result_check_for_role = $GLOBALS['db']->query($query_check_for_role);
+
+                    $result_check_for_role = $GLOBALS['db']->query($new_query);
                     $rows_check_for_role = $GLOBALS['db']->fetchByAssoc($result_check_for_role);
                     $total = $rows_check_for_role['total'];
                     if ($total > 0) {

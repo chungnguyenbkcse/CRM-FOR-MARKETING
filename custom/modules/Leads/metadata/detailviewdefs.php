@@ -270,6 +270,11 @@ $viewdefs['Leads'] =
           array(
             0 => "lead_status",
             1 => "day_ro_modified_sale_stage"
+          ),
+          10 => 
+          array(
+            0 => "ngay_phat_hanh_the",
+            1 => ""
           )
         ),
         'LBL_PANEL_ADVANCED' =>

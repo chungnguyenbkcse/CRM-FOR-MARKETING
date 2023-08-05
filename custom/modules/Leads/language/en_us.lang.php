@@ -59,4 +59,5 @@ $mod_strings = array(
     'LBL_SALE_STAGE_FOLLOW_LEVEL' => 'Sale stage follow level',
     'LBL_HOW_GET_PHONE_NUMBER' => 'How to get phone',
     'LBL_CAMPAIGN' => 'Campaign',
+    'LBL_NGAY_PHAT_HANH_THE' => 'Card issue date',
 );

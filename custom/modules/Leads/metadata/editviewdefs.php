@@ -178,6 +178,11 @@ $viewdefs['Leads'] =
           array(
             0 => "campaign",
             1 => "id"
+          ),
+          11 => 
+          array(
+            0 => "ngay_phat_hanh_the",
+            1 => ""
           )
         ),
         'LBL_EDIT_ROLE_RO' =>

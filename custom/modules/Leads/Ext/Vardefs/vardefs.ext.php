@@ -1117,6 +1117,15 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'len' => '255',
                 'comment' => 'How did the sale stage come about',
             ),
+        'ngay_phat_hanh_the' => array(
+                'name' => 'ngay_phat_hanh_the',
+                'vname' => 'LBL_NGAY_PHAT_HANH_THE',
+                'massupdate' => false,
+                'inline_edit' =>false,
+                'audited' => true,
+                'type' => 'date',
+                'comment' => 'The birthday of the contact'
+            ),
 
     )
 , 'indices' => array(

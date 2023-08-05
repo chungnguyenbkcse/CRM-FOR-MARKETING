@@ -59,4 +59,5 @@ $mod_strings = array(
     'LBL_HOW_GET_PHONE_NUMBER' => 'Cách lấy SĐT',
     'LBL_DATE_CREATED' => 'Ngày tạo',
     'LBL_CAMPAIGN' => 'Chiến dịch',
+    'LBL_NGAY_PHAT_HANH_THE' => 'Ngày phát hành thẻ',
 );

@@ -113,7 +113,7 @@ $entry_point_registry['CdrReportRO'] = array(
 );
 
 $entry_point_registry['update_data'] = array(
-    'file' => '/home/www/html/mkt.tranthu.vn/custom/modules/Leads/chia_data/31-7-2023/update.php',
+    'file' => '/home/www/html/mkt.tranthu.vn/custom/modules/Leads/chia_data/4-8-2023/update1.php',
     'auth' => false,
 );
 

@@ -189,6 +189,7 @@ $app_list_strings = array(
         '20' => 'VP ĐỒNG NAI',
         '21' => 'VP KHÁNH HÒA',
         '22' => 'ĐỐI TÁC TCB',
+        '23' => 'VP 0108',
 
     ),
     'ro_name_dom' => array(

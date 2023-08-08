@@ -1,6 +1,6 @@
 <?php
 
-$filename = '/home/www/html/mkt.tranthu.vn/custom/modules/Leads/chia_data/4-8-2023/data.csv';
+$filename = '/home/www/html/mkt.tranthu.vn/custom/modules/Leads/chia_data/5-8-2023/data1.csv';
 
 // Mở tệp CSV để đọc
 $file = fopen($filename, 'r');
@@ -37,7 +37,7 @@ for ($i = 0; $i < $dataCount; $i++) {
 
     $phone_number_primary = $phone_number_primarys[$i];
     
-    $query = "UPDATE leads SET campaign = '4', data_sources = '19' WHERE phone_number_primary = '{$phone_number_primary}' AND deleted = 0";
+    $query = "UPDATE leads SET created_by = '1', campaign = '4', data_sources = '19' WHERE phone_number_primary = '{$phone_number_primary}' AND deleted = 0";
     $GLOBALS['db']->query($query);
     echo "$phone_number_primary\n";
 }

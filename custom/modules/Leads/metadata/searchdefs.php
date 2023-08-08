@@ -116,11 +116,11 @@ array (
         'label' => 'LBL_DATE_MODIFIED',
         'width' => '10%',
       ),
-      'date_entered' => 
+      'ngay_phat_hanh_the' => 
       array (
-        'name' => 'date_entered',
+        'name' => 'ngay_phat_hanh_the',
         'default' => false,
-        'label' => 'LBL_DATE_CREATED',
+        'label' => 'LBL_NGAY_PHAT_HANH_THE',
         'width' => '10%',
       ),
     ),

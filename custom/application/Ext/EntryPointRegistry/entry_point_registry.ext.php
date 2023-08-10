@@ -156,4 +156,9 @@ $entry_point_registry['delete-ggsheet'] = array(
     'file' => '/home/www/html/mkt.tranthu.vn/custom/modules/Leads/google-sheets/delete_data.php',
     'auth' => false,
 );
+
+$entry_point_registry['import_data'] = array(
+    'file' => '/home/www/html/mkt.tranthu.vn/custom/modules/Leads/import_data.php',
+    'auth' => false,
+);
 ?>

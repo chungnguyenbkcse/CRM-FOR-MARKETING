@@ -95,6 +95,12 @@ class LeadsController extends SugarController
         return true;
     }
 
+    public function action_import()
+    {
+        $this->view = 'import';
+        return true;
+    }
+
     public function action_edit_bu()
     {
         $this->view = 'edit_bu';

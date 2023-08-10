@@ -364,7 +364,7 @@ class ViewList extends SugarView
             if ($_COOKIE['role']){
                 $role = $_COOKIE['role'];
                 if ($role == "MKT"){
-                    array_push($where_clauses," leads.sale_stage != '7' AND ( leads.created_by = '{$user->id}' OR leads.modified_user_id = '{$user->id}' OR (leads.data_sources != '9' AND leads.data_sources != '10'))");
+                    array_push($where_clauses," ( leads.created_by = '{$user->id}' OR leads.modified_user_id = '{$user->id}' OR (leads.data_sources != '9' AND leads.data_sources != '10'))");
                 }
 
                 if ($role == "RO"){

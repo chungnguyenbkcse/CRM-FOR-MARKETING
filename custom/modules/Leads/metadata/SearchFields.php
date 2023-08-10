@@ -218,4 +218,22 @@ $searchFields['Leads'] = array (
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
+  'range_ngay_phat_hanh_the' => 
+  array (
+    'query_type' => 'default',
+    'enable_range_search' => true,
+    'is_date_field' => true,
+  ),
+  'start_range_ngay_phat_hanh_the' => 
+  array (
+    'query_type' => 'default',
+    'enable_range_search' => true,
+    'is_date_field' => true,
+  ),
+  'end_range_ngay_phat_hanh_the' => 
+  array (
+    'query_type' => 'default',
+    'enable_range_search' => true,
+    'is_date_field' => true,
+  ),
 );

@@ -20,10 +20,10 @@
 
                 if ($role == "MKT"){
                     if ($this->where == ""){
-                        $this->where .= " AND  leads.sale_stage != '7' AND (leads.created_by = '{$user->id}' OR leads.modified_user_id = '{$user->id}' OR (leads.data_sources != '9' AND leads.data_sources != '10'))";
+                        $this->where .= " AND (leads.created_by = '{$user->id}' OR leads.modified_user_id = '{$user->id}' OR (leads.data_sources != '9' AND leads.data_sources != '10'))";
                     }
                     else {
-                        $this->where .= " AND leads.sale_stage != '7' AND (leads.created_by = '{$user->id}' OR leads.modified_user_id = '{$user->id}' OR (leads.data_sources != '9' AND leads.data_sources != '10'))";
+                        $this->where .= "  AND (leads.created_by = '{$user->id}' OR leads.modified_user_id = '{$user->id}' OR (leads.data_sources != '9' AND leads.data_sources != '10'))";
                     }
                 }
 

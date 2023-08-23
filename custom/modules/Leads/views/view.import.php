@@ -75,6 +75,7 @@ $(document).ready(function(){
 });
 </script>
     <h1>Import dữ liệu</h1>
+    <h4>File phải gồm 4 trường theo thứ tự: họ tên => số điện thoại => địa chỉ => ngày phát hành thẻ</h4>
     <form action="index.php?module=Leads&entryPoint=import_data" method="post" enctype="multipart/form-data">
         <div class="row">
             <div class="col-md-4">

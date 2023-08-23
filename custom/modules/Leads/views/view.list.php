@@ -33,7 +33,7 @@
                        
                     }
                     else if ($user->id == '640b5327-a567-bdd1-c73f-64a657064f4a') {
-                        $this->where .= " AND leads.sale_stage != '7' AND ( leads.owned_branch = 'HCM_3' OR leads.owned_branch = 'HCM_4'  OR (leads.created_by = '1' AND leads.ro_name = '{$user->id}') OR (leads.created_by = '{$user->id}') OR (leads.ro_name = '{$user->id}' AND leads.ro_modified_sale_stage = true) OR ( leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != ''))";
+                        $this->where .= " AND leads.sale_stage != '7' AND ( leads.owned_branch = 'HCM_3' OR leads.owned_branch = '8' OR leads.owned_branch = 'HCM_4'  OR (leads.created_by = '1' AND leads.ro_name = '{$user->id}') OR (leads.created_by = '{$user->id}') OR (leads.ro_name = '{$user->id}' AND leads.ro_modified_sale_stage = true) OR ( leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != ''))";
                     }
                     else if ($user->id == '351edcea-83d2-bf13-f595-64a80ff642b5') {
                         $this->where .= " AND leads.sale_stage != '7' AND ( leads.owned_branch = 'HCM_3' OR (leads.created_by = '1' AND leads.ro_name = '{$user->id}') OR (leads.created_by = '{$user->id}') OR (leads.ro_name = '{$user->id}' AND leads.ro_modified_sale_stage = true) OR ( leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != ''))";
@@ -46,6 +46,9 @@
                     }
                     else if ($user->id == '497f0e21-37eb-a875-75b2-63fdb2c03264') {
                         $this->where .= " AND leads.sale_stage != '7' AND ((leads.created_by = '1' AND leads.ro_name = '{$user->id}' AND lead_status = '1' AND sale_stage = '1') OR ((leads.data_sources = '9' OR leads.data_sources = '10') AND leads.lead_status = '17') OR (leads.created_by = '1' AND leads.ro_name = '{$user->id}') OR (leads.created_by = '{$user->id}') OR (leads.ro_name = '{$user->id}' AND leads.ro_modified_sale_stage = true)  OR (leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != ''))";
+                    }
+                    else if ($user->id == '874a0d88-138e-bbd8-a573-6440b69c3aa6' || $user->id == '1b67e2b2-99ce-71d9-6ab4-6440b68dbd20' || $user->id == '413fda5b-cf08-2583-7706-6406e1753591') {
+                        $this->where .= " AND ((leads.created_by = '1' AND leads.ro_name = '{$user->id}' AND lead_status = '1' AND sale_stage = '1') OR ((leads.data_sources = '9' OR leads.data_sources = '10') AND leads.lead_status = '17') OR (leads.created_by = '1' AND leads.ro_name = '{$user->id}') OR (leads.created_by = '{$user->id}') OR (leads.ro_name = '{$user->id}' AND leads.ro_modified_sale_stage = true)  OR (leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != ''))";
                     }
                     else if ($this->where == ""){
                         $this->where .= " AND leads.sale_stage != '7' AND ((leads.created_by = '1' AND leads.ro_name = '{$user->id}' AND lead_status = '1' AND sale_stage = '1') OR (leads.created_by = '1' AND leads.ro_name = '{$user->id}') OR (leads.created_by = '{$user->id}') OR (leads.ro_name = '{$user->id}' AND leads.ro_modified_sale_stage = true)  OR (leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != ''))";

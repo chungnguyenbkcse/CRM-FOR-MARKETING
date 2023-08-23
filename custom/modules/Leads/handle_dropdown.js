@@ -2,6 +2,7 @@ $(document).ready(function () {
 
     var lead_id = $("#lead_id").val();
     var created_by = $("#created_by_val").val();
+    var lead_status_follow_level = $('#lead_status_follow_level').val();
 
     ////console.log(created_by)
 
@@ -470,10 +471,42 @@ $(document).ready(function () {
                             //console.log(data);
                             //$("#lead_status").html(data);
                             $('[name="lead_status"]').html(data);
+
+                            $.ajax({
+                                url: "index.php?module=Leads&entryPoint=get_sale_stage_follow_level",
+                                data: { lead_status_id: $("#lead_status").val(),  lead_status_follow_level: lead_status_follow_level },
+                                success: function (data) {
+                                    console.log(data);
+                                    //$("#lead_status").html(data);
+                                    if (data == 'true') {
+                                        $('#lead_status_follow_level').val($("#lead_status").val())
+                                    }
+                                },
+                                dataType: 'html'
+                            });
                         },
                         dataType: 'html'
                 });
         });
+
+        
+        $('[name="lead_status"]').change(function () {
+            var lead_status_change_id = $(this).val();
+            console.log(lead_status_change_id)
+            console.log(lead_status_follow_level)
+            $.ajax({
+                url: "index.php?module=Leads&entryPoint=get_sale_stage_follow_level",
+                data: { lead_status_id: lead_status_change_id,  lead_status_follow_level: lead_status_follow_level },
+                success: function (data) {
+                    console.log(data);
+                    //$("#lead_status").html(data);
+                    if (data == 'true') {
+                        $('#lead_status_follow_level').val(lead_status_change_id)
+                    }
+                },
+                dataType: 'html'
+        });
+});
     }
 
     else if (role == "MKT" || role == "SUPER_MKT") {
@@ -558,6 +591,7 @@ $(document).ready(function () {
             }
             
         }
+        
 
         if ($('#lead_id').val().length === 0) {
             $(".btn-phone").remove();
@@ -1024,6 +1058,7 @@ $(document).ready(function () {
                         success: function (data) {
                             //console.log(data);
                             $('[name="lead_status"]').html(data);
+                            
                         },
                         dataType: 'html'
                     });
@@ -1109,10 +1144,42 @@ $(document).ready(function () {
                 success: function (data) {
                     //console.log(data);
                     $("#lead_status").html(data);
+
+                    $.ajax({
+                        url: "index.php?module=Leads&entryPoint=get_sale_stage_follow_level",
+                        data: { lead_status_id: $("#lead_status").val(),  lead_status_follow_level: lead_status_follow_level },
+                        success: function (data) {
+                            console.log(data);
+                            //$("#lead_status").html(data);
+                            if (data == 'true') {
+                                $('#lead_status_follow_level').val($("#lead_status").val())
+                            }
+                        },
+                        dataType: 'html'
+                    });
                 },
                 dataType: 'html'
             });
         });
+
+        $('[name="lead_status"]').change(function () {
+            var lead_status_change_id = $(this).val();
+            //console.log(sale_stage_change_id)
+            console.log(lead_status_change_id)
+            console.log(lead_status_follow_level)
+            $.ajax({
+                url: "index.php?module=Leads&entryPoint=get_sale_stage_follow_level",
+                data: { lead_status_id: lead_status_change_id,  lead_status_follow_level: lead_status_follow_level },
+                success: function (data) {
+                    console.log(data);
+                    //$("#lead_status").html(data);
+                    if (data == 'true') {
+                        $('#lead_status_follow_level').val(lead_status_change_id)
+                    }
+                },
+                dataType: 'html'
+            });
+        })
 
         
     }

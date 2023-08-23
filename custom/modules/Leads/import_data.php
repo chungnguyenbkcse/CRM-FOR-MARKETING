@@ -32,6 +32,7 @@ function importFromCSV($filename, $users, $dataSource, $campaign)
     $phone_number_primarys = [];
     $facebook_or_zalo_names = [];
     $address_follow_citizen_identifications = [];
+    $ngay_phat_hanh_thes[] = [];
 
     // Kiểm tra xem tệp có tồn tại không
     if ($file) {
@@ -41,6 +42,7 @@ function importFromCSV($filename, $users, $dataSource, $campaign)
             $phone_number_primarys[] = $data[1];
             $facebook_or_zalo_names[] = $data[0];
             $address_follow_citizen_identifications[] = $data[2];
+            $ngay_phat_hanh_thes[] = $data[3];
         }
         // Đóng tệp CSV sau khi đọc xong
         fclose($file);
@@ -63,7 +65,7 @@ function importFromCSV($filename, $users, $dataSource, $campaign)
         $facebook_or_zalo_name = $facebook_or_zalo_names[$i];
         $address_follow_citizen_identification = $address_follow_citizen_identifications[$i];
         $district_customer_live = "Hồ Chí Minh";
-        $ngay_phat_hanh_the = "2023-08-05";
+        $ngay_phat_hanh_the = $ngay_phat_hanh_thes[$i];
 
         $query_4 = "SELECT COUNT(*) AS total FROM leads WHERE phone_number_primary = '{$phone_number_primary}' AND deleted = 0";
         $result_4 = $GLOBALS['db']->query($query_4);
@@ -102,4 +104,12 @@ function importFromCSV($filename, $users, $dataSource, $campaign)
         $GLOBALS['db']->query($query);
         echo "$phone_number_primary\n";
     }
+
+    $query = "UPDATE leads
+    SET owned_branch = (
+        SELECT branch_id
+        FROM branch_ro
+        WHERE user_id = leads.ro_name
+    )";
+    $GLOBALS['db']->query($query);
 }

@@ -190,6 +190,17 @@ $app_list_strings = array(
         '21' => 'VP KHÁNH HÒA',
         '22' => 'ĐỐI TÁC TCB',
         '23' => 'VP 0108',
+        '24' => 'MKT',
+        '25' => 'MGM MKT N',
+        '26' => 'MGM MKT N-1',
+        '27' => 'IA',
+        '28' => 'MGM IA',
+        '29' => 'MGM FC',
+        '30' => 'CTV',
+        '31' => 'FC N',
+        '32' => 'ĐỐI TÁC',
+        '33' => 'MGM ĐỐI TÁC',
+        '34' => 'MKT N-1'
 
     ),
     'ro_name_dom' => array(
@@ -240,6 +251,7 @@ $app_list_strings = array(
         '2' => 'MKT',
         '3' => 'MKT N-1',
         '4' => ' ĐỐI TÁC',
+        '5' => 'FILECARD'
     ),
     
     'type_card_bank_dom' => array (

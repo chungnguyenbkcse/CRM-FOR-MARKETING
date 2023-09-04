@@ -23,6 +23,8 @@ $viewdefs['Leads'] =
             11 => '<input type="hidden" name="created_by_val" id = "created_by_val" value="{$bean->created_by}">',
             12 => '<input type="hidden" name="sale_stage_follow_level_val" id = "sale_stage_follow_level_val" value="{$bean->sale_stage_follow_level}">',
             13 => '<input type="hidden" name="lead_status_follow_level_val" id = "lead_status_follow_level_val" value="{$bean->lead_status_follow_level_val}">',
+            14 => '<input type="hidden" name="campaign_val" id = "campaign_val" value="{$bean->campaign}">',
+            15 => '<input type="hidden" name="data_sources_val" id = "data_sources_val" value="{$bean->data_sources}">',
           ),
           'buttons' =>
           array(

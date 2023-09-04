@@ -2,48 +2,52 @@ $(document).ready(function () {
 
     var lead_id = $("#lead_id").val();
     var created_by = $("#created_by_val").val();
-    var lead_status_follow_level = $('#lead_status_follow_level').val();
-    var sale_stage_follow_level_val = $('#sale_stage_follow_level_val').val();
+    var campaign_val = $("#campaign_val").val();
+    var data_sources_val = $("#data_sources_val").val();
 
-    if (lead_id.length == 0) {
-        $('[name="sale_stage"]').change(function () {
-
-            $('#sale_stage_follow_level option[selected="selected"]').removeAttr('selected');
-
-                                // Thay đổi lựa chọn đã được chọn
-            $('#sale_stage_follow_level').val($(this).val())
-
-
-            $('#lead_status_follow_level option[selected="selected"]').removeAttr('selected');
-            // Thay đổi lựa chọn đã được chọn
-            $('#lead_status_follow_level').val($('#lead_status').val())
+    if (lead_id.length > 0) {
+        console.log(campaign_val)
+        console.log(data_sources_val)
+        $.ajax({
+            url: "index.php?module=Leads&entryPoint=get-data-source",
+            data: { campaign: campaign_val, data_source_selected:  data_sources_val},
+            success: function (data) {
+                console.log(data);
+                $('[name="data_sources"]').html(data);
+            },
+            dataType: 'html'
         });
 
+    } 
 
-        $('[name="lead_status"]').change(function () {
-            $('#lead_status_follow_level option[selected="selected"]').removeAttr('selected');
-            console.log('hello')
-            // Thay đổi lựa chọn đã được chọn
-            $('#lead_status_follow_level').val($(this).val())
-
-        });
-    }
-        
-
+    $('[name="campaign"]').change(function () {
+        var campaign_id = $(this).val();
+        //console.log(sale_stage_change_id)
+        $.ajax({
+            url: "index.php?module=Leads&entryPoint=get-data-source",
+            data: { campaign: campaign_id },
+            success: function (data) {
+                //console.log(data);
+                //$("#lead_status").html(data);
+                $('[name="data_sources"]').html(data);
+            },
+            dataType: 'html'
+        }); 
+    });
 
     ////console.log(created_by)
 
     $("#id").attr("disabled", true);
 
-
-        $.ajax({
-            url: "index.php?module=Leads&entryPoint=get_card_number_lead",
-            data: { lead_id: lead_id },
-            success: function (data) {
-                let x = JSON.parse(data)
-                ////console.log(x);
-                x.map((ele, idx) => {
-                    $(`
+    
+    $.ajax({
+        url: "index.php?module=Leads&entryPoint=get_card_number_lead",
+        data: {lead_id: lead_id},
+        success: function (data) {
+            let x = JSON.parse(data)
+            ////console.log(x);
+            x.map((ele, idx) => {
+                $(`
                 <div class="col-xs-12 mr-4 card-number-lines-container">
                     <div class="col-xs-12 template card-number-line-container">
                       <div class="col-xs-12 col-sm-12  card-number-input-container {if $module == "Leads"} card-number-users-profile{/if}">
@@ -59,57 +63,57 @@ $(document).ready(function () {
                     </div>          
                 </div>
                 `
-                    ).insertAfter('.card-number-list');
+                ).insertAfter('.card-number-list');
 
-                    $(".card-number-add-line-container").css(
-                        'margin-left', "-8px"
-                    )
+                $(".card-number-add-line-container").css(
+                    'margin-left', "-8px"
+                )
 
-                    $(".card-number-lines-container").css(
-                        'margin-left', "-8px"
-                    )
+                $(".card-number-lines-container").css(
+                    'margin-left', "-8px"
+                )
 
-                    $("#card-number-remove-button").css(
-                        'margin-right', "20px",
-                    )
-                })
-            }
-        });
+                $("#card-number-remove-button").css(
+                    'margin-right', "20px",
+                )
+            })
+        }
+    });
+    
+    $("[alt='zalo']").click(function(){
+        var phone = $("#phone_number_primary").val().replace(/ /g,'');
+        if (phone.length > 10 && phone.slice(0, 2) == '84') {
+            phone = '0' + phone.slice(2);
+        }
+        if (phone.length < 10) {
+            phone = '0' + phone;
+        }
+        if (phone.length < 10) {
+            window.open(`zalo://conversation?phone=${'0' + phone}`);
+        }
+        else {
+            window.open(`zalo://conversation?phone=${phone}`);
+        }      
+    })
 
-        $("[alt='zalo']").click(function () {
-            var phone = $("#phone_number_primary").val().replace(/ /g, '');
-            if (phone.length > 10 && phone.slice(0, 2) == '84') {
-                phone = '0' + phone.slice(2);
-            }
-            if (phone.length < 10) {
-                phone = '0' + phone;
-            }
-            if (phone.length < 10) {
-                window.open(`zalo://conversation?phone=${'0' + phone}`);
-            }
-            else {
-                window.open(`zalo://conversation?phone=${phone}`);
-            }
-        })
+    $("[alt='zalo_extra']").click(function(){
+        var phone = $("#phone_number_extra").val().replace(/ /g,'');
+        if (phone.length > 10 && phone.slice(0, 2) == '84') {
+            phone = '0' + phone.slice(2);
+        }
+        if (phone.length < 10) {
+            phone = '0' + phone;
+        }
+        if (phone.length < 10) {
+            window.open(`zalo://conversation?phone=${'0' + phone}`);
+        }
+        else {
+            window.open(`zalo://conversation?phone=${phone}`);
+        }  
+    })
 
-        $("[alt='zalo_extra']").click(function () {
-            var phone = $("#phone_number_extra").val().replace(/ /g, '');
-            if (phone.length > 10 && phone.slice(0, 2) == '84') {
-                phone = '0' + phone.slice(2);
-            }
-            if (phone.length < 10) {
-                phone = '0' + phone;
-            }
-            if (phone.length < 10) {
-                window.open(`zalo://conversation?phone=${'0' + phone}`);
-            }
-            else {
-                window.open(`zalo://conversation?phone=${phone}`);
-            }
-        })
-
-        $(".card-number-add-button").click(function () {
-            $(`
+    $(".card-number-add-button").click(function() {
+        $(`
             <div class="col-xs-12 mr-4 card-number-lines-container">
                 <div class="col-xs-12 template card-number-line-container">
                   <div class="col-xs-12 col-sm-12  card-number-input-container {if $module == "Leads"} card-number-users-profile{/if}">
@@ -125,290 +129,651 @@ $(document).ready(function () {
                 </div>          
             </div>
             `
-            ).insertAfter('.card-number-list');
-
-            $(".card-number-add-line-container").css(
-                'margin-left', "-8px"
-            )
-
-            $(".card-number-lines-container").css(
-                'margin-left', "-8px"
-            )
-
-            $("#card-number-remove-button").css(
-                'margin-right', "20px",
-            )
-        })
-
-
+        ).insertAfter('.card-number-list');
 
         $(".card-number-add-line-container").css(
-            'margin-left', "-8px"
+            'margin-left',"-8px"
         )
-
+    
         $(".card-number-lines-container").css(
-            'margin-left', "-8px"
+            'margin-left',"-8px"
         )
-
+    
         $("#card-number-remove-button").css(
-            'margin-right', "20px",
+            'margin-right',"20px",
         )
+    })
 
 
 
-        function getCookie(name) {
-            const value = `; ${document.cookie}`;
-            const parts = value.split(`; ${name}=`);
-            if (parts.length === 2) return parts.pop().split(';').shift();
+    $(".card-number-add-line-container").css(
+        'margin-left',"-8px"
+    )
+
+    $(".card-number-lines-container").css(
+        'margin-left',"-8px"
+    )
+
+    $("#card-number-remove-button").css(
+        'margin-right',"20px",
+    )
+
+
+
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    var role = getCookie("role");
+    var lead_id = $("#lead_id").val();
+
+    $(".glyphicon-earphone").map(function(idx) {
+        if (idx == 0) {
+            $(this).click(function () {
+                var phone = $("#phone_number_primary").val().replace(/ /g,'');
+                if (phone.length > 10 && phone.slice(0, 2) == '84') {
+                    phone = '0' + phone.slice(2);
+                }
+                if (phone.length < 10) {
+                    phone = '0' + phone;
+                }
+                if (phone.length < 10) {
+                    phone = '0' + phone;
+                }
+                var formData = { phone_number: phone }; //Array 
+        
+                $.ajax({
+                    url: "index.php?module=Leads&entryPoint=Click2Call",
+                    type: "POST",
+                    data: formData,
+                    success: function (data, textStatus, jqXHR) {
+                        //console.log('Susscess')
+                        //console.log(data)
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        //console.log('Error')
+                    }
+                });
+            })
         }
-
-        var role = getCookie("role");
-        var lead_id = $("#lead_id").val();
-
-        $(".glyphicon-earphone").map(function (idx) {
-            if (idx == 0) {
-                $(this).click(function () {
-                    var phone = $("#phone_number_primary").val().replace(/ /g, '');
-                    if (phone.length > 10 && phone.slice(0, 2) == '84') {
-                        phone = '0' + phone.slice(2);
+        else {
+            $(this).click(function () {
+                var phone = $("#phone_number_extra").val().replace(/ /g,'');
+                if (phone.length > 10 && phone.slice(0, 2) == '84') {
+                    phone = '0' + phone.slice(2);
+                }
+                if (phone.length < 10) {
+                    phone = '0' + phone;
+                }
+                var formData = { phone_number: phone }; //Array 
+                
+                $.ajax({
+                    url: "index.php?module=Leads&entryPoint=Click2Call",
+                    type: "POST",
+                    data: formData,
+                    success: function (data, textStatus, jqXHR) {
+                        //console.log('Susscess')
+                        //console.log(data)
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        //console.log('Error')
                     }
-                    if (phone.length < 10) {
-                        phone = '0' + phone;
-                    }
-                    if (phone.length < 10) {
-                        phone = '0' + phone;
-                    }
-                    var formData = { phone_number: phone }; //Array 
-
-                    $.ajax({
-                        url: "index.php?module=Leads&entryPoint=Click2Call",
-                        type: "POST",
-                        data: formData,
-                        success: function (data, textStatus, jqXHR) {
-                            //console.log('Susscess')
-                            //console.log(data)
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
-                            //console.log('Error')
-                        }
-                    });
-                })
-            }
-            else {
-                $(this).click(function () {
-                    var phone = $("#phone_number_extra").val().replace(/ /g, '');
-                    if (phone.length > 10 && phone.slice(0, 2) == '84') {
-                        phone = '0' + phone.slice(2);
-                    }
-                    if (phone.length < 10) {
-                        phone = '0' + phone;
-                    }
-                    var formData = { phone_number: phone }; //Array 
-
-                    $.ajax({
-                        url: "index.php?module=Leads&entryPoint=Click2Call",
-                        type: "POST",
-                        data: formData,
-                        success: function (data, textStatus, jqXHR) {
-                            //console.log('Susscess')
-                            //console.log(data)
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
-                            //console.log('Error')
-                        }
-                    });
-                })
-            }
-        })
+                });
+            })
+        }
+    })
 
 
 
 
-        $("#MKT_day_shared_BU").attr("disabled", true);
-        $("#MKT_day_shared_BU_trigger").attr("disabled", true);
+    $("#MKT_day_shared_BU").attr("disabled", true);
+    $("#MKT_day_shared_BU_trigger").attr("disabled", true);
 
+    var owner_branch = $('#owner_branch_val').val();
+    $.ajax({
+        url: "index.php?module=Leads&entryPoint=owner_branch",
+        data: { id: owner_branch },
+        success: function (data) {
+            //console.log(data);
+            $("#owner_branch").html(data);
+        },
+        dataType: 'html'
+    });
+
+    if (role == "RO") {
+        var sale_stage_id = $('#sale_stages_val').val();
+        var lead_status_id = $('#lead_status_id').val();
         var owner_branch = $('#owner_branch_val').val();
-        $.ajax({
-            url: "index.php?module=Leads&entryPoint=owner_branch",
-            data: { id: owner_branch },
-            success: function (data) {
-                //console.log(data);
-                $("#owner_branch").html(data);
-            },
-            dataType: 'html'
-        });
 
-        if (role == "RO") {
-            var sale_stage_id = $('#sale_stages_val').val();
-            var lead_status_id = $('#lead_status_id').val();
-            var owner_branch = $('#owner_branch_val').val();
+        $('select').css('width', "90%")
+        var ro_name_val = $("#ro_name_val").val();
 
-            $('select').css('width', "90%")
-            var ro_name_val = $("#ro_name_val").val();
+        
 
-
-
-            $('[name="bank"]').change(function () {
+        $('[name="bank"]').change(function() {
                 //console.log('xxx')
                 let re = $(this).val()
                 $('[name="bank"]').val(re)
-            });
+        });
 
 
-            $('[name="card_bark_type"]').change(function () {
+        $('[name="card_bark_type"]').change(function() {
                 //console.log('xxx')
                 let re = $(this).val()
                 $('[name="card_bark_type"]').val(re)
-            });
+        });
 
 
-            $('[name="service"]').change(function () {
+        $('[name="service"]').change(function() {
                 //console.log('xxx')
                 let re = $(this).val()
                 $('[name="service"]').val(re)
-            });
+        });
 
 
 
-            $('[name="sale_stage"]').change(function () {
+        $('[name="sale_stage"]').change(function() {
                 var sale_stage_change_id = $(this).val();
                 $('[name="sale_stage"]').val(sale_stage_change_id)
-            });
+        });
 
 
-            $('[name="lead_status"]').change(function () {
+        $('[name="lead_status"]').change(function() {
                 //console.log('xxx')
                 let re = $(this).val()
                 $('[name="lead_status"]').val(re)
+        });
+
+        $("#citizen_identification").blur(function () {
+            check_cmdd()
+        })
+
+        
+
+        if (lead_id.length > 0) {
+            if (sale_stage_id == '10') {
+                $(document).ready(function () {
+                    setInterval(function () {
+                        $.ajax({
+                            url: "index.php?module=Leads&entryPoint=handle_check_time",
+                            data: { id: lead_id },
+                            success: function (data) {
+                                console.log(data)
+                                if (data != "") {
+                                    alert(`Bạn vượt quá thời gian tác động ${data}`)
+                                    window.open("http://mkt.tranthu.vn/index.php?module=Leads&action=index&return_module=Leads&return_action=index");
+                                }
+                            }
+                        });
+                    }, 1000);
+                })
+            }     
+        }
+
+        if ($('#lead_id').val().length === 0) {
+            $(".btn-phone").remove();
+            $(".fa-phone").remove();
+
+            $('[data-label="LBL_FACEBOOK_OR_ZALO_NAME"]').append("<span class='required'>*</span>")
+            $('[data-label="LBL_DATA_SOURCES"]').append("<span class='required'>*</span>")
+            $('[data-label="LBL_HOW_GET_PHONE_NUMBER"]').append("<span class='required'>*</span>")
+            //$('[data-label="LBL_RECEIVING_BRANCH"]').append("<span class='required'>*</span>")
+            //$('[data-label="LBL_OWNED_BRANCH"]').append("<span class='required'>*</span>")
+            $('[data-label="LBL_SALE_STAGE"]').append("<span class='required'>*</span>")
+            $('[data-label="LBL_CONTACT_DATE"]').append("<span class='required'>*</span>")
+            
+
+            $('.edit-view-row-item').each(function() {
+                //console.log('hello')
+                if ($(this).find('div[field="sale_stage_follow_level"]').length != 0 || $(this).find('div[field="lead_status_follow_level"]').length != 0) {
+                    //console.log('finded')
+                    $(this).remove();
+                }
             });
 
-            $("#citizen_identification").blur(function () {
-                check_cmdd()
-            })
-
-
-
-            if (lead_id.length > 0) {
-                if (sale_stage_id == '10') {
-                    $(document).ready(function () {
-                        setInterval(function () {
-                            $.ajax({
-                                url: "index.php?module=Leads&entryPoint=handle_check_time",
-                                data: { id: lead_id },
-                                success: function (data) {
-                                    console.log(data)
-                                    if (data != "") {
-                                        alert(`Bạn vượt quá thời gian tác động ${data}`)
-                                        window.open("http://mkt.tranthu.vn/index.php?module=Leads&action=index&return_module=Leads&return_action=index");
-                                    }
-                                }
-                            });
-                        }, 1000);
-                    })
-                }
-            }
-
-            if ($('#lead_id').val().length === 0) {
-                $(".btn-phone").remove();
-                $(".fa-phone").remove();
-
-                $('[data-label="LBL_FACEBOOK_OR_ZALO_NAME"]').append("<span class='required'>*</span>")
-                $('[data-label="LBL_DATA_SOURCES"]').append("<span class='required'>*</span>")
-                $('[data-label="LBL_HOW_GET_PHONE_NUMBER"]').append("<span class='required'>*</span>")
-                //$('[data-label="LBL_RECEIVING_BRANCH"]').append("<span class='required'>*</span>")
-                //$('[data-label="LBL_OWNED_BRANCH"]').append("<span class='required'>*</span>")
-                $('[data-label="LBL_SALE_STAGE"]').append("<span class='required'>*</span>")
-                $('[data-label="LBL_CONTACT_DATE"]').append("<span class='required'>*</span>")
-
-
-
-                let context = $("#receiving_branch").html();
-                $('[name="service"]').change(function () {
+            let context = $("#receiving_branch").html();
+            $('[name="service"]').change(function() {
                     var service = $(this).val();
                     if (service == '5') {
-                        $("#receiving_branch").html("<option value='4' selected>TELE</option><option value='5'>DL TB</option><option value='0'>Choose</option>");
+                            $("#receiving_branch").html("<option value='4' selected>TELE</option><option value='5'>DL TB</option><option value='0'>Choose</option>");
                     }
                     else {
                         $("#receiving_branch").html(context)
                     }
+            })
+
+            $("#phone_number_primary").blur(function () {
+                check_phone_number()
+            })
+            $("[data-label='LBL_RO_NAME']").remove();
+            $("#ro_name").remove();
+
+
+
+            $(".input_phone_number_primary").removeClass("col-xs-6")
+           $(".edit-view-row-item").map(function (idx) {
+                if (idx == 18) {
+                    return this.remove();
+                }
+                idx++;
+            }).get();
+
+             $(".panel-default").map(function (idx) {
+                if (idx == 1) {
+                    return this.remove();
+                }
+                idx++;
+            }).get(); 
+            $(".input_phone_number_primary").addClass("col-xl-12 col-xs-12 col-sm-8 edit-view-field")
+            $('.input_phone_number_primary').css('width', "100%")
+            $('#phone_number_primary').css('width', "90%")
+        }
+
+        
+        $("#ro_name").attr("disabled", true);
+        $.ajax({
+            url: "index.php?module=Leads&entryPoint=ro_name",
+            data: { ro_name: ro_name_val },
+            success: function (data) {
+                console.log(data);
+                $("#ro_name").html(data);
+                $("#ro_name").attr("disabled", true);
+            },
+            dataType: 'html'
+        });
+
+        $("#transaction_amount").change(function () {
+            var transaction_amount = $(this).val();
+            $(this).val(Number(transaction_amount).toLocaleString());
+        })
+        var real_transaction_amount = $("#real_transaction_amount").val();
+        $("#real_transaction_amount").val(real_transaction_amount.split(".")[0]);
+
+        $("#real_transaction_amount").change(function () {
+            var transaction_amount = $(this).val();
+            $(this).val(Number(transaction_amount).toLocaleString());
+        })
+
+        $("#phone_number_primary").attr('type', 'password');
+        $(".glyphicon-earphone").css({
+            'position': 'absolute',
+            'color': '#00FF00',
+            'font-size': '30px',
+            'left': '10px'
+        });
+
+        $(".glyphicon-earphone-1").css({
+            'position': 'absolute',
+            'color': '#00FF00',
+            'font-size': '30px',
+            'left': '10px'
+        });
+
+        if ($('#lead_id').val().length > 0) {
+            $("input").map(function (idx) {
+                //console.log(idx)
+                if (idx <= 65 && idx >= 60) {
+                    return $(this).attr("disabled", true);
+                }
+                return idx++;
+            }).get();
+    
+            $("#contact_date_trigger").attr("disabled", true);
+    
+            $("select").map(function (idx) {
+                //console.log(idx)
+                if (idx < 13) {
+                    return $(this).attr("disabled", true);
+                }
+                return idx++;
+            }).get();
+    
+            $(".label").map(function (idx) {
+                //console.log(idx)
+                if (idx < 20) {
+                    return $(this).removeClass('label');
+                }
+                return idx++;
+            }).get();
+    
+            $('textarea').map(function (idx) {
+                if (idx == 0) {
+                    $(this).attr("disabled", true);
+                    $(this).css("background-color", "#f8f8f8");
+                }
+            })
+        }
+
+        $('#lead_status').css('width', "90%")
+
+        $("#fullname").keyup(function () {
+            $(this).val($(this).val().toUpperCase());
+        });
+
+        $(".label").map(function (idx) {
+            return $(this).css('color', "#696969")
+        })
+
+        $("#phone_number_extra").blur(function () {
+            $(this).val($(this).val().replace(/ /g, "").replace(/^(\d{3})(\d{3})(\d{4})(\d*)$/, "$1 $2 $3 $4"))
+        })
+        $('select').css('width', "90%")
+
+        $("[data-label='LBL_CITIZEN_IDENTIFICATION_ISSUANCE_DATE']").html("");
+        $("[data-label='LBL_CITIZEN_IDENTIFICATION_ISSUANCE_PLACE']").html("");
+        $("[data-label='LBL_ADDRESS_FOLLOW_CITIZEN_IDENTIFICATION']").html("");
+        $("[data-label='LBL_BIRTHDAY']").html("");
+        $("#citizen_identification_issuance_date").attr("placeholder", "Issuance date (dd/mm/yyyy)");
+        $("#citizen_identification_issuance_place").attr("placeholder", "Issuance place");
+        $("#address_follow_citizen_identification").attr("placeholder", "Address follow Citizen identity card");
+        $("#birthday").attr("placeholder", "Birthday");
+
+        $.ajax({
+            url: "index.php?module=Leads&entryPoint=sale_stage",
+            data: { id: sale_stage_id, lead_status_id: lead_status_id },
+            success: function (data) {
+                //console.log(data);
+                $("#sale_stage").html(data);
+
+            },
+            dataType: 'html'
+        });
+
+        $.ajax({
+            url: "index.php?module=Leads&entryPoint=lead_status",
+            data: { id: sale_stage_id, lead_status_id: lead_status_id, created_by: created_by },
+            success: function (data) {
+                //console.log(data);
+                $('[name = "lead_status"]').html(data);
+            },
+            dataType: 'html'
+        });
+
+        $('[name="sale_stage"]').change(function () {
+                    var sale_stage_change_id = $(this).val();
+                    $('[name="sale_stage"]').not(this).val(sale_stage_change_id)
+                    //console.log(sale_stage_change_id)
+                    $.ajax({
+                        url: "index.php?module=Leads&entryPoint=lead_status",
+                        data: { id: sale_stage_change_id, lead_status_id: lead_status_id, created_by: created_by },
+                        success: function (data) {
+                            //console.log(data);
+                            //$("#lead_status").html(data);
+                            $('[name="lead_status"]').html(data);
+                        },
+                        dataType: 'html'
+                });
+        });
+    }
+
+    else if (role == "MKT" || role == "SUPER_MKT") {
+        var sale_stage_id = $('#sale_stages_val').val();
+        var lead_status_id = $('#lead_status_id').val();
+        var ro_name = $('#ro_name_val').val();
+        var ho_name = $('#ho_name_val').val();
+        var owner_branch = $('#owner_branch_val').val();
+
+        $('[name="note"]').change(function() {
+                //console.log('xxx')
+                let re = $(this).val()
+                $('[name="note"]').val(re)
+        });
+
+        $("#transaction_amount").change(function () {
+            var transaction_amount = $(this).val();
+            $(this).val(Number(transaction_amount).toLocaleString());
+        })
+        var real_transaction_amount = $("#real_transaction_amount").val();
+        $("#real_transaction_amount").val(real_transaction_amount.split(".")[0]);
+
+        $("#real_transaction_amount").change(function () {
+            var transaction_amount = $(this).val();
+            $(this).val(Number(transaction_amount).toLocaleString());
+        })
+
+        $('[name="bank"]').change(function() {
+                //console.log('xxx')
+                let re = $(this).val()
+                $('[name="bank"]').val(re)
+        });
+
+
+        $('[name="card_bark_type"]').change(function() {
+                //console.log('xxx')
+                let re = $(this).val()
+                $('[name="card_bark_type"]').val(re)
+        });
+
+
+        $('[name="service"]').change(function() {
+                //console.log('xxx')
+                let re = $(this).val()
+                $('[name="service"]').val(re)
+        });
+
+
+
+        $('[name="sale_stage"]').change(function() {
+                var sale_stage_change_id = $(this).val();
+                $('[name="sale_stage"]').val(sale_stage_change_id)
+                let re = $(this).val()
+                $('[name="sale_stage"]').val(re)
+        });
+
+
+        $('[name="lead_status"]').change(function() {
+                //console.log('xxx')
+                let re = $(this).val()
+                $('[name="lead_status"]').val(re)
+        });
+
+        if (lead_id.length > 0) {
+            if (sale_stage_id == '10') {
+                $(document).ready(function () {
+                    setInterval(function () {
+                        $.ajax({
+                            url: "index.php?module=Leads&entryPoint=handle_check_time",
+                            data: { id: lead_id },
+                            success: function (data) {
+                                
+                                //console.log(data)
+                                if (data != "") {
+                                    alert(`Bạn vượt quá thời gian tác động ${data}`)
+                                    window.open("http://mkt.tranthu.vn/index.php?module=Leads&action=index&return_module=Leads&return_action=index");
+                                }
+                            }
+                        });
+                    }, 1000);
                 })
+            }
+            
+        }
+
+        if ($('#lead_id').val().length === 0) {
+            $(".btn-phone").remove();
+            $(".fa-phone").remove();
+
+            $('[data-label="LBL_FACEBOOK_OR_ZALO_NAME"]').append("<span class='required'>*</span>")
+            $('[data-label="LBL_DATA_SOURCES"]').append("<span class='required'>*</span>")
+            $('[data-label="LBL_HOW_GET_PHONE_NUMBER"]').append("<span class='required'>*</span>")
+            //$('[data-label="LBL_RECEIVING_BRANCH"]').append("<span class='required'>*</span>")
+            //$('[data-label="LBL_OWNED_BRANCH"]').append("<span class='required'>*</span>")
+            $('[data-label="LBL_SALE_STAGE"]').append("<span class='required'>*</span>")
+            $('[data-label="LBL_CONTACT_DATE"]').append("<span class='required'>*</span>")
+            //$('[data-label="LBL_RO_NAME"]').append("<span class='required'>*</span>")
+
+            $('.edit-view-row-item').each(function() {
+                //console.log('hello')
+                if ($(this).find('div[field="sale_stage_follow_level"]').length != 0 || $(this).find('div[field="lead_status_follow_level"]').length != 0) {
+                    //console.log('finded')
+                    $(this).remove();
+                }
+            });
+
+            $('[name="service"]').map(function (idx) {
+                if (idx == 0) {
+                    var service = $(this).val();
+                    if (service == '5') {
+                        //console.log('hello')
+                        $("#receiving_branch").html("<option value='4' selected>TELE</option><option value='5'>DL TB</option><option value='0'>Choose</option>");
+                    }
+                    else {
+                        $("#receiving_branch").html("<option value='' selected>Choose</option><option value='1'>NTT</option><option value='2'>Q10</option><option value='3'>Tân Bình</option><option value='4'>TELE</option><option value='5'>DL TB</option><option value='0'>Choose</option>");
+                    }
+                }
+            })
+            
+
+            let context = $("#receiving_branch").html();
+            $('[name="service"]').map(function (idx) {
+                $(this).change(function() {
+                    if (idx == 0) {
+                        var service = $(this).val();
+                        if (service == '5') {
+                            //console.log('hello')
+                            $("#receiving_branch").html("<option value='4' selected>TELE</option><option value='5'>DL TB</option><option value='0'>Choose</option>");
+                        }
+                        else {
+                            $("#receiving_branch").html("<option value='' selected>Choose</option><option value='1'>NTT</option><option value='2'>Q10</option><option value='3'>Tân Bình</option><option value='4'>TELE</option><option value='5'>DL TB</option><option value='0'>Choose</option>");
+                        }
+                    }
+                })
+            })
+            
+
+            $("#phone_number_primary").blur(function () {
+                check_phone_number()
+            })
+
+            $(".input_phone_number_primary").removeClass("col-xs-6")
+            $(".edit-view-row-item").map(function (idx) {
+                if (idx == 19) {
+                    return this.remove();
+                }
+                idx++;
+            }).get();
+
+            $(".panel-default").map(function (idx) {
+                if (idx == 1) {
+                    return this.remove();
+                }
+                idx++;
+            }).get(); 
+            $(".input_phone_number_primary").addClass("col-xl-12 col-xs-12 col-sm-8 edit-view-field")
+            $('.input_phone_number_primary').css('width', "100%")
+            $('#phone_number_primary').css('width', "90%")
+
+            $("#owned_branch").change(function() {
+                $("#ro_name").attr("disabled", true);
+                let owned_branch = $(this).val();
+                $.ajax({
+                    url: "index.php?module=Leads&entryPoint=ro_name",
+                    data: { owned_branch: owned_branch },
+                    success: function (data) {
+                        console.log(data);
+                        $("#ro_name").html(data);
+                        $("#ro_name").attr("disabled", false);
+                    },
+                    dataType: 'html'
+                });
+            })
+            
+        }
+        else {
+            $("#phone_number_primary").attr('type', 'password');
+
+            $('[name="service"]').map(function (idx) {
+                if (idx == 0) {
+                    var service = $(this).val();
+                    if (service == '5') {
+                        //console.log('hello')
+                        $("#receiving_branch").html("<option value='4' selected>TELE</option><option value='5'>DL TB</option><option value='0'>Choose</option>");
+                    }
+                    else {
+                        $("#receiving_branch").html("<option value='' selected>Choose</option><option value='1'>NTT</option><option value='2'>Q10</option><option value='3'>Tân Bình</option><option value='4'>TELE</option><option value='5'>DL TB</option><option value='0'>Choose</option>");
+                    }
+                }
+            })
+
+            
+
+            $('#sale_stage_follow_level').attr('disabled', true);
+            $('#lead_status_follow_level').attr('disabled', true);
+            
+
+            let context = $("#receiving_branch").html();
+            $('[name="service"]').change(function() {
+                if (idx == 0) {
+                    var service = $(this).val();
+                    if (service == '5') {
+                        //console.log('hello')
+                        $("#receiving_branch").html("<option value='4' selected>TELE</option><option value='5'>DL TB</option><option value='0'>Choose</option>");
+                    }
+                    else {
+                        $("#receiving_branch").html("<option value='' selected>Choose</option><option value='1'>NTT</option><option value='2'>Q10</option><option value='3'>Tân Bình</option><option value='4'>TELE</option><option value='5'>DL TB</option><option value='0'>Choose</option>");
+                    }
+                }
+            })
+
+            if (sale_stage_id == "0") {
+                var ro_name_val = $("#ro_name_val").val();
+                $("#ro_name").attr("disabled", true);
+                //console.log('x')
+                $('#sale_stage_follow_level').attr('disabled', true);
+                $.ajax({
+                    url: "index.php?module=Leads&entryPoint=ro_name",
+                    data: { ro_name: ro_name_val },
+                    success: function (data) {
+                        console.log(data);
+                        $("#ro_name").html(data);
+                        $("#ro_name").attr("disabled", false);
+                    },
+                    dataType: 'html'
+                });
+
+               
+
 
                 $("#phone_number_primary").blur(function () {
                     check_phone_number()
                 })
-                $("[data-label='LBL_RO_NAME']").remove();
-                $("#ro_name").remove();
 
 
-
-                $(".input_phone_number_primary").removeClass("col-xs-6")
-                
-
-                $(".panel-default").map(function (idx) {
-                    if (idx == 1) {
-                        return this.remove();
-                    }
-                    idx++;
-                }).get();
-                $(".input_phone_number_primary").addClass("col-xl-12 col-xs-12 col-sm-8 edit-view-field")
-                $('.input_phone_number_primary').css('width', "100%")
-                $('#phone_number_primary').css('width', "90%")
-            }
-
-
-            $("#ro_name").attr("disabled", true);
-            $.ajax({
-                url: "index.php?module=Leads&entryPoint=ro_name",
-                data: { ro_name: ro_name_val },
-                success: function (data) {
-                    console.log(data);
-                    $("#ro_name").html(data);
-                    $("#ro_name").attr("disabled", true);
-                },
-                dataType: 'html'
-            });
-
-            $("#transaction_amount").change(function () {
-                var transaction_amount = $(this).val();
-                $(this).val(Number(transaction_amount).toLocaleString());
-            })
-            var real_transaction_amount = $("#real_transaction_amount").val();
-            $("#real_transaction_amount").val(real_transaction_amount.split(".")[0]);
-
-            $("#real_transaction_amount").change(function () {
-                var transaction_amount = $(this).val();
-                $(this).val(Number(transaction_amount).toLocaleString());
-            })
-
-            $("#phone_number_primary").attr('type', 'password');
-            $(".glyphicon-earphone").css({
-                'position': 'absolute',
-                'color': '#00FF00',
-                'font-size': '30px',
-                'left': '10px'
-            });
-
-            $(".glyphicon-earphone-1").css({
-                'position': 'absolute',
-                'color': '#00FF00',
-                'font-size': '30px',
-                'left': '10px'
-            });
-
-            if ($('#lead_id').val().length > 0) {
-                $("input").map(function (idx) {
+                $(".glyphicon-earphone").css({
+                    'position': 'absolute',
+                    'color': '#00FF00',
+                    'font-size': '30px',
+                    'left': '10px'
+                });
+                $(".glyphicon-earphone-1").css({
+                    'position': 'absolute',
+                    'color': '#00FF00',
+                    'font-size': '30px',
+                    'left': '10px'
+                });
+                /* $("input").map(function (idx) {
                     //console.log(idx)
-                    if (idx <= 65 && idx >= 60) {
+                    if (idx > 60 && idx < 76) {
                         return $(this).attr("disabled", true);
                     }
                     return idx++;
-                }).get();
+                }).get(); */
 
-                $("#contact_date_trigger").attr("disabled", true);
+                $("#phone_number_primary").attr('disabled', false);
+
+
+                /* $('textarea').map(function (idx) {
+                    if (idx == 1) {
+                        $(this).attr("disabled", true);
+                        $(this).css("background-color", "#f8f8f8");
+                    }
+                })
 
                 $("select").map(function (idx) {
                     //console.log(idx)
-                    if (idx < 13) {
+                    if (idx > 7) {
                         return $(this).attr("disabled", true);
                     }
                     return idx++;
@@ -416,7 +781,88 @@ $(document).ready(function () {
 
                 $(".label").map(function (idx) {
                     //console.log(idx)
-                    if (idx < 20) {
+                    if (idx >= 16) {
+                        return $(this).removeClass('label');
+                    }
+                    return idx++;
+                }).get(); */
+
+                /* $(".btn-danger").map(function (idx) {
+                    //console.log(idx)
+                    return $(this).attr("disabled", true);
+                }).get(); */
+
+                $(".glyphicon-earphone").hover(function () {
+                    $(this).css("color", "#20B2AA");
+                }, function () {
+                    $(this).css("color", "#00FF00");
+                });
+
+                $(".glyphicon-earphone-1").hover(function () {
+                    $(this).css("color", "#20B2AA");
+                }, function () {
+                    $(this).css("color", "#00FF00");
+                });
+                $("#phone_number_primary").css({
+                    'width': '100%'
+                })
+            }
+            else if (sale_stage_id == "10") {
+                var ro_name_val = $("#ro_name_val").val();
+                $("#ro_name").attr("disabled", true);
+                
+                $.ajax({
+                    url: "index.php?module=Leads&entryPoint=ro_name",
+                    data: { ro_name: ro_name_val },
+                    success: function (data) {
+                        console.log(data);
+                        $("#ro_name").html(data);
+                        $("#ro_name").attr("disabled", false);
+                    },
+                    dataType: 'html'
+                });
+
+                
+
+                $("#citizen_identification").blur(function () {
+                    check_cmdd()
+                })
+
+                
+
+                $(".glyphicon-earphone").css({
+                    'position': 'absolute',
+                    'color': '#00FF00',
+                    'font-size': '30px',
+                    'left': '10px'
+                });
+                $(".glyphicon-earphone-1").css({
+                    'position': 'absolute',
+                    'color': '#00FF00',
+                    'font-size': '30px',
+                    'left': '10px'
+                });
+                /* $("input").map(function (idx) {
+                    //console.log(idx)
+                    if (idx <= 60 && idx > 55) {
+                        return $(this).attr("disabled", true);
+                    }
+                    return idx++;
+                }).get(); */
+
+                $("#phone_number_primary").attr('disabled', false);
+
+                /* $("select").map(function (idx) {
+                    //console.log(idx)
+                    if (idx <= 7) {
+                        return $(this).attr("disabled", true);
+                    }
+                    return idx++;
+                }).get();
+
+                $(".label").map(function (idx) {
+                    //console.log(idx)
+                    if (idx < 16 && idx != 14) {
                         return $(this).removeClass('label');
                     }
                     return idx++;
@@ -427,698 +873,100 @@ $(document).ready(function () {
                         $(this).attr("disabled", true);
                         $(this).css("background-color", "#f8f8f8");
                     }
+                }) */
+
+                $('#lead_status').css('width', "90%")
+
+                $("#fullname").keyup(function () {
+                    $(this).val($(this).val().toUpperCase());
+                });
+
+                $(".label").map(function (idx) {
+                    return $(this).css('color', "#696969")
                 })
-            }
 
-            $('#lead_status').css('width', "90%")
+                $("#phone_number_extra").blur(function () {
+                    $(this).val($(this).val().replace(/ /g, "").replace(/^(\d{3})(\d{3})(\d{4})(\d*)$/, "$1 $2 $3 $4"))
+                })
+                $('select').css('width', "90%")
 
-            $("#fullname").keyup(function () {
-                $(this).val($(this).val().toUpperCase());
-            });
+                $("[data-label='LBL_CITIZEN_IDENTIFICATION_ISSUANCE_DATE']").html("");
+                $("[data-label='LBL_CITIZEN_IDENTIFICATION_ISSUANCE_PLACE']").html("");
+                $("[data-label='LBL_ADDRESS_FOLLOW_CITIZEN_IDENTIFICATION']").html("");
+                $("[data-label='LBL_BIRTHDAY']").html("");
+                $("#citizen_identification_issuance_date").attr("placeholder", "Issuance date (dd/mm/yyyy)");
+                $("#citizen_identification_issuance_place").attr("placeholder", "Issuance place");
+                $("#address_follow_citizen_identification").attr("placeholder", "Address follow Citizen identity card");
+                $("#birthday").attr("placeholder", "Birthday");
 
-            $(".label").map(function (idx) {
-                return $(this).css('color', "#696969")
-            })
-
-            $("#phone_number_extra").blur(function () {
-                $(this).val($(this).val().replace(/ /g, "").replace(/^(\d{3})(\d{3})(\d{4})(\d*)$/, "$1 $2 $3 $4"))
-            })
-            $('select').css('width', "90%")
-
-            $("[data-label='LBL_CITIZEN_IDENTIFICATION_ISSUANCE_DATE']").html("");
-            $("[data-label='LBL_CITIZEN_IDENTIFICATION_ISSUANCE_PLACE']").html("");
-            $("[data-label='LBL_ADDRESS_FOLLOW_CITIZEN_IDENTIFICATION']").html("");
-            $("[data-label='LBL_BIRTHDAY']").html("");
-            $("#citizen_identification_issuance_date").attr("placeholder", "Issuance date (dd/mm/yyyy)");
-            $("#citizen_identification_issuance_place").attr("placeholder", "Issuance place");
-            $("#address_follow_citizen_identification").attr("placeholder", "Address follow Citizen identity card");
-            $("#birthday").attr("placeholder", "Birthday");
-
-            $.ajax({
-                url: "index.php?module=Leads&entryPoint=sale_stage",
-                data: { id: sale_stage_id, lead_status_id: lead_status_id },
-                success: function (data) {
-                    //console.log(data);
-                    $("#sale_stage").html(data);
-
-                },
-                dataType: 'html'
-            });
-
-            $.ajax({
-                url: "index.php?module=Leads&entryPoint=lead_status",
-                data: { id: sale_stage_id, lead_status_id: lead_status_id, created_by: created_by },
-                success: function (data) {
-                    //console.log(data);
-                    $('[name = "lead_status"]').html(data);
-                },
-                dataType: 'html'
-            });
-
-            $('[name="sale_stage"]').change(function () {
-                var sale_stage_change_id = $(this).val();
-                $('[name="sale_stage"]').not(this).val(sale_stage_change_id)
-                //console.log(sale_stage_change_id)
                 $.ajax({
-                    url: "index.php?module=Leads&entryPoint=lead_status",
-                    data: { id: sale_stage_change_id, lead_status_id: lead_status_id, created_by: created_by },
+                    url: "index.php?module=Leads&entryPoint=sale_stage",
+                    data: { id: sale_stage_id, lead_status_id: lead_status_id },
                     success: function (data) {
                         //console.log(data);
-                        //$("#lead_status").html(data);
-                        $('[name="lead_status"]').html(data);
-
-                        if (lead_id.length != 0) {
-                            $.ajax({
-                                url: "index.php?module=Leads&entryPoint=get_sale_stage_follow_level",
-                                data: { lead_status_id: $("#lead_status").val(), lead_status_follow_level: lead_status_follow_level },
-                                success: function (data) {
-                                    console.log(data);
-                                    //$("#lead_status").html(data);
-                                    if (data == 'true') {
-    
-                                        $('#lead_status_follow_level option[selected="selected"]').removeAttr('selected');
-    
-                                        // Thay đổi lựa chọn đã được chọn
-                                        $('#lead_status_follow_level').val($("#lead_status").val())
-    
-                                        $('#sale_stage_follow_level option[selected="selected"]').removeAttr('selected');
-    
-                                        // Thay đổi lựa chọn đã được chọn
-                                        $('#sale_stage_follow_level').val($('#sale_stage').val())
-    
-    
-                                    }else {
-                                        $('#lead_status_follow_level option[selected="selected"]').removeAttr('selected');
-
-                                        // Thay đổi lựa chọn đã được chọn
-                                        $('#lead_status_follow_level').val(lead_status_follow_level)
-    
-                                        $('#sale_stage_follow_level option[selected="selected"]').removeAttr('selected');
-    
-                                        // Thay đổi lựa chọn đã được chọn
-                                        $('#sale_stage_follow_level').val(sale_stage_follow_level_val)
-                                        
-                                    }
-                                },
-                                dataType: 'html'
-                            });
-                        }
-                        
+                        $('[name = "sale_stage"]').html(data);
                     },
                     dataType: 'html'
                 });
-            });
 
+                $.ajax({
+                    url: "index.php?module=Leads&entryPoint=lead_status",
+                    data: { id: sale_stage_id, lead_status_id: lead_status_id, created_by: created_by },
+                    success: function (data) {
+                        //console.log(data);
+                        $('[name = "lead_status"]').html(data);
+                    },
+                    dataType: 'html'
+                });
 
-            $('[name="lead_status"]').change(function () {
-                var lead_status_change_id = $(this).val();
-                console.log(lead_status_change_id)
-                console.log(lead_status_follow_level)
-                if (lead_id.length != 0) {
+                $('[name="sale_stage"]').change(function () {
+                    var sale_stage_change_id = $("option:selected", this).val();
+                    $('[name="sale_stage"]').not(this).val(sale_stage_change_id)
                     $.ajax({
-                        url: "index.php?module=Leads&entryPoint=get_sale_stage_follow_level",
-                        data: { lead_status_id: lead_status_change_id, lead_status_follow_level: lead_status_follow_level },
+                        url: "index.php?module=Leads&entryPoint=lead_status",
+                        data: { id: sale_stage_change_id, lead_status_id: lead_status_id, created_by: created_by },
                         success: function (data) {
-                            console.log(data);
+                            //console.log(data);
                             //$("#lead_status").html(data);
-                            if (data == 'true') {
-    
-    
-    
-                                $('#lead_status_follow_level option[selected="selected"]').removeAttr('selected');
-    
-                                // Thay đổi lựa chọn đã được chọn
-                                $('#lead_status_follow_level').val(lead_status_change_id)
-    
-                                $('#sale_stage_follow_level option[selected="selected"]').removeAttr('selected');
-    
-                                // Thay đổi lựa chọn đã được chọn
-                                $('#sale_stage_follow_level').val($('#sale_stage').val())
-                            }else {
-                                    $('#lead_status_follow_level option[selected="selected"]').removeAttr('selected');
-    
-                                // Thay đổi lựa chọn đã được chọn
-                                    $('#lead_status_follow_level').val(lead_status_follow_level)
-    
-                                    $('#sale_stage_follow_level option[selected="selected"]').removeAttr('selected');
-    
-                                    // Thay đổi lựa chọn đã được chọn
-                                $('#sale_stage_follow_level').val(sale_stage_follow_level_val)
-                                
-                            }
+                            $('[name="lead_status"]').html(data);
                         },
                         dataType: 'html'
                     });
-                }
-                
-            });
-        }
-
-        else if (role == "MKT" || role == "SUPER_MKT") {
-            var sale_stage_id = $('#sale_stages_val').val();
-            var lead_status_id = $('#lead_status_id').val();
-            var ro_name = $('#ro_name_val').val();
-            var ho_name = $('#ho_name_val').val();
-            var owner_branch = $('#owner_branch_val').val();
-
-            $('[name="note"]').change(function () {
-                //console.log('xxx')
-                let re = $(this).val()
-                $('[name="note"]').val(re)
-            });
-
-            $("#transaction_amount").change(function () {
-                var transaction_amount = $(this).val();
-                $(this).val(Number(transaction_amount).toLocaleString());
-            })
-            var real_transaction_amount = $("#real_transaction_amount").val();
-            $("#real_transaction_amount").val(real_transaction_amount.split(".")[0]);
-
-            $("#real_transaction_amount").change(function () {
-                var transaction_amount = $(this).val();
-                $(this).val(Number(transaction_amount).toLocaleString());
-            })
-
-            $('[name="bank"]').change(function () {
-                //console.log('xxx')
-                let re = $(this).val()
-                $('[name="bank"]').val(re)
-            });
-
-
-            $('[name="card_bark_type"]').change(function () {
-                //console.log('xxx')
-                let re = $(this).val()
-                $('[name="card_bark_type"]').val(re)
-            });
-
-
-            $('[name="service"]').change(function () {
-                //console.log('xxx')
-                let re = $(this).val()
-                $('[name="service"]').val(re)
-            });
-
-
-
-            $('[name="sale_stage"]').change(function () {
-                var sale_stage_change_id = $(this).val();
-                $('[name="sale_stage"]').val(sale_stage_change_id)
-                let re = $(this).val()
-                $('[name="sale_stage"]').val(re)
-            });
-
-
-            $('[name="lead_status"]').change(function () {
-                //console.log('xxx')
-                let re = $(this).val()
-                $('[name="lead_status"]').val(re)
-            });
-
-            if (lead_id.length > 0) {
-                if (sale_stage_id == '10') {
-                    $(document).ready(function () {
-                        setInterval(function () {
-                            $.ajax({
-                                url: "index.php?module=Leads&entryPoint=handle_check_time",
-                                data: { id: lead_id },
-                                success: function (data) {
-
-                                    //console.log(data)
-                                    if (data != "") {
-                                        alert(`Bạn vượt quá thời gian tác động ${data}`)
-                                        window.open("http://mkt.tranthu.vn/index.php?module=Leads&action=index&return_module=Leads&return_action=index");
-                                    }
-                                }
-                            });
-                        }, 1000);
-                    })
-                }
+                        
+                });
 
             }
+            else {
+                var ro_name_val = $("#ro_name_val").val();
 
-
-            if ($('#lead_id').val().length === 0) {
-                $(".btn-phone").remove();
-                $(".fa-phone").remove();
-
-                $('[data-label="LBL_FACEBOOK_OR_ZALO_NAME"]').append("<span class='required'>*</span>")
-                $('[data-label="LBL_DATA_SOURCES"]').append("<span class='required'>*</span>")
-                $('[data-label="LBL_HOW_GET_PHONE_NUMBER"]').append("<span class='required'>*</span>")
-                //$('[data-label="LBL_RECEIVING_BRANCH"]').append("<span class='required'>*</span>")
-                //$('[data-label="LBL_OWNED_BRANCH"]').append("<span class='required'>*</span>")
-                $('[data-label="LBL_SALE_STAGE"]').append("<span class='required'>*</span>")
-                $('[data-label="LBL_CONTACT_DATE"]').append("<span class='required'>*</span>")
-                //$('[data-label="LBL_RO_NAME"]').append("<span class='required'>*</span>")
-
-
-                $('[name="service"]').map(function (idx) {
-                    if (idx == 0) {
-                        var service = $(this).val();
-                        if (service == '5') {
-                            //console.log('hello')
-                            $("#receiving_branch").html("<option value='4' selected>TELE</option><option value='5'>DL TB</option><option value='0'>Choose</option>");
-                        }
-                        else {
-                            $("#receiving_branch").html("<option value='' selected>Choose</option><option value='1'>NTT</option><option value='2'>Q10</option><option value='3'>Tân Bình</option><option value='4'>TELE</option><option value='5'>DL TB</option><option value='0'>Choose</option>");
-                        }
+                /* $('textarea').map(function (idx) {
+                    if (idx == 1) {
+                        $(this).attr("disabled", true);
+                        $(this).css("background-color", "#f8f8f8");
                     }
-                })
+                }) */
 
+                $("#ro_name").attr("disabled", true);
+                $.ajax({
+                    url: "index.php?module=Leads&entryPoint=ro_name",
+                    data: { ro_name: ro_name_val },
+                    success: function (data) {
+                        console.log(data);
+                        $("#ro_name").html(data);
+                        $("#ro_name").attr("disabled", false);
+                    },
+                    dataType: 'html'
+                });
 
-                let context = $("#receiving_branch").html();
-                $('[name="service"]').map(function (idx) {
-                    $(this).change(function () {
-                        if (idx == 0) {
-                            var service = $(this).val();
-                            if (service == '5') {
-                                //console.log('hello')
-                                $("#receiving_branch").html("<option value='4' selected>TELE</option><option value='5'>DL TB</option><option value='0'>Choose</option>");
-                            }
-                            else {
-                                $("#receiving_branch").html("<option value='' selected>Choose</option><option value='1'>NTT</option><option value='2'>Q10</option><option value='3'>Tân Bình</option><option value='4'>TELE</option><option value='5'>DL TB</option><option value='0'>Choose</option>");
-                            }
-                        }
-                    })
-                })
-
+                
 
                 $("#phone_number_primary").blur(function () {
                     check_phone_number()
                 })
 
-                $(".input_phone_number_primary").removeClass("col-xs-6")
-                $(".edit-view-row-item").map(function (idx) {
-                    
-                    idx++;
-                }).get();
 
-                $(".panel-default").map(function (idx) {
-                    if (idx == 1) {
-                        return this.remove();
-                    }
-                    idx++;
-                }).get();
-                $(".input_phone_number_primary").addClass("col-xl-12 col-xs-12 col-sm-8 edit-view-field")
-                $('.input_phone_number_primary').css('width', "100%")
-                $('#phone_number_primary').css('width', "90%")
-
-                $("#owned_branch").change(function () {
-                    $("#ro_name").attr("disabled", true);
-                    let owned_branch = $(this).val();
-                    $.ajax({
-                        url: "index.php?module=Leads&entryPoint=ro_name",
-                        data: { owned_branch: owned_branch },
-                        success: function (data) {
-                            console.log(data);
-                            $("#ro_name").html(data);
-                            $("#ro_name").attr("disabled", false);
-                        },
-                        dataType: 'html'
-                    });
-                })
-
-            }
-            else {
-                $("#phone_number_primary").attr('type', 'password');
-
-                $('[name="service"]').map(function (idx) {
-                    if (idx == 0) {
-                        var service = $(this).val();
-                        if (service == '5') {
-                            //console.log('hello')
-                            $("#receiving_branch").html("<option value='4' selected>TELE</option><option value='5'>DL TB</option><option value='0'>Choose</option>");
-                        }
-                        else {
-                            $("#receiving_branch").html("<option value='' selected>Choose</option><option value='1'>NTT</option><option value='2'>Q10</option><option value='3'>Tân Bình</option><option value='4'>TELE</option><option value='5'>DL TB</option><option value='0'>Choose</option>");
-                        }
-                    }
-                })
-
-
-
-
-
-                let context = $("#receiving_branch").html();
-                $('[name="service"]').change(function () {
-                    if (idx == 0) {
-                        var service = $(this).val();
-                        if (service == '5') {
-                            //console.log('hello')
-                            $("#receiving_branch").html("<option value='4' selected>TELE</option><option value='5'>DL TB</option><option value='0'>Choose</option>");
-                        }
-                        else {
-                            $("#receiving_branch").html("<option value='' selected>Choose</option><option value='1'>NTT</option><option value='2'>Q10</option><option value='3'>Tân Bình</option><option value='4'>TELE</option><option value='5'>DL TB</option><option value='0'>Choose</option>");
-                        }
-                    }
-                })
-
-                if (sale_stage_id == "0") {
-                    var ro_name_val = $("#ro_name_val").val();
-                    $("#ro_name").attr("disabled", true);
-                    //console.log('x')
-                    $('#sale_stage_follow_level').attr('disabled', true);
-                    $.ajax({
-                        url: "index.php?module=Leads&entryPoint=ro_name",
-                        data: { ro_name: ro_name_val },
-                        success: function (data) {
-                            console.log(data);
-                            $("#ro_name").html(data);
-                            $("#ro_name").attr("disabled", false);
-                        },
-                        dataType: 'html'
-                    });
-
-
-
-
-                    $("#phone_number_primary").blur(function () {
-                        check_phone_number()
-                    })
-
-
-                    $(".glyphicon-earphone").css({
-                        'position': 'absolute',
-                        'color': '#00FF00',
-                        'font-size': '30px',
-                        'left': '10px'
-                    });
-                    $(".glyphicon-earphone-1").css({
-                        'position': 'absolute',
-                        'color': '#00FF00',
-                        'font-size': '30px',
-                        'left': '10px'
-                    });
-                    /* $("input").map(function (idx) {
-                        //console.log(idx)
-                        if (idx > 60 && idx < 76) {
-                            return $(this).attr("disabled", true);
-                        }
-                        return idx++;
-                    }).get(); */
-
-                    $("#phone_number_primary").attr('disabled', false);
-
-
-                    /* $('textarea').map(function (idx) {
-                        if (idx == 1) {
-                            $(this).attr("disabled", true);
-                            $(this).css("background-color", "#f8f8f8");
-                        }
-                    })
-    
-                    $("select").map(function (idx) {
-                        //console.log(idx)
-                        if (idx > 7) {
-                            return $(this).attr("disabled", true);
-                        }
-                        return idx++;
-                    }).get();
-    
-                    $(".label").map(function (idx) {
-                        //console.log(idx)
-                        if (idx >= 16) {
-                            return $(this).removeClass('label');
-                        }
-                        return idx++;
-                    }).get(); */
-
-                    /* $(".btn-danger").map(function (idx) {
-                        //console.log(idx)
-                        return $(this).attr("disabled", true);
-                    }).get(); */
-
-                    $(".glyphicon-earphone").hover(function () {
-                        $(this).css("color", "#20B2AA");
-                    }, function () {
-                        $(this).css("color", "#00FF00");
-                    });
-
-                    $(".glyphicon-earphone-1").hover(function () {
-                        $(this).css("color", "#20B2AA");
-                    }, function () {
-                        $(this).css("color", "#00FF00");
-                    });
-                    $("#phone_number_primary").css({
-                        'width': '100%'
-                    })
-                }
-                else if (sale_stage_id == "10") {
-                    var ro_name_val = $("#ro_name_val").val();
-                    $("#ro_name").attr("disabled", true);
-
-                    $.ajax({
-                        url: "index.php?module=Leads&entryPoint=ro_name",
-                        data: { ro_name: ro_name_val },
-                        success: function (data) {
-                            console.log(data);
-                            $("#ro_name").html(data);
-                            $("#ro_name").attr("disabled", false);
-                        },
-                        dataType: 'html'
-                    });
-
-
-
-                    $("#citizen_identification").blur(function () {
-                        check_cmdd()
-                    })
-
-
-
-                    $(".glyphicon-earphone").css({
-                        'position': 'absolute',
-                        'color': '#00FF00',
-                        'font-size': '30px',
-                        'left': '10px'
-                    });
-                    $(".glyphicon-earphone-1").css({
-                        'position': 'absolute',
-                        'color': '#00FF00',
-                        'font-size': '30px',
-                        'left': '10px'
-                    });
-                    /* $("input").map(function (idx) {
-                        //console.log(idx)
-                        if (idx <= 60 && idx > 55) {
-                            return $(this).attr("disabled", true);
-                        }
-                        return idx++;
-                    }).get(); */
-
-                    $("#phone_number_primary").attr('disabled', false);
-
-                    /* $("select").map(function (idx) {
-                        //console.log(idx)
-                        if (idx <= 7) {
-                            return $(this).attr("disabled", true);
-                        }
-                        return idx++;
-                    }).get();
-    
-                    $(".label").map(function (idx) {
-                        //console.log(idx)
-                        if (idx < 16 && idx != 14) {
-                            return $(this).removeClass('label');
-                        }
-                        return idx++;
-                    }).get();
-    
-                    $('textarea').map(function (idx) {
-                        if (idx == 0) {
-                            $(this).attr("disabled", true);
-                            $(this).css("background-color", "#f8f8f8");
-                        }
-                    }) */
-
-                    $('#lead_status').css('width', "90%")
-
-                    $("#fullname").keyup(function () {
-                        $(this).val($(this).val().toUpperCase());
-                    });
-
-                    $(".label").map(function (idx) {
-                        return $(this).css('color', "#696969")
-                    })
-
-                    $("#phone_number_extra").blur(function () {
-                        $(this).val($(this).val().replace(/ /g, "").replace(/^(\d{3})(\d{3})(\d{4})(\d*)$/, "$1 $2 $3 $4"))
-                    })
-                    $('select').css('width', "90%")
-
-                    $("[data-label='LBL_CITIZEN_IDENTIFICATION_ISSUANCE_DATE']").html("");
-                    $("[data-label='LBL_CITIZEN_IDENTIFICATION_ISSUANCE_PLACE']").html("");
-                    $("[data-label='LBL_ADDRESS_FOLLOW_CITIZEN_IDENTIFICATION']").html("");
-                    $("[data-label='LBL_BIRTHDAY']").html("");
-                    $("#citizen_identification_issuance_date").attr("placeholder", "Issuance date (dd/mm/yyyy)");
-                    $("#citizen_identification_issuance_place").attr("placeholder", "Issuance place");
-                    $("#address_follow_citizen_identification").attr("placeholder", "Address follow Citizen identity card");
-                    $("#birthday").attr("placeholder", "Birthday");
-
-                    $.ajax({
-                        url: "index.php?module=Leads&entryPoint=sale_stage",
-                        data: { id: sale_stage_id, lead_status_id: lead_status_id },
-                        success: function (data) {
-                            //console.log(data);
-                            $('[name = "sale_stage"]').html(data);
-                        },
-                        dataType: 'html'
-                    });
-
-                    $.ajax({
-                        url: "index.php?module=Leads&entryPoint=lead_status",
-                        data: { id: sale_stage_id, lead_status_id: lead_status_id, created_by: created_by },
-                        success: function (data) {
-                            //console.log(data);
-                            $('[name = "lead_status"]').html(data);
-                        },
-                        dataType: 'html'
-                    });
-
-                    $('[name="sale_stage"]').change(function () {
-                        var sale_stage_change_id = $("option:selected", this).val();
-                        $('[name="sale_stage"]').not(this).val(sale_stage_change_id)
-                        $.ajax({
-                            url: "index.php?module=Leads&entryPoint=lead_status",
-                            data: { id: sale_stage_change_id, lead_status_id: lead_status_id, created_by: created_by },
-                            success: function (data) {
-                                //console.log(data);
-                                //$("#lead_status").html(data);
-                                $('[name="lead_status"]').html(data);
-                            },
-                            dataType: 'html'
-                        });
-
-                    });
-
-                }
-                else {
-                    var ro_name_val = $("#ro_name_val").val();
-
-                    /* $('textarea').map(function (idx) {
-                        if (idx == 1) {
-                            $(this).attr("disabled", true);
-                            $(this).css("background-color", "#f8f8f8");
-                        }
-                    }) */
-
-                    $("#ro_name").attr("disabled", true);
-                    $.ajax({
-                        url: "index.php?module=Leads&entryPoint=ro_name",
-                        data: { ro_name: ro_name_val },
-                        success: function (data) {
-                            console.log(data);
-                            $("#ro_name").html(data);
-                            $("#ro_name").attr("disabled", false);
-                        },
-                        dataType: 'html'
-                    });
-
-
-
-                    $("#phone_number_primary").blur(function () {
-                        check_phone_number()
-                    })
-
-
-                    var transaction_amount = $("#transaction_amount").val();
-                    $("#transaction_amount").val(transaction_amount.split(".")[0]);
-                    $(".glyphicon-earphone").css({
-                        'position': 'absolute',
-                        'color': '#00FF00',
-                        'font-size': '30px',
-                        'left': '10px'
-                    });
-
-                    $(".glyphicon-earphone-1").css({
-                        'position': 'absolute',
-                        'color': '#00FF00',
-                        'font-size': '30px',
-                        'left': '10px'
-                    });
-
-                    /* $("input").map(function (idx) {
-                        //console.log(idx)
-                        if (idx > 60 && idx < 76) {
-                            return $(this).attr("disabled", true);
-                        }
-                        return idx++;
-                    }).get();
-    
-                    $("select").map(function (idx) {
-                        //console.log(idx)
-                        if (idx > 7) {
-                            return $(this).attr("disabled", true);
-                        }
-                        return idx++;
-                    }).get();
-    
-                    $(".label").map(function (idx) {
-                        //console.log(idx)
-                        if (idx >= 16) {
-                            return $(this).removeClass('label');
-                        }
-                        return idx++;
-                    }).get(); */
-
-                    /* $(".btn-danger").map(function (idx) {
-                        //console.log(idx)
-                        return $(this).attr("disabled", true);
-                    }).get(); */
-
-                    $(".glyphicon-earphone").hover(function () {
-                        $(this).css("color", "#20B2AA");
-                    }, function () {
-                        $(this).css("color", "#00FF00");
-                    });
-
-                    $(".glyphicon-earphone-1").hover(function () {
-                        $(this).css("color", "#20B2AA");
-                    }, function () {
-                        $(this).css("color", "#00FF00");
-                    });
-                    $("#phone_number_primary").css({
-                        'width': '100%'
-                    })
-
-                    $.ajax({
-                        url: "index.php?module=Leads&entryPoint=sale_stage",
-                        data: { id: sale_stage_id, lead_status_id: lead_status_id },
-                        success: function (data) {
-                            //console.log(data);
-                            $('[name="sale_stage"]').html(data);
-                        },
-                        dataType: 'html'
-                    });
-
-                    $.ajax({
-                        url: "index.php?module=Leads&entryPoint=lead_status",
-                        data: { id: sale_stage_id, lead_status_id: lead_status_id, created_by: created_by },
-                        success: function (data) {
-                            //console.log(data);
-                            $('[name="lead_status"]').html(data);
-                        },
-                        dataType: 'html'
-                    });
-
-                    $('[name="sale_stage"]').change(function () {
-                        //console.log('sale stage change!')
-                        var sale_stage_change_id = $("option:selected", this).val();
-                        //console.log(sale_stage_change_id)
-                        $('[name="sale_stage"]').not(this).val(sale_stage_change_id)
-                        $.ajax({
-                            url: "index.php?module=Leads&entryPoint=lead_status",
-                            data: { id: sale_stage_change_id, lead_status_id: lead_status_id, created_by: created_by },
-                            success: function (data) {
-                                //console.log(data);
-                                $('[name="lead_status"]').html(data);
-
-                            },
-                            dataType: 'html'
-                        });
-                    });
-                }
-
+                var transaction_amount = $("#transaction_amount").val();
+                $("#transaction_amount").val(transaction_amount.split(".")[0]);
                 $(".glyphicon-earphone").css({
                     'position': 'absolute',
                     'color': '#00FF00',
@@ -1132,6 +980,36 @@ $(document).ready(function () {
                     'font-size': '30px',
                     'left': '10px'
                 });
+                
+                /* $("input").map(function (idx) {
+                    //console.log(idx)
+                    if (idx > 60 && idx < 76) {
+                        return $(this).attr("disabled", true);
+                    }
+                    return idx++;
+                }).get();
+
+                $("select").map(function (idx) {
+                    //console.log(idx)
+                    if (idx > 7) {
+                        return $(this).attr("disabled", true);
+                    }
+                    return idx++;
+                }).get();
+
+                $(".label").map(function (idx) {
+                    //console.log(idx)
+                    if (idx >= 16) {
+                        return $(this).removeClass('label');
+                    }
+                    return idx++;
+                }).get(); */
+
+                /* $(".btn-danger").map(function (idx) {
+                    //console.log(idx)
+                    return $(this).attr("disabled", true);
+                }).get(); */
+
                 $(".glyphicon-earphone").hover(function () {
                     $(this).css("color", "#20B2AA");
                 }, function () {
@@ -1147,360 +1025,341 @@ $(document).ready(function () {
                     'width': '100%'
                 })
 
-            }
-
-            $('select').css('width', "90%")
-
-            $.ajax({
-                url: "index.php?module=Leads&entryPoint=sale_stage",
-                data: { id: sale_stage_id, lead_status_id: lead_status_id },
-                success: function (data) {
-                    //console.log(data);
-                    $('[name="sale_stage"]').html(data);
-
-                },
-                dataType: 'html'
-            });
-
-            $.ajax({
-                url: "index.php?module=Leads&entryPoint=lead_status",
-                data: { id: sale_stage_id, lead_status_id: lead_status_id, created_by: created_by },
-                success: function (data) {
-                    //console.log(data);
-                    $('[name="lead_status"]').html(data);
-                },
-                dataType: 'html'
-            });
-
-
-            $("#owned_branch").change(function () {
-                $("#ro_name").attr("disabled", true);
-                let owned_branch = $(this).val();
                 $.ajax({
-                    url: "index.php?module=Leads&entryPoint=ro_name",
-                    data: { owned_branch: owned_branch },
-                    success: function (data) {
-                        console.log(data);
-                        $("#ro_name").html(data);
-                        $("#ro_name").attr("disabled", false);
-                    },
-                    dataType: 'html'
-                });
-            })
-
-
-
-            $('#sale_stage').change(function () {
-                var sale_stage_change_id = $("option:selected", this).val();
-                $.ajax({
-                    url: "index.php?module=Leads&entryPoint=lead_status",
-                    data: { id: sale_stage_change_id, lead_status_id: lead_status_id, created_by: created_by },
+                    url: "index.php?module=Leads&entryPoint=sale_stage",
+                    data: { id: sale_stage_id, lead_status_id: lead_status_id },
                     success: function (data) {
                         //console.log(data);
-                        $("#lead_status").html(data);
-
-                        if (lead_id.length != 0) {
-                            $.ajax({
-                                url: "index.php?module=Leads&entryPoint=get_sale_stage_follow_level",
-                                data: { lead_status_id: $("#lead_status").val(), lead_status_follow_level: lead_status_follow_level },
-                                success: function (data) {
-                                    console.log(data);
-                                    //$("#lead_status").html(data);
-                                    if (data == 'true') {
-    
-    
-                                        $('#lead_status_follow_level option[selected="selected"]').removeAttr('selected');
-    
-                                        // Thay đổi lựa chọn đã được chọn
-                                        $('#lead_status_follow_level').val($("#lead_status").val())
-    
-    
-                                        $('#sale_stage_follow_level option[selected="selected"]').removeAttr('selected');
-    
-                                        // Thay đổi lựa chọn đã được chọn
-                                        $('#sale_stage_follow_level').val($('#sale_stage').val())
-    
-                                    }else {
-                                            $('#lead_status_follow_level option[selected="selected"]').removeAttr('selected');
-    
-                                            // Thay đổi lựa chọn đã được chọn
-                                            $('#lead_status_follow_level').val(lead_status_follow_level)
-        
-                                            $('#sale_stage_follow_level option[selected="selected"]').removeAttr('selected');
-        
-                                            // Thay đổi lựa chọn đã được chọn
-                                            $('#sale_stage_follow_level').val(sale_stage_follow_level_val)
-                                       
-                                    }
-                                },
-                                dataType: 'html'
-                            });
-                        }
-                        
+                        $('[name="sale_stage"]').html(data);
                     },
                     dataType: 'html'
                 });
-            });
 
-            $('[name="lead_status"]').change(function () {
-                var lead_status_change_id = $(this).val();
-                //console.log(sale_stage_change_id)
-                console.log(lead_status_change_id)
-                console.log(lead_status_follow_level)
-                if (lead_id.length != 0) {
+                $.ajax({
+                    url: "index.php?module=Leads&entryPoint=lead_status",
+                    data: { id: sale_stage_id, lead_status_id: lead_status_id, created_by: created_by },
+                    success: function (data) {
+                        //console.log(data);
+                        $('[name="lead_status"]').html(data);
+                    },
+                    dataType: 'html'
+                });
+
+                $('[name="sale_stage"]').change(function () {
+                        //console.log('sale stage change!')
+                    var sale_stage_change_id = $("option:selected", this).val();
+                    //console.log(sale_stage_change_id)
+                    $('[name="sale_stage"]').not(this).val(sale_stage_change_id)
                     $.ajax({
-                        url: "index.php?module=Leads&entryPoint=get_sale_stage_follow_level",
-                        data: { lead_status_id: lead_status_change_id, lead_status_follow_level: lead_status_follow_level },
+                        url: "index.php?module=Leads&entryPoint=lead_status",
+                        data: { id: sale_stage_change_id, lead_status_id: lead_status_id, created_by: created_by },
                         success: function (data) {
-                            console.log(data);
-                            //$("#lead_status").html(data);
-                            if (data == 'true') {
-    
-    
-                                // Gỡ bỏ thuộc tính selected từ tất cả các options
-                                $('#lead_status_follow_level option[selected="selected"]').removeAttr('selected');
-    
-                                // Thay đổi lựa chọn đã được chọn
-                                $('#lead_status_follow_level').val(lead_status_change_id)
-    
-                                $('#sale_stage_follow_level option[selected="selected"]').removeAttr('selected');
-    
-                                // Thay đổi lựa chọn đã được chọn
-                                $('#sale_stage_follow_level').val($('#sale_stage').val())
-    
-                            }else {
-                                    $('#lead_status_follow_level option[selected="selected"]').removeAttr('selected');
-    
-                                    // Thay đổi lựa chọn đã được chọn
-                                    $('#lead_status_follow_level').val(lead_status_follow_level)
-        
-                                    $('#sale_stage_follow_level option[selected="selected"]').removeAttr('selected');
-        
-                                    // Thay đổi lựa chọn đã được chọn
-                                    $('#sale_stage_follow_level').val(sale_stage_follow_level_val)
-                                
-                            }
+                            //console.log(data);
+                            $('[name="lead_status"]').html(data);
                         },
                         dataType: 'html'
                     });
-                }
-                
+                });
+            }
+            
+            $(".glyphicon-earphone").css({
+                'position': 'absolute',
+                'color': '#00FF00',
+                'font-size': '30px',
+                'left': '10px'
+            });
+
+            $(".glyphicon-earphone-1").css({
+                'position': 'absolute',
+                'color': '#00FF00',
+                'font-size': '30px',
+                'left': '10px'
+            });
+            $(".glyphicon-earphone").hover(function () {
+                $(this).css("color", "#20B2AA");
+            }, function () {
+                $(this).css("color", "#00FF00");
+            });
+
+            $(".glyphicon-earphone-1").hover(function () {
+                $(this).css("color", "#20B2AA");
+            }, function () {
+                $(this).css("color", "#00FF00");
+            });
+            $("#phone_number_primary").css({
+                'width': '100%'
             })
 
-
         }
 
-        if (lead_id.length == 0) {
-            $(".btn-record").remove()
-            $("[data-label='LBL_IS_RECORD']").remove()
-        }
+        $('select').css('width', "90%")
 
-        else {
+        $.ajax({
+            url: "index.php?module=Leads&entryPoint=sale_stage",
+            data: { id: sale_stage_id, lead_status_id: lead_status_id },
+            success: function (data) {
+                //console.log(data);
+                $('[name="sale_stage"]').html(data);
 
-            $("[data-label='LBL_IS_RECORD']").html("")
-            if (role == "RO") {
-                var sip = getCookie("sip");
-                var date = new Date();
-                // Get year, month, and day part from the date
-                var year = date.toLocaleString("default", { year: "numeric" });
-                var month = date.toLocaleString("default", { month: "2-digit" });
-                var day = date.toLocaleString("default", { day: "2-digit" });
-                // Generate yyyy-mm-dd date string
-                var start_date = year + "-" + month + "-" + day + " 00:00:00";
-                var end_date = year + "-" + month + "-" + day + " 23:59:59";
+            },
+            dataType: 'html'
+        });
 
-                var phone = $('#phone_number_primary').val();
-                if (phone.length > 10 && phone.slice(0, 2) == '84') {
-                    phone = '0' + phone.slice(2);
-                }
-                if (phone.length < 10) {
-                    phone = '0' + phone;
-                }
+        $.ajax({
+            url: "index.php?module=Leads&entryPoint=lead_status",
+            data: { id: sale_stage_id, lead_status_id: lead_status_id, created_by: created_by },
+            success: function (data) {
+                //console.log(data);
+                $('[name="lead_status"]').html(data);
+            },
+            dataType: 'html'
+        });
 
-                var formData = {
+        
+        $("#owned_branch").change(function() {
+            $("#ro_name").attr("disabled", true);
+            let owned_branch = $(this).val();
+            $.ajax({
+                url: "index.php?module=Leads&entryPoint=ro_name",
+                data: { owned_branch: owned_branch },
+                success: function (data) {
+                    console.log(data);
+                    $("#ro_name").html(data);
+                    $("#ro_name").attr("disabled", false);
+                },
+                dataType: 'html'
+            });
+        })
+
+        
+
+        $('#sale_stage').change(function () {
+            var sale_stage_change_id = $("option:selected", this).val();
+            $.ajax({
+                url: "index.php?module=Leads&entryPoint=lead_status",
+                data: { id: sale_stage_change_id, lead_status_id: lead_status_id, created_by: created_by },
+                success: function (data) {
+                    //console.log(data);
+                    $("#lead_status").html(data);
+                },
+                dataType: 'html'
+            });
+        });
+
+        
+    }
+
+    if (lead_id.length == 0) {
+        $(".btn-record").remove()
+        $("[data-label='LBL_IS_RECORD']").remove()
+    }
+
+    else {
+
+        $("[data-label='LBL_IS_RECORD']").html("")
+        if (role == "RO") {
+            var sip = getCookie("sip");
+            var date = new Date();
+            // Get year, month, and day part from the date
+            var year = date.toLocaleString("default", { year: "numeric" });
+            var month = date.toLocaleString("default", { month: "2-digit" });
+            var day = date.toLocaleString("default", { day: "2-digit" });
+            // Generate yyyy-mm-dd date string
+            var start_date = year + "-" + month + "-" + day + " 00:00:00";
+            var end_date = year + "-" + month + "-" + day + " 23:59:59";
+
+            var phone = $('#phone_number_primary').val();
+            if (phone.length > 10 && phone.slice(0, 2) == '84') {
+                phone = '0' + phone.slice(2);
+            }
+            if (phone.length < 10) {
+                phone = '0' + phone;
+            }
+
+            var formData = {
+                sip: sip,
+                field_name: "dst",
+                field_pattern: phone,
+                status: "ANSWERED",
+                limit: 1,
+                offset: 0,
+            }; //Array 
+
+            console.log(formData)
+            console.log('Enter RO')
+
+            $.ajax({
+                url: "index.php?module=Leads&entryPoint=CdrReport",
+                type: "POST",
+                data: {
                     sip: sip,
                     field_name: "dst",
                     field_pattern: phone,
                     status: "ANSWERED",
                     limit: 1,
-                    offset: 0,
-                }; //Array 
+                    offset: 0
+                },
+                success: function (data, textStatus, jqXHR) {
+                    ////console.log('Susscess')
+                    console.log('Susscess RO')
 
-                console.log(formData)
-                console.log('Enter RO')
-
-                $.ajax({
-                    url: "index.php?module=Leads&entryPoint=CdrReport",
-                    type: "POST",
-                    data: {
-                        sip: sip,
-                        field_name: "dst",
-                        field_pattern: phone,
-                        status: "ANSWERED",
-                        limit: 1,
-                        offset: 0
-                    },
-                    success: function (data, textStatus, jqXHR) {
-                        ////console.log('Susscess')
-                        console.log('Susscess RO')
-
-                        var res = jQuery.parseJSON(data)[0];
-                        console.log(res)
-                        if (res != null && res != undefined && res.recordingfile != undefined && res.calldate != undefined) {
-                            const recording_file = "/" + (res.calldate.substring(0, 4)) + "/" + (res.calldate.substring(5, 7)) + "/" + (res.calldate.substring(8, 10)) + "/" + (res.recordingfile);
-                            fetch(`index.php?module=Leads&entryPoint=GetWarfile&data=${recording_file}`)
-                                .then(response => response.blob())
-                                .then(blob => {
-                                    //$("#source").attr('src', URL.createObjectURL(blob));
-                                    let name_file = new Date().getTime();
-                                    ////console.log(name_file)
-                                    let file = new File([blob], `${name_file}.wav`, {
-                                        type: "audio/x-wav", lastModified: new Date().getTime()
-                                    });
-
-                                    var form_data = new FormData();
-                                    form_data.append("files[]", file);
-                                    form_data.append('lead_id', lead_id);
-                                    $.ajax({
-                                        url: "index.php?module=Leads&entryPoint=handle_upload_file",
-                                        contentType: false,
-                                        processData: false,
-                                        data: form_data,
-                                        type: 'post',
-                                        success: function (data) {
-                                            //alert(data);
-                                            var url = "https://mkt.tranthu.vn/upload1/" + `${name_file}.wav`;
-                                            //$("#source").attr('src', url);
-
-                                            $(".btn-record").html(
-                                                `<audio id="audio" controls autoplay muted><source id="source" src="${url}" type="audio/wav" /></audio>`
-                                            )
-                                        },
-
-                                    });
-                                    // do stuff with `file`
-                                })
-                        }
-
-
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        ////console.log('Error')
+                    var res = jQuery.parseJSON(data)[0];
+                    console.log(res)
+                    if (res != null && res != undefined && res.recordingfile != undefined && res.calldate != undefined) {
+                        const recording_file = "/" + (res.calldate.substring(0,4)) + "/" + (res.calldate.substring(5,7)) + "/" + (res.calldate.substring(8,10)) +  "/" + (res.recordingfile);
+                        fetch(`index.php?module=Leads&entryPoint=GetWarfile&data=${recording_file}`)
+                            .then(response => response.blob())
+                            .then(blob => {
+                                //$("#source").attr('src', URL.createObjectURL(blob));
+                                let name_file = new Date().getTime();
+                                ////console.log(name_file)
+                                let file = new File([blob], `${name_file}.wav`, {
+                                    type: "audio/x-wav", lastModified: new Date().getTime()
+                                });
+    
+                                var form_data = new FormData();
+                                form_data.append("files[]", file);
+                                form_data.append('lead_id', lead_id);
+                                $.ajax({
+                                    url: "index.php?module=Leads&entryPoint=handle_upload_file",
+                                    contentType: false,
+                                    processData: false,
+                                    data: form_data,
+                                    type: 'post',
+                                    success: function (data) {
+                                        //alert(data);
+                                        var url = "https://mkt.tranthu.vn/upload1/" + `${name_file}.wav`;
+                                        //$("#source").attr('src', url);
+                                    
+                                        $(".btn-record").html(
+                                            `<audio id="audio" controls autoplay muted><source id="source" src="${url}" type="audio/wav" /></audio>`
+                                        )
+                                    },
+    
+                                });
+                                // do stuff with `file`
+                            })
                     }
-                });
+                    
+
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    ////console.log('Error')
+                }
+            });
+        }
+        else if (role == "MKT" || role == "SUPER_MKT") {
+            var ro_name_val = $("#ro_name_val").val();
+            var sip = getCookie("sip");
+
+            $.ajax({
+                url: "index.php?module=Leads&entryPoint=get_sip",
+                data: { ro_id: ro_name_val },
+                success: function (data) {
+                    ////console.log(data);
+                    sip = data;
+                },
+                async: false
+            });
+
+            ////console.log(sip);
+
+            var date = new Date();
+            // Get year, month, and day part from the date
+            var year = date.toLocaleString("default", { year: "numeric" });
+            var month = date.toLocaleString("default", { month: "2-digit" });
+            var day = date.toLocaleString("default", { day: "2-digit" });
+            // Generate yyyy-mm-dd date string
+            var start_date = year + "-" + month + "-" + day + " 00:00:00";
+            var end_date = year + "-" + month + "-" + day + " 23:59:59";
+            
+            var phone = $('#phone_number_primary').val();
+            if (phone.length > 10 && phone.slice(0, 2) == '84') {
+                phone = '0' + phone.slice(2);
             }
-            else if (role == "MKT" || role == "SUPER_MKT") {
-                var ro_name_val = $("#ro_name_val").val();
-                var sip = getCookie("sip");
-
-                $.ajax({
-                    url: "index.php?module=Leads&entryPoint=get_sip",
-                    data: { ro_id: ro_name_val },
-                    success: function (data) {
-                        ////console.log(data);
-                        sip = data;
-                    },
-                    async: false
-                });
-
-                ////console.log(sip);
-
-                var date = new Date();
-                // Get year, month, and day part from the date
-                var year = date.toLocaleString("default", { year: "numeric" });
-                var month = date.toLocaleString("default", { month: "2-digit" });
-                var day = date.toLocaleString("default", { day: "2-digit" });
-                // Generate yyyy-mm-dd date string
-                var start_date = year + "-" + month + "-" + day + " 00:00:00";
-                var end_date = year + "-" + month + "-" + day + " 23:59:59";
-
-                var phone = $('#phone_number_primary').val();
-                if (phone.length > 10 && phone.slice(0, 2) == '84') {
-                    phone = '0' + phone.slice(2);
-                }
-                if (phone.length < 10) {
-                    phone = '0' + phone;
-                }
-
-                var formData = {
+            if (phone.length < 10) {
+                phone = '0' + phone;
+            }
+            
+            var formData = {
+                sip: sip,
+                field_name: "dst",
+                field_pattern: phone,
+                status: "ANSWERED",
+                limit: 1,
+                offset: 0,
+            }; //Array 
+        
+            console.log(formData)
+        
+            console.log('Get report mkt')
+            $.ajax({
+                url: "index.php?module=Leads&entryPoint=CdrReport",
+                type: "POST",
+                data: {
                     sip: sip,
+                    start_date: start_date,
+                    end_date: end_date,
                     field_name: "dst",
                     field_pattern: phone,
                     status: "ANSWERED",
                     limit: 1,
-                    offset: 0,
-                }; //Array 
-
-                console.log(formData)
-
-                console.log('Get report mkt')
-                $.ajax({
-                    url: "index.php?module=Leads&entryPoint=CdrReport",
-                    type: "POST",
-                    data: {
-                        sip: sip,
-                        start_date: start_date,
-                        end_date: end_date,
-                        field_name: "dst",
-                        field_pattern: phone,
-                        status: "ANSWERED",
-                        limit: 1,
-                        offset: 0
-                    },
-                    success: function (data, textStatus, jqXHR) {
-                        //console.log('Susscess')
-                        console.log('Susscess MKT')
-
-                        var res = jQuery.parseJSON(data)[0];
-                        //console.log(res.calldate.substring(0,4))
-                        //console.log(res.calldate.substring(5,7))
-                        console.log(res)
-                        if (res != null && res != undefined && res.recordingfile != undefined && res.calldate != undefined) {
-                            const recording_file = "/" + (res.calldate.substring(0, 4)) + "/" + (res.calldate.substring(5, 7)) + "/" + (res.calldate.substring(8, 10)) + "/" + (res.recordingfile);
-                            fetch(`index.php?module=Leads&entryPoint=GetWarfile&data=${recording_file}`)
-                                .then(response => response.blob())
-                                .then(blob => {
-                                    //$("#source").attr('src', URL.createObjectURL(blob));
-                                    let name_file = new Date().getTime();
-                                    //console.log(name_file)
-                                    let file = new File([blob], `${name_file}.wav`, {
-                                        type: "audio/x-wav", lastModified: new Date().getTime()
-                                    });
-
-                                    var form_data = new FormData();
-                                    form_data.append("files[]", file);
-                                    form_data.append('lead_id', lead_id);
-                                    $.ajax({
-                                        url: "index.php?module=Leads&entryPoint=handle_upload_file",
-                                        contentType: false,
-                                        processData: false,
-                                        data: form_data,
-                                        type: 'post',
-                                        success: function (data) {
-                                            //alert(data);
-                                            var url = "https://mkt.tranthu.vn/upload1/" + `${name_file}.wav`;
-                                            //$("#source").attr('src', url);
-
-                                            $(".btn-record").html(
-                                                `<audio id="audio" controls autoplay muted><source id="source" src="${url}" type="audio/wav" /></audio>`
-                                            )
-                                        },
-
-                                    });
-                                    // do stuff with `file`
-                                })
-
-                        }
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        //console.log('Error')
+                    offset: 0
+                },
+                success: function (data, textStatus, jqXHR) {
+                    //console.log('Susscess')
+                    console.log('Susscess MKT')
+                    
+                    var res = jQuery.parseJSON(data)[0];
+                    //console.log(res.calldate.substring(0,4))
+                    //console.log(res.calldate.substring(5,7))
+                    console.log(res)
+                    if (res != null && res != undefined && res.recordingfile != undefined && res.calldate != undefined) {
+                    const recording_file = "/" + (res.calldate.substring(0,4)) + "/" + (res.calldate.substring(5,7)) + "/" + (res.calldate.substring(8,10)) +  "/" + (res.recordingfile);
+                    fetch(`index.php?module=Leads&entryPoint=GetWarfile&data=${recording_file}`)
+                        .then(response => response.blob())
+                        .then(blob => {
+                            //$("#source").attr('src', URL.createObjectURL(blob));
+                            let name_file = new Date().getTime();
+                            //console.log(name_file)
+                            let file = new File([blob], `${name_file}.wav`, {
+                                type: "audio/x-wav", lastModified: new Date().getTime()
+                            });
+                        
+                            var form_data = new FormData();
+                            form_data.append("files[]", file);
+                            form_data.append('lead_id', lead_id);
+                            $.ajax({
+                                url: "index.php?module=Leads&entryPoint=handle_upload_file",
+                                contentType: false,
+                                processData: false,
+                                data: form_data,
+                                type: 'post',
+                                success: function (data) {
+                                    //alert(data);
+                                    var url = "https://mkt.tranthu.vn/upload1/" + `${name_file}.wav`;
+                                    //$("#source").attr('src', url);
+                                
+                                    $(".btn-record").html(
+                                        `<audio id="audio" controls autoplay muted><source id="source" src="${url}" type="audio/wav" /></audio>`
+                                    )
+                                },
+                            
+                            });
+                            // do stuff with `file`
+                        })
+                    
                     }
-                });
-            }
-
+                    },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    //console.log('Error')
+                }
+            });
         }
 
-    });
+    }
+
+});
 
 function handle_check_payment_day() {
     var isCheck = false;
@@ -1600,7 +1459,7 @@ function handle_check_record_in_day() {
             if (res != null && res != undefined && res.recordingfile != undefined) {
 
                 var recording_file = res.recordingfile;
-
+                
                 if (recording_file != undefined && recording_file != null && recording_file != "") {
                     isCheck = true;
                 }
@@ -1655,17 +1514,17 @@ function handle_check_owned_branch() {
         var sale_stage_id = $('#sale_stage').val();
         var owned_branch = $("#owned_branch").val();
         if (sale_stage_id == '10') {
-            if (owned_branch == "" || owned_branch == null) {
+            if (owned_branch == "" || owned_branch == null ) {
                 return false;
             }
         }
     }
     else {
-
+        
         var sale_stage_id_01 = $('#sale_stages_val').val();
         var owned_branch_01 = $("#owned_branch").val();
         if (sale_stage_id_01 == '10') {
-            if (owned_branch_01 == "" || owned_branch_01 == null) {
+            if (owned_branch_01 == "" || owned_branch_01 == null ) {
                 return false;
             }
         }
@@ -1674,7 +1533,7 @@ function handle_check_owned_branch() {
 }
 
 function handle_check_ro_name() {
-
+    
 
     var lead_id = $("#lead_id").val();
     if (lead_id.length === 0) {
@@ -1716,7 +1575,7 @@ function handle_check_form_role_ro() {
     var sale_stage_id = $('#sale_stages_val').val();
 
     $('[name="sale_stage"]').map(function (idx) {
-        $(this).change(function () {
+        $(this).change(function() {
             sale_stage_id = $(this).val();
         })
     });
@@ -1750,13 +1609,13 @@ function handle_check_form_role_ro() {
             alert("Vui lòng nhập nới phát hành thể CCCD!");
             return false;
         }
-
+    
         handle_check_payment_day_empty();
-
+    
         handle_check_leads_status_empty();
-
+    
         handle_check_service_empty();
-
+    
         if (real_fee.length === 0) {
             alert("Vui lòng nhập phí thực tế!");
             return false;
@@ -1840,7 +1699,7 @@ function checkCardNumber() {
         //console.log($(this).val())
         if ($(this).val() != null && $(this).val() != "") {
             checked = true;
-        }
+        }  
         else {
             arr.push($(this).val());
         }
@@ -1850,7 +1709,7 @@ function checkCardNumber() {
 
     if (checked == true) {
         arr.map(function (idx) {
-            res.push($(this).val())
+            res.push($(this).val())      
         })
 
         //console.log(new Set(res))
@@ -1899,54 +1758,54 @@ function check_phone_number() {
 
     //console.log(phone)
 
-
+    
 
     var lead_id = $("#lead_id").val();
     if (lead_id.length === 0) {
-        $.ajax({
-            url: "index.php?module=Leads&entryPoint=get_phone_number",
-            data: { phone_number: phone[0] },
-            success: function (data) {
-                //console.log(data);
-                if (data == false) {
-                    alert("Số điện thoại bị trùng! Vui lòng nhập lại!")
-                    res = false
-                }
-                else {
-                    $.ajax({
-                        url: "index.php?module=Leads&entryPoint=get_phone_number",
-                        data: { phone_number: phone[1] },
-                        success: function (data) {
-                            //console.log(data);
-                            if (data == false) {
-                                alert("Số điện thoại bị trùng! Vui lòng nhập lại!")
-                                res = false
-                            }
-                            else {
-                                $.ajax({
-                                    url: "index.php?module=Leads&entryPoint=get_phone_number",
-                                    data: { phone_number: phone[2] },
-                                    success: function (data) {
-                                        //console.log(data);
-                                        if (data == false) {
-                                            alert("Số điện thoại bị trùng! Vui lòng nhập lại!")
-                                            res = false
-                                        }
-                                    },
-                                    async: false
-                                });
-                            }
-                        },
-                        async: false
-                    });
-                }
-            },
-            async: false
-        });
+                $.ajax({
+                    url: "index.php?module=Leads&entryPoint=get_phone_number",
+                    data: { phone_number: phone[0] },
+                    success: function (data) {
+                        //console.log(data);
+                        if (data == false) {
+                            alert("Số điện thoại bị trùng! Vui lòng nhập lại!")
+                            res = false
+                        }
+                        else {
+                            $.ajax({
+                                url: "index.php?module=Leads&entryPoint=get_phone_number",
+                                data: { phone_number: phone[1] },
+                                success: function (data) {
+                                    //console.log(data);
+                                    if (data == false) {
+                                        alert("Số điện thoại bị trùng! Vui lòng nhập lại!")
+                                        res = false
+                                    }
+                                    else {
+                                        $.ajax({
+                                            url: "index.php?module=Leads&entryPoint=get_phone_number",
+                                            data: { phone_number: phone[2] },
+                                            success: function (data) {
+                                                //console.log(data);
+                                                if (data == false) {
+                                                    alert("Số điện thoại bị trùng! Vui lòng nhập lại!")
+                                                    res = false
+                                                }
+                                            },
+                                            async: false
+                                        });
+                                    }
+                                },
+                                async: false
+                            });
+                        }
+                    },
+                    async: false
+                });
 
     }
     else {
-
+        
 
         $.ajax({
             url: "index.php?module=Leads&entryPoint=get_phone_number",
@@ -1988,7 +1847,7 @@ function check_phone_number() {
             },
             async: false
         });
-
+        
     }
     return res;
 }
@@ -2004,13 +1863,13 @@ function check_form(form_name) {
 
     let sale_stage = '';
     $('[name="sale_stage"]').map(function (idx) {
-        sale_stage = $("option:selected", this).val();
+        sale_stage = $("option:selected", this).val();    
     })
 
     var role = getCookie("role");
     console.log(role)
 
-    if ($('#lead_id').val().length != 0) {
+    if ($('#lead_id').val().length != 0 ) {
         if (sale_stage == '7') {
             if (handle_check_payment_day() == false) {
                 alert("Vui lòng nhập giá trị ngày thanh toán trong khoảng từ 1 đến 31!")
@@ -2027,7 +1886,7 @@ function check_form(form_name) {
             alert("Vui lòng nhập giá trị RO!")
             return false;
         }
-
+        
     }
     else {
 
@@ -2044,7 +1903,7 @@ function check_form(form_name) {
             alert("Vui lòng nhập giá trị RO!")
             return false;
         }
-
+        
 
         if ($('#facebook_or_zalo_name').val().length == 0) {
             alert("Vui lòng nhập tên FB/Zalo!")
@@ -2058,7 +1917,7 @@ function check_form(form_name) {
             alert("Vui lòng chọn chi nhánh nhận!")
             return false;
         } */
-        else if ($('#sale_stage').val().length == 0 || $('#sale_stage').val() == "0") {
+        else if ($('#sale_stage').val().length == 0 || $('#sale_stage').val() == "0" ) {
             alert("Vui lòng chọn Sale Stage!")
             return false;
         }
@@ -2081,16 +1940,16 @@ function check_form(form_name) {
         return false;
     }
 
-
+    
     let lead_status = '';
     $('[name="lead_status"]').map(function (idx) {
         lead_status = $("option:selected", this).val();
-
+        
     })
     //console.log(sale_stage)
     //console.log(lead_status)
-
-    if ((role === "RO" || role === "BU") && sale_stage == '7' && lead_status == '18') {
+    
+    if ((role === "RO" || role === "BU") && sale_stage == '7' && lead_status == '18' ) {
 
         /* if (role == "RO") {
             if (handle_check_record_in_day() == false) {
@@ -2098,7 +1957,7 @@ function check_form(form_name) {
                 return false;
             }
         } */
-
+        
         if (handle_check_form_role_ro() == false) {
             return false;
         }
@@ -2123,7 +1982,7 @@ function check_form(form_name) {
 
     let res = []
     $('.card-number-input').map(function (idx) {
-        res.push($(this).val())
+        res.push($(this).val())   
     })
     var lead_id = $("#lead_id").val();
     $.ajax({

@@ -50,6 +50,12 @@ array (
         'default' => true,
         'width' => '10%',
       ),
+      'fullname' => 
+      array (
+        'name' => 'fullname',
+        'default' => true,
+        'width' => '10%',
+      ),
       'phone_number_primary' => 
       array (
         'name' => 'phone_number_primary',

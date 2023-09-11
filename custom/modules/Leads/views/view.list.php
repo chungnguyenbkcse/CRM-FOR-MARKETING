@@ -32,6 +32,12 @@
                         $this->where .= " AND leads.sale_stage != '7' AND ( leads.owned_branch = 'HCM_2' OR (leads.created_by = '1' AND leads.ro_name = '{$user->id}') OR (leads.created_by = '{$user->id}') OR (leads.ro_name = '{$user->id}' AND leads.ro_modified_sale_stage = true) OR ( leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != ''))";
                        
                     }
+                    else if ($user->id == 'b55724a4-710b-8d5f-e4f0-64a4d19b1d26') {
+                        $this->where .= " AND leads.sale_stage != '7' AND ((leads.created_by = '1' AND ( leads.ro_name = '{$user->id}' OR leads.ro_name = '1f08d048-cfe3-bbc5-15fe-63f44730fec2') AND lead_status = '1' AND sale_stage = '1') OR (leads.created_by = '1' AND ( leads.ro_name = '{$user->id}' OR leads.ro_name = '1f08d048-cfe3-bbc5-15fe-63f44730fec2')) OR (leads.created_by = '{$user->id}') OR (( leads.ro_name = '{$user->id}' OR leads.ro_name = '1f08d048-cfe3-bbc5-15fe-63f44730fec2') AND leads.ro_modified_sale_stage = true)  OR (( leads.ro_name = '{$user->id}' OR leads.ro_name = '1f08d048-cfe3-bbc5-15fe-63f44730fec2') AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != ''))";
+                    }
+                    else if ($user->id == '1f08d048-cfe3-bbc5-15fe-63f44730fec2') {
+                        $this->where .= " AND leads.sale_stage != '7' AND ((leads.created_by = '1' AND ( leads.ro_name = '{$user->id}' OR leads.ro_name = 'b55724a4-710b-8d5f-e4f0-64a4d19b1d26') AND lead_status = '1' AND sale_stage = '1') OR (leads.created_by = '1' AND ( leads.ro_name = '{$user->id}' OR leads.ro_name = 'b55724a4-710b-8d5f-e4f0-64a4d19b1d26')) OR (leads.created_by = '{$user->id}') OR (( leads.ro_name = '{$user->id}' OR leads.ro_name = 'b55724a4-710b-8d5f-e4f0-64a4d19b1d26') AND leads.ro_modified_sale_stage = true)  OR (( leads.ro_name = '{$user->id}' OR leads.ro_name = 'b55724a4-710b-8d5f-e4f0-64a4d19b1d26') AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != ''))";
+                    }
                     else if ($user->id == '640b5327-a567-bdd1-c73f-64a657064f4a') {
                         $this->where .= " AND leads.sale_stage != '7' AND ( leads.owned_branch = 'HCM_3' OR leads.owned_branch = '8' OR leads.owned_branch = 'HCM_4'  OR (leads.created_by = '1' AND leads.ro_name = '{$user->id}') OR (leads.created_by = '{$user->id}') OR (leads.ro_name = '{$user->id}' AND leads.ro_modified_sale_stage = true) OR ( leads.ro_name = '{$user->id}' AND leads.sale_stage = '10' AND leads.sale_stage IS NOT NULL AND leads.sale_stage != '0' AND leads.sale_stage != ''))";
                     }
@@ -70,6 +76,8 @@
             }
             $this->lv->searchColumns = $this->searchForm->searchColumns;
             $this->processSearchForm();
+
+            $GLOBALS['log']->fatal($new_query);
             
             if (!$this->headers) {
                 return;

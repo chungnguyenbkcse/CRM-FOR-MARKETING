@@ -4,6 +4,11 @@ $(document).ready(function () {
     var created_by = $("#created_by_val").val();
     var campaign_val = $("#campaign_val").val();
     var data_sources_val = $("#data_sources_val").val();
+    var ngay_khach_hang_lien_he_mkt_val = $("#ngay_khach_hang_lien_he_mkt_val").val();
+
+    if (ngay_khach_hang_lien_he_mkt_val.length > 0) {
+        $("#ngay_khach_hang_lien_he_mkt").attr("disabled", true);
+    }
 
     if (lead_id.length > 0) {
         console.log(campaign_val)

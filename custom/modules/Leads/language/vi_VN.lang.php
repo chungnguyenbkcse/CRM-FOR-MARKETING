@@ -60,4 +60,5 @@ $mod_strings = array(
     'LBL_DATE_CREATED' => 'Ngày tạo',
     'LBL_CAMPAIGN' => 'Chiến dịch',
     'LBL_NGAY_PHAT_HANH_THE' => 'Ngày phát hành thẻ',
+    'LBL_NGAY_KHACH_HANG_LIEN_HE_MKT' => 'Ngày KH liên hệ MKT',
 );

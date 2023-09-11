@@ -25,6 +25,7 @@ $viewdefs['Leads'] =
             13 => '<input type="hidden" name="lead_status_follow_level_val" id = "lead_status_follow_level_val" value="{$bean->lead_status_follow_level_val}">',
             14 => '<input type="hidden" name="campaign_val" id = "campaign_val" value="{$bean->campaign}">',
             15 => '<input type="hidden" name="data_sources_val" id = "data_sources_val" value="{$bean->data_sources}">',
+            16 => '<input type="hidden" name="ngay_khach_hang_lien_he_mkt_val" id = "ngay_khach_hang_lien_he_mkt_val" value="{$bean->ngay_khach_hang_lien_he_mkt}">',
           ),
           'buttons' =>
           array(
@@ -184,7 +185,7 @@ $viewdefs['Leads'] =
           11 => 
           array(
             0 => "ngay_phat_hanh_the",
-            1 => ""
+            1 => "ngay_khach_hang_lien_he_mkt"
           )
         ),
         'LBL_EDIT_ROLE_RO' =>

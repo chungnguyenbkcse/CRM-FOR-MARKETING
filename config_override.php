@@ -10,4 +10,7 @@ $sugar_config['dashlet_auto_refresh_min'] = '30';
 $sugar_config['stack_trace_errors'] = false;
 $sugar_config['developerMode'] = false;
 $sugar_config['addAjaxBannedModules'][0] = 'SecurityGroups';
+$sugar_config['dbconfigoption']['collation'] = 'utf8_general_ci';
+$sugar_config['default_date_format'] = 'd/m/Y';
+$sugar_config['default_language'] = 'vi_VN';
 /***CONFIGURATOR***/

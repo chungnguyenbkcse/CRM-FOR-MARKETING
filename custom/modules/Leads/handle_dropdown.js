@@ -359,7 +359,7 @@ $(document).ready(function () {
 
             $(".input_phone_number_primary").removeClass("col-xs-6")
            $(".edit-view-row-item").map(function (idx) {
-                if (idx == 18) {
+                if (idx == 17) {
                     return this.remove();
                 }
                 idx++;
@@ -654,7 +654,7 @@ $(document).ready(function () {
 
             $(".input_phone_number_primary").removeClass("col-xs-6")
             $(".edit-view-row-item").map(function (idx) {
-                if (idx == 19) {
+                if (idx == 18) {
                     return this.remove();
                 }
                 idx++;

@@ -159,7 +159,7 @@ $viewdefs['Leads'] =
           ),
           6 =>
           array(
-            0 => 'sale_stage_follow_level',
+            0 => '',
             1 => 'lead_status_follow_level',
           ),
           7 =>

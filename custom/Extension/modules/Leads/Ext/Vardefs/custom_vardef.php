@@ -1112,6 +1112,16 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'type' => 'date',
                 'comment' => 'The birthday of the contact'
             ),
+        'sex' => array(
+                'name' => 'sex',
+                'vname' => 'LBL_SEX',
+                'type' => 'enum',
+                'audited' => true,
+                'inline_edit' =>false,
+                'options' => 'sex_dom',
+                'len' => '255',
+                'comment' => 'How did the sale stage come about',
+            ),
 
     )
 , 'indices' => array(

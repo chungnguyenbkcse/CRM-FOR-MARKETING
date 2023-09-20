@@ -10,9 +10,15 @@ $(document).ready(function () {
         $("#ngay_khach_hang_lien_he_mkt").attr("disabled", true);
     }
 
+    $('.edit-view-row-item').each(function() {
+        //console.log('hello')
+        if ($(this).find('div[field="sale_stage_follow_level"]').length != 0) {
+            //console.log('finded')
+            $(this).hide();
+        }
+    });
+
     if (lead_id.length > 0) {
-        console.log(campaign_val)
-        console.log(data_sources_val)
         $.ajax({
             url: "index.php?module=Leads&entryPoint=get-data-source",
             data: { campaign: campaign_val, data_source_selected:  data_sources_val},
@@ -359,18 +365,19 @@ $(document).ready(function () {
 
             $(".input_phone_number_primary").removeClass("col-xs-6")
            $(".edit-view-row-item").map(function (idx) {
-                if (idx == 17) {
+                if (idx == 18) {
                     return this.remove();
                 }
                 idx++;
             }).get();
 
-             $(".panel-default").map(function (idx) {
+            // edit by chungnguyen 20/9/2023
+            /* $(".panel-default").map(function (idx) {
                 if (idx == 1) {
                     return this.remove();
                 }
                 idx++;
-            }).get(); 
+            }).get();  */
             $(".input_phone_number_primary").addClass("col-xl-12 col-xs-12 col-sm-8 edit-view-field")
             $('.input_phone_number_primary').css('width', "100%")
             $('#phone_number_primary').css('width', "90%")
@@ -654,18 +661,19 @@ $(document).ready(function () {
 
             $(".input_phone_number_primary").removeClass("col-xs-6")
             $(".edit-view-row-item").map(function (idx) {
-                if (idx == 18) {
+                if (idx == 19) {
                     return this.remove();
                 }
                 idx++;
             }).get();
 
-            $(".panel-default").map(function (idx) {
+            // edit by chungnguyen 20/9/2023
+            /* $(".panel-default").map(function (idx) {
                 if (idx == 1) {
                     return this.remove();
                 }
                 idx++;
-            }).get(); 
+            }).get();  */
             $(".input_phone_number_primary").addClass("col-xl-12 col-xs-12 col-sm-8 edit-view-field")
             $('.input_phone_number_primary').css('width', "100%")
             $('#phone_number_primary').css('width', "90%")

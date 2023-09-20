@@ -340,6 +340,12 @@ $app_list_strings = array(
         '11' => 'Improperly',
     ),
 
+    'sex_dom' => array (
+        '' => '',
+        '1' => 'Male',
+        '2' => 'Famale',
+    ),
+
     'lead_status_new_dom' => array (
         '' => '',
         '1' => 'NONE',

@@ -803,6 +803,12 @@ $app_list_strings = array(
         '5' => 'Nguyễn Thị Phương',
     ),
 
+    'sex_dom' => array (
+        '' => '',
+        '1' => 'Nam',
+        '2' => 'Nữ',
+    ),
+
     'sale_stage_dom' => array (
         '' => '',
         '1' => 'New',

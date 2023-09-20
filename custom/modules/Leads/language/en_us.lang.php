@@ -61,4 +61,5 @@ $mod_strings = array(
     'LBL_CAMPAIGN' => 'Campaign',
     'LBL_NGAY_PHAT_HANH_THE' => 'Card issue date',
     'LBL_NGAY_KHACH_HANG_LIEN_HE_MKT' => 'Day customer contact mkt',
+    'LBL_SEX' => 'Sex',
 );

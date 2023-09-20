@@ -159,8 +159,8 @@ $viewdefs['Leads'] =
           ),
           6 =>
           array(
-            0 => '',
-            1 => 'lead_status_follow_level',
+            0 => 'sale_stage_follow_level',
+            1 => 'lead_status_follow_level'
           ),
           7 =>
           array(
@@ -288,7 +288,7 @@ $viewdefs['Leads'] =
                 </div>
                 ',
             ),
-            1 => ""
+            1 => "sex"
           ),
         ),
       ),

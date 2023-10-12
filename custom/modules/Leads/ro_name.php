@@ -166,7 +166,7 @@ function getListRoByRo($ro_name) {
     $html = "";
     $query_1 = "SELECT *
     FROM branch_ro
-    WHERE branch_id = (SELECT branch_id FROM branch_ro WHERE user_id = '{$ro_name}');";
+    WHERE branch_id IN (SELECT branch_id FROM branch_ro WHERE user_id = '{$ro_name}');";
     $result_1 = $GLOBALS['db']->query($query_1);
     while ($rows_1 = $GLOBALS['db']->fetchByAssoc($result_1)) {
         if ($ro_name == $rows_1['user_id']) {

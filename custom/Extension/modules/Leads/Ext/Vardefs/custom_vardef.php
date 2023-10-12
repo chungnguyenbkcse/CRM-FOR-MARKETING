@@ -1122,6 +1122,16 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'len' => '255',
                 'comment' => 'How did the sale stage come about',
             ),
+        'phone_many' =>
+            array(
+                'name' => 'phone_many',
+                'vname' => 'LBL_PHONE_MANY',
+                'type' => 'enum',
+                'len' => '100',
+                'options' => 'phone_many_dom',
+                'comment' => 'Status of the lead',
+                'merge_filter' => 'enabled',
+            ),
 
     )
 , 'indices' => array(

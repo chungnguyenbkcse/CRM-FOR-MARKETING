@@ -122,6 +122,13 @@ array (
         'label' => 'LBL_DATE_MODIFIED',
         'width' => '10%',
       ),
+      'date_entered' => 
+      array (
+        'name' => 'date_entered',
+        'default' => false,
+        'label' => 'LBL_DATE_ENTERED',
+        'width' => '10%',
+      ),
       'ngay_phat_hanh_the' => 
       array (
         'name' => 'ngay_phat_hanh_the',

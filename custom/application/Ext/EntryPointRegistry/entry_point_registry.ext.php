@@ -113,7 +113,7 @@ $entry_point_registry['CdrReportRO'] = array(
 );
 
 $entry_point_registry['update_data'] = array(
-    'file' => '/home/www/html/mkt.tranthu.vn/custom/modules/Leads/chia_data/19-9-2023/xoa_code.php',
+    'file' => '/home/www/html/mkt.tranthu.vn/custom/modules/Leads/chia_data/5-10-2023/update.php',
     'auth' => false,
 );
 
@@ -169,6 +169,16 @@ $entry_point_registry['get_sale_stage_follow_level'] = array(
 
 $entry_point_registry['get-data-source'] = array(
     'file' => 'custom/modules/Leads/get-data-source.php',
+    'auth' => false,
+);
+
+$entry_point_registry['add_phone_many'] = array(
+    'file' => '/home/www/html/mkt.tranthu.vn/custom/modules/Leads/add_phone_many.php',
+    'auth' => false,
+);
+
+$entry_point_registry['get_phone_many'] = array(
+    'file' => '/home/www/html/mkt.tranthu.vn/custom/modules/Leads/get_phone_many.php',
     'auth' => false,
 );
 ?>

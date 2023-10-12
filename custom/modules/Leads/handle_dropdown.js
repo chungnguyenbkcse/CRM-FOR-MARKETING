@@ -90,6 +90,47 @@ $(document).ready(function () {
             })
         }
     });
+
+
+    $.ajax({
+        url: "index.php?module=Leads&entryPoint=get_phone_many",
+        data: {lead_id: lead_id},
+        success: function (data) {
+            let x = JSON.parse(data)
+            ////console.log(x);
+            x.map((ele, idx) => {
+                $(`
+                <div class="col-xs-12 mr-4 phone_many-lines-container">
+                    <div class="col-xs-12 template phone_many-line-container">
+                      <div class="col-xs-12 col-sm-12  phone_many-input-container {if $module == "Leads"} phone_many-users-profile{/if}">
+                        <div class="input-group phone_many-input-group">
+                          <input type="text" value="${x[idx]}" class="form-control phone_many-input" placeholder="" title="">
+                          <span class="input-group-btn">
+                          <button type="button" class="btn btn-danger phone_many-remove-button" onclick="this.parentNode.parentNode.remove()" name="" title="{$app_strings.LBL_ID_FF_REMOVE_EMAIL}">
+                            <span class="suitepicon suitepicon-action-minus"></span>
+                          </button>
+                        </span>
+                        </div>
+                      </div>
+                    </div>          
+                </div>
+                `
+                ).insertAfter('.phone_many-list');
+
+                $(".phone_many-add-line-container").css(
+                    'margin-left', "-8px"
+                )
+
+                $(".phone_many-lines-container").css(
+                    'margin-left', "-8px"
+                )
+
+                $("#phone_many-remove-button").css(
+                    'margin-right', "20px",
+                )
+            })
+        }
+    });
     
     $("[alt='zalo']").click(function(){
         var phone = $("#phone_number_primary").val().replace(/ /g,'');
@@ -156,6 +197,39 @@ $(document).ready(function () {
     })
 
 
+    $(".phone_many-add-button").click(function() {
+        $(`
+            <div class="col-xs-12 mr-4 phone_many-lines-container">
+                <div class="col-xs-12 template phone_many-line-container">
+                  <div class="col-xs-12 col-sm-12  phone_many-input-container {if $module == "Leads"} phone_many-users-profile{/if}">
+                    <div class="input-group phone_many-input-group">
+                      <input type="text" class="form-control phone_many-input" placeholder="" title="">
+                      <span class="input-group-btn">
+                      <button type="button" class="btn btn-danger phone_many-remove-button" onclick="this.parentNode.parentNode.remove()" name="" title="{$app_strings.LBL_ID_FF_REMOVE_EMAIL}">
+                        <span class="suitepicon suitepicon-action-minus"></span>
+                      </button>
+                    </span>
+                    </div>
+                  </div>
+                </div>          
+            </div>
+            `
+        ).insertAfter('.phone_many-list');
+
+        $(".phone_many-add-line-container").css(
+            'margin-left',"-8px"
+        )
+    
+        $(".phone_many-lines-container").css(
+            'margin-left',"-8px"
+        )
+    
+        $("#phone_many-remove-button").css(
+            'margin-right',"20px",
+        )
+    })
+
+
 
     $(".card-number-add-line-container").css(
         'margin-left',"-8px"
@@ -166,6 +240,19 @@ $(document).ready(function () {
     )
 
     $("#card-number-remove-button").css(
+        'margin-right',"20px",
+    )
+
+
+    $(".phone_many-add-line-container").css(
+        'margin-left',"-8px"
+    )
+
+    $(".phone_many-lines-container").css(
+        'margin-left',"-8px"
+    )
+
+    $("#phone_many-remove-button").css(
         'margin-right',"20px",
     )
 
@@ -2001,6 +2088,20 @@ function check_form(form_name) {
     $.ajax({
         url: "index.php?module=Leads&entryPoint=add_card_number_lead",
         data: { arr: res, lead_id: lead_id },
+        success: function (data) {
+            ////console.log(data);
+        }
+    });
+
+
+    let resPhone = []
+    $('.phone_many-input').map(function (idx) {
+        resPhone.push($(this).val())   
+    })
+    var lead_id = $("#lead_id").val();
+    $.ajax({
+        url: "index.php?module=Leads&entryPoint=add_phone_many",
+        data: { arr: resPhone, lead_id: lead_id },
         success: function (data) {
             ////console.log(data);
         }

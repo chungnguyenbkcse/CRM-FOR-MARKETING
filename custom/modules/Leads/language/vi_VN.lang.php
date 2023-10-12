@@ -62,4 +62,6 @@ $mod_strings = array(
     'LBL_NGAY_PHAT_HANH_THE' => 'Ngày phát hành thẻ',
     'LBL_NGAY_KHACH_HANG_LIEN_HE_MKT' => 'Ngày KH liên hệ MKT',
     'LBL_SEX' => 'Giới tính',
+    'LBL_PHONE_MANY' => 'Số đt phụ',
+    'LBL_DATE_ENTERED' => 'Ngày tạo'
 );

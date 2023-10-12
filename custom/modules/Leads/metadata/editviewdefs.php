@@ -185,7 +185,23 @@ $viewdefs['Leads'] =
           11 => 
           array(
             0 => "ngay_phat_hanh_the",
-            1 => "ngay_khach_hang_lien_he_mkt"
+            1 => ""
+          ),
+          12 => 
+          array(
+            0 => array(
+              'name' => 'phone_many',
+              'customCode' => '  
+              <div class="col-xs-12 phone_many-list">
+                <div class="col-xs-12 phone_many-add-line-container emailaddresses" id="{$module}emailAddressesTable{$index}">
+                  <button type="button" class="btn btn-danger phone_many-add-button" title="{$app_strings.LBL_ID_FF_ADD_EMAIL} " {$other_attributes}>
+                    <span class="suitepicon suitepicon-action-plus"></span><span></span>
+                  </button>
+                </div>
+              </div>
+              <input type="hidden" name="useEmailWidget" value="true">
+              ',
+            ),
           )
         ),
         'LBL_EDIT_ROLE_RO' =>

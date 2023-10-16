@@ -688,7 +688,8 @@ $app_list_strings = array(
         '32' => 'ĐỐI TÁC',
         '33' => 'MGM ĐỐI TÁC',
         '34' => 'MKT N-1',
-        '35' => 'FC'
+        '35' => 'FC',
+        '36' => 'DATA TUẤN'
     ),
 
     'receiving_branch_dom' => array(

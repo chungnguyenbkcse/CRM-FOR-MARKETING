@@ -62,6 +62,12 @@ array (
         'default' => true,
         'width' => '10%',
       ),
+      'phone_number_extra' => 
+      array (
+        'name' => 'phone_number_extra',
+        'default' => true,
+        'width' => '10%',
+      ),
       'ro_name' => 
       array (
         'name' => 'ro_name',

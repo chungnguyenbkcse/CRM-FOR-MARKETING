@@ -63,5 +63,6 @@ $mod_strings = array(
     'LBL_NGAY_KHACH_HANG_LIEN_HE_MKT' => 'Day customer contact mkt',
     'LBL_SEX' => 'Sex',
     'LBL_PHONE_MANY' => 'Secondary phone',
-    'LBL_DATE_ENTERED' => 'Date entered'
+    'LBL_DATE_ENTERED' => 'Date entered',
+    'LNK_CHUYEN_CODE_LEADS' => 'Chuyển code',
 );

@@ -95,6 +95,9 @@ if ($_COOKIE['role']) {
         if (ACLController::checkAccess('Leads', 'list', true)) {
             $module_menu[] = array("index.php?module=Leads&action=import&return_module=Leads&return_action=DetailView", $mod_strings['LNK_IMPORT_LEADS'], "Import", 'Leads');
         }
+        if (ACLController::checkAccess('Leads', 'list', true)) {
+            $module_menu[] = array("index.php?module=Leads&action=chuyen_code&return_module=Leads&return_action=DetailView", $mod_strings['LNK_CHUYEN_CODE_LEADS'], "Import", 'Leads');
+        }
     }
 }
 

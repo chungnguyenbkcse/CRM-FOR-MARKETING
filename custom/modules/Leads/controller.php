@@ -119,6 +119,12 @@ class LeadsController extends SugarController
         return true;
     }
 
+    public function action_chuyen_code()
+    {
+        $this->view = 'chuyen_code';
+        return true;
+    }
+
     protected function callLegacyCode()
     {
         if (strtolower($this->do_action) == 'convertlead') {

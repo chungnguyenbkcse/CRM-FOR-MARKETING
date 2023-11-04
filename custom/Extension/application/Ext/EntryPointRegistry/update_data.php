@@ -1,5 +1,5 @@
 <?php
 $entry_point_registry['update_data'] = array(
-    'file' => '/home/www/html/mkt.tranthu.vn/custom/modules/Leads/chia_data/24-10-2023/update.php',
+    'file' => '/home/www/html/mkt.tranthu.vn/custom/modules/Leads/chia_data/4-11-2023/update.php',
     'auth' => false,
 );

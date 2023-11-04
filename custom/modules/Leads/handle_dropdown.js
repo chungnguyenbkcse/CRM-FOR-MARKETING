@@ -2046,6 +2046,104 @@ function check_form(form_name) {
         lead_status = $("option:selected", this).val();
         
     })
+
+    if ($('#lead_id').val().length != 0) {
+        if ($('#sale_stage').val() == '7') {
+            let arr = []
+            $('.form-control.card-number-input').map(function (idx) {
+                //console.log($(this).val())
+                if ($(this).val() != null &&  $(this).val() != 'null' && $(this).val() != "") {
+                    arr.push($(this).val());
+                }
+            })
+
+            if (arr.length == 0) {
+                alert('Vui lòng nhập ít nhất 1 số thẻ hợp lệ');
+                return false;
+            }
+
+            if ($('#fullname').val().length == 0) {
+                alert('Vui lòng điền tên đầy đủ');
+                return false;
+            }
+            if ($('#bank').val().length == 0) {
+                alert('Vui lòng nhập ngân hàng');
+                return false;
+            }
+            if ($('#citizen_identification').val().length == 0) {
+                alert('Vui lòng nhập chứng minh nhân dân');
+                return false;
+            }
+            if ($('#card_bark_type').val().length == 0) {
+                alert('Vui lòng nhập loại thẻ');
+                return false;
+            }
+            if ($('#citizen_identification_issuance_date').val().length == 0) {
+                alert('Vui lòng nhập ngày cấp thẻ cccd');
+                return false;
+            }
+            if ($('#real_transaction_amount').val().length == 0) {
+                alert('Vui lòng nhập số tiền giao dịch');
+                return false;
+            }
+            if ($('#citizen_identification_issuance_place').val().length == 0) {
+                alert('Vui lòng nhập nơi cấp cccd');
+                return false;
+            }
+            if ($('#real_fee').val().length == 0) {
+                alert('Vui lòng nhập thực phí');
+                return false;
+            }
+            if ($('#address_follow_citizen_identification').val().length == 0) {
+                alert('Vui lòng nhập địa chỉ theo cccd');
+                return false;
+            }
+            if ($('#payment_day').val().length == 0) {
+                alert('Vui lòng nhập ngày thanh toán');
+                return false;
+            }
+            if ($('#birthday').val().length == 0) {
+                alert('Vui lòng nhập ngày sinh');
+                return false;
+            }
+            if ($('#successful_trading_day').val().length == 0) {
+                alert('Vui lòng nhập ngày giao dịch thành công');
+                return false;
+            }
+            if ($('#career').val().length == 0) {
+                alert('Vui lòng nhập nghề nghiệp');
+                return false;
+            }
+            if ($('#service').val().length == 0) {
+                alert('Vui lòng nhập dịch vụ');
+                return false;
+            }
+            if ($('#district_customer_live').val().length == 0) {
+                alert('Vui lòng nhập quận sinh sống');
+                return false;
+            }
+            if ($('#note').val().length == 0) {
+                alert('Vui lòng nhập note');
+                return false;
+            }
+            if ($('#sale_stage').val().length == 0) {
+                alert('Vui lòng nhập sale_stage');
+                return false;
+            }
+            if ($('#lead_status').val().length == 0) {
+                alert('Vui lòng nhập lead_status');
+                return false;
+            }
+            if ($('#sex').val().length == 0) {
+                alert('Vui lòng nhập giới tính');
+                return false;
+            }
+
+            
+        }
+        return true;
+    }
+
     //console.log(sale_stage)
     //console.log(lead_status)
     
@@ -2062,7 +2160,7 @@ function check_form(form_name) {
             return false;
         }
         if (check_cmdd() == false) {
-            alert('hello')
+            alert('Lỗi chứng minh nhân dân')
             return false;
         }
     }

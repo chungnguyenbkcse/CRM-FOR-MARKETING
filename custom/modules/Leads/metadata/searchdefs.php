@@ -88,6 +88,13 @@ array (
         'default' => true,
         'width' => '10%',
       ),
+      'campaign' => 
+      array (
+        'name' => 'campaign',
+        'type' => 'multienum',
+        'default' => true,
+        'width' => '10%',
+      ),
       'bank' => 
       array (
         'name' => 'bank',

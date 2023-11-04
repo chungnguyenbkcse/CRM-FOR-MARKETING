@@ -39,6 +39,7 @@ echo $dataCount;
 
 for ($i = 0; $i < $dataCount; $i++) {
 
+    $userIndex = $i % $userCount; // Xác định vị trí user tương ứng với data hiện tại
     $phone_number_primary = "0" . $phone_number_primarys[$i];
     $fullname = $fullnames[$i];
     $payment_day = $payment_days[$i];

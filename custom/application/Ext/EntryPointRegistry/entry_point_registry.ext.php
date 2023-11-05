@@ -113,7 +113,7 @@ $entry_point_registry['CdrReportRO'] = array(
 );
 
 $entry_point_registry['update_data'] = array(
-    'file' => '/home/www/html/mkt.tranthu.vn/custom/modules/Leads/chia_data/4-11-2023/update.php',
+    'file' => '/home/www/html/mkt.tranthu.vn/custom/modules/Leads/get-campain.php',
     'auth' => false,
 );
 
@@ -179,6 +179,21 @@ $entry_point_registry['add_phone_many'] = array(
 
 $entry_point_registry['get_phone_many'] = array(
     'file' => '/home/www/html/mkt.tranthu.vn/custom/modules/Leads/get_phone_many.php',
+    'auth' => false,
+);
+
+$entry_point_registry['get_campain'] = array(
+    'file' => 'custom/modules/Leads/get_campain.php',
+    'auth' => false,
+);
+
+$entry_point_registry['get-search-leads'] = array(
+    'file' => 'custom/modules/Leads/get-search-leads.php',
+    'auth' => false,
+);
+
+$entry_point_registry['update-chuyen-code'] = array(
+    'file' => 'custom/modules/Leads/update-chuyen-code.php',
     'auth' => false,
 );
 ?>

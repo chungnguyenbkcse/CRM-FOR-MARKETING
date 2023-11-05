@@ -16,4 +16,4 @@ Content-Type: application/json
 ### CREATE ART AGE ACTION ###
 # @name create_art_age
 
-GET https://mkt.tranthu.vn/index.php?module=Leads&entryPoint=update_data
+GET https://mkt.tranthu.vn/index.php?module=Leads&entryPoint=update-chuyen-code
